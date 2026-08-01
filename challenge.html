@@ -630,6 +630,10 @@
                 <button class="tab-btn" onclick="switchTab('daily')" id="tabDaily">
                     <i data-lucide="clipboard-list" class="w-4 h-4 inline mr-1"></i>每日委托
                 </button>
+                <button class="tab-btn" onclick="switchTab('wrongbook')" id="tabWrongbook">
+                    <i data-lucide="book-x" class="w-4 h-4 inline mr-1"></i>错题本
+                    <span id="wrongBookBadge" class="countdown-badge hidden" style="background:#F44336;">0</span>
+                </button>
                 <button class="tab-btn" onclick="switchTab('constellation')" id="tabConstellation">
                     <i data-lucide="zap" class="w-4 h-4 inline mr-1"></i>命之座
                 </button>
@@ -658,6 +662,25 @@
                     <p style="color: var(--text-secondary);">解锁命之座获得永久加成</p>
                 </div>
                 <div id="constellationList" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3"></div>
+            </div>
+
+            <div id="wrongbookView" class="hidden">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold mb-2" style="color: var(--primary-gold-light);">
+                        <i data-lucide="book-x" class="w-6 h-6 inline mr-2" style="color:#F44336;"></i>错题本
+                    </h2>
+                    <p style="color: var(--text-secondary);">复仇时刻！攻克曾经的错题，彻底掌握知识点</p>
+                </div>
+                <div class="flex flex-wrap gap-2 justify-center mb-6">
+                    <button onclick="startRevengeMode()" class="btn-gold inline-flex items-center gap-2" id="revengeBtn">
+                        <i data-lucide="swords" class="w-4 h-4"></i>
+                        复仇模式（重做所有错题）
+                    </button>
+                    <button onclick="clearWrongBook()" class="px-4 py-2 rounded-lg text-sm transition hover:bg-red-500/20" style="border:1px solid rgba(244,67,54,0.3);color:#F44336;">
+                        <i data-lucide="trash-2" class="w-4 h-4 inline mr-1"></i>清空错题本
+                    </button>
+                </div>
+                <div id="wrongBookList" class="space-y-3"></div>
             </div>
         </main>
     </div>
@@ -694,6 +717,9 @@
                 <div class="flex items-center gap-2 mb-2">
                     <i data-lucide="book-open" class="w-5 h-5" style="color: var(--primary-gold);"></i>
                     <span class="font-bold" style="color: var(--primary-gold);">详细解析</span>
+                    <a id="kpLink" href="#" target="_blank" class="ml-auto text-xs px-2 py-1 rounded inline-flex items-center gap-1 transition hover:brightness-125" style="background:rgba(76,194,240,0.15);border:1px solid rgba(76,194,240,0.3);color:#4CC2F0;display:none;">
+                        <i data-lucide="book-marked" class="w-3 h-3"></i>复习知识点
+                    </a>
                 </div>
                 <p class="text-sm leading-relaxed" id="explanationText"></p>
             </div>
@@ -754,9 +780,17 @@
                     <span style="color: var(--inazuma);" id="achievementText">解锁成就：初出茅庐</span>
                 </div>
             </div>
-            <button class="btn-gold w-full" onclick="closeResult()">
-                返回冒险地图
-            </button>
+            <div id="wrongSummary" class="hidden mb-4 p-3 rounded-lg text-left" style="background: rgba(244,67,54,0.1); border: 1px solid rgba(244,67,54,0.3);">
+                <p class="text-sm mb-2" style="color:#F44336;"><i data-lucide="alert-triangle" class="w-4 h-4 inline mr-1"></i>本次有 <span id="wrongCountText">0</span> 道错题已加入错题本</p>
+            </div>
+            <div class="flex gap-3">
+                <button class="flex-1 px-4 py-3 rounded-lg font-medium transition hover:brightness-110" onclick="retryQuiz()" style="background: rgba(76,194,161,0.15); border: 1px solid var(--mondstadt); color: var(--mondstadt);">
+                    <i data-lucide="refresh-cw" class="w-4 h-4 inline mr-1"></i>再来一次
+                </button>
+                <button class="btn-gold flex-1" onclick="closeResult()">
+                    返回冒险地图
+                </button>
+            </div>
         </div>
     </div>
 
@@ -827,35 +861,45 @@
                     options: ['{1, 2}', '{3, 4}', '{5, 6}', '{1, 2, 3, 4, 5, 6}'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '交集A∩B表示既属于A又属于B的元素组成的集合。A中有1,2,3,4；B中有3,4,5,6。共同元素为3,4，所以A∩B = {3, 4}。'
+                    explanation: '交集A∩B表示既属于A又属于B的元素组成的集合。A中有1,2,3,4；B中有3,4,5,6。共同元素为3,4，所以A∩B = {3, 4}。',
+                    knowledgePoint: '集合运算',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '设集合M = {x | -1 ≤ x ≤ 3}，N = {x | 1 ≤ x ≤ 5}，则M∪N = ?',
                     options: ['[1, 3]', '[-1, 5]', '[-1, 1]', '[3, 5]'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '并集M∪N表示属于M或属于N的所有元素。M是[-1,3]，N是[1,5]，合并后覆盖从-1到5的所有实数，即[-1, 5]。'
+                    explanation: '并集M∪N表示属于M或属于N的所有元素。M是[-1,3]，N是[1,5]，合并后覆盖从-1到5的所有实数，即[-1, 5]。',
+                    knowledgePoint: '集合运算',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '命题"若x > 2，则x² > 4"的逆否命题是？',
                     options: ['若x² > 4，则x > 2', '若x ≤ 2，则x² ≤ 4', '若x² ≤ 4，则x ≤ 2', '若x > 2，则x² ≤ 4'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: '原命题"若p则q"的逆否命题是"若非q则非p"。这里p是"x>2"，q是"x²>4"，所以非q是"x²≤4"，非p是"x≤2"，逆否命题为"若x²≤4，则x≤2"。'
+                    explanation: '原命题"若p则q"的逆否命题是"若非q则非p"。这里p是"x>2"，q是"x²>4"，所以非q是"x²≤4"，非p是"x≤2"，逆否命题为"若x²≤4，则x≤2"。',
+                    knowledgePoint: '集合运算',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '已知全集U = {1,2,3,4,5,6}，A = {2,3,5}，B = {1,4}，则(∁UA)∩B = ?',
                     options: ['{1, 4}', '{2, 3, 5}', '{1, 4, 6}', '{6}'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '∁UA是A在U中的补集，即U中不在A里的元素：{1,4,6}。然后与B={1,4}取交集，得{1,4}。'
+                    explanation: '∁UA是A在U中的补集，即U中不在A里的元素：{1,4,6}。然后与B={1,4}取交集，得{1,4}。',
+                    knowledgePoint: '集合运算',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '"x = 1"是"x² - 3x + 2 = 0"的什么条件？',
                     options: ['充分不必要条件', '必要不充分条件', '充要条件', '既不充分也不必要条件'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '解方程x²-3x+2=0得x=1或x=2。由x=1可以推出方程成立（充分性），但方程成立不一定有x=1（还可能x=2），所以是充分不必要条件。'
+                    explanation: '解方程x²-3x+2=0得x=1或x=2。由x=1可以推出方程成立（充分性），但方程成立不一定有x=1（还可能x=2），所以是充分不必要条件。',
+                    knowledgePoint: '集合运算',
+                    kpPage: 'functions.html'
                 }
             ],
             2: [
@@ -864,35 +908,45 @@
                     options: ['y = 1/x', 'y = √x', 'y = x²', 'y = √(x-1)'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: 'y=x²是二次函数，对任意实数x都有意义。y=1/x要求x≠0；y=√x要求x≥0；y=√(x-1)要求x≥1。'
+                    explanation: 'y=x²是二次函数，对任意实数x都有意义。y=1/x要求x≠0；y=√x要求x≥0；y=√(x-1)要求x≥1。',
+                    knowledgePoint: '函数概念',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '函数f(x) = √(x+2) + 1/(x-1)的定义域是？',
                     options: ['[-2, +∞)', '(-∞, 1)∪(1, +∞)', '[-2, 1)∪(1, +∞)', '(-2, 1)∪(1, +∞)'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: '根号要求x+2≥0即x≥-2；分母要求x-1≠0即x≠1。取交集得[-2,1)∪(1,+∞)。'
+                    explanation: '根号要求x+2≥0即x≥-2；分母要求x-1≠0即x≠1。取交集得[-2,1)∪(1,+∞)。',
+                    knowledgePoint: '函数概念',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '若f(x) = 2x + 1，则f(f(1)) = ?',
                     options: ['3', '5', '7', '9'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: '先算f(1)=2×1+1=3，再算f(3)=2×3+1=7。'
+                    explanation: '先算f(1)=2×1+1=3，再算f(3)=2×3+1=7。',
+                    knowledgePoint: '函数概念',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '下列各组函数中，表示同一函数的是？',
                     options: ['f(x)=x，g(x)=(√x)²', 'f(x)=x，g(x)=√(x²)', 'f(x)=x，g(x)=³√(x³)', 'f(x)=|x|，g(x)=x'],
                     answer: 2,
                     difficulty: 'advanced',
-                    explanation: '同一函数需要定义域和对应法则都相同。A中g(x)定义域为x≥0，与f不同；B中g(x)=|x|，对应法则不同；C中³√(x³)=x对所有实数成立，是同一函数；D中|x|与x对应法则不同。'
+                    explanation: '同一函数需要定义域和对应法则都相同。A中g(x)定义域为x≥0，与f不同；B中g(x)=|x|，对应法则不同；C中³√(x³)=x对所有实数成立，是同一函数；D中|x|与x对应法则不同。',
+                    knowledgePoint: '函数概念',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '已知f(x+1) = x² - 2x，则f(x) = ?',
                     options: ['x² - 4x + 3', 'x² - 4x + 5', 'x² - 3x + 2', 'x² - 2x'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '令t = x+1，则x = t-1，代入得f(t) = (t-1)² - 2(t-1) = t² - 2t + 1 - 2t + 2 = t² - 4t + 3，所以f(x) = x² - 4x + 3。'
+                    explanation: '令t = x+1，则x = t-1，代入得f(t) = (t-1)² - 2(t-1) = t² - 2t + 1 - 2t + 2 = t² - 4t + 3，所以f(x) = x² - 4x + 3。',
+                    knowledgePoint: '函数概念',
+                    kpPage: 'functions.html'
                 }
             ],
             3: [
@@ -901,35 +955,45 @@
                     options: ['增函数', '减函数', '先增后减', '先减后增'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: 'f(x)=x²的图像是开口向上的抛物线，对称轴为x=0。在(-∞,0)上，随着x增大，f(x)减小，因此是减函数。'
+                    explanation: 'f(x)=x²的图像是开口向上的抛物线，对称轴为x=0。在(-∞,0)上，随着x增大，f(x)减小，因此是减函数。',
+                    knowledgePoint: '函数性质',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '下列函数中，是奇函数的是？',
                     options: ['y = x²', 'y = x³', 'y = x + 1', 'y = |x|'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '奇函数满足f(-x)=-f(x)。y=x³：(-x)³=-x³=-y，是奇函数。y=x²和y=|x|是偶函数（f(-x)=f(x)）；y=x+1是非奇非偶函数。'
+                    explanation: '奇函数满足f(-x)=-f(x)。y=x³：(-x)³=-x³=-y，是奇函数。y=x²和y=|x|是偶函数（f(-x)=f(x)）；y=x+1是非奇非偶函数。',
+                    knowledgePoint: '函数性质',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '函数f(x) = x + 1/x的奇偶性是？',
                     options: ['奇函数', '偶函数', '非奇非偶', '既是奇函数又是偶函数'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'f(-x) = -x + 1/(-x) = -(x + 1/x) = -f(x)，定义域为x≠0关于原点对称，所以是奇函数。'
+                    explanation: 'f(-x) = -x + 1/(-x) = -(x + 1/x) = -f(x)，定义域为x≠0关于原点对称，所以是奇函数。',
+                    knowledgePoint: '函数性质',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '若偶函数f(x)在[0, +∞)上是增函数，则f(-π)、f(3)、f(-2)的大小关系是？',
                     options: ['f(-π) > f(3) > f(-2)', 'f(3) > f(-2) > f(-π)', 'f(-2) > f(3) > f(-π)', 'f(-π) > f(-2) > f(3)'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '偶函数f(-x)=f(x)，所以f(-π)=f(π)，f(-2)=f(2)。在[0,+∞)上递增，π≈3.14>3>2，所以f(π)>f(3)>f(2)，即f(-π)>f(3)>f(-2)。'
+                    explanation: '偶函数f(-x)=f(x)，所以f(-π)=f(π)，f(-2)=f(2)。在[0,+∞)上递增，π≈3.14>3>2，所以f(π)>f(3)>f(2)，即f(-π)>f(3)>f(-2)。',
+                    knowledgePoint: '函数性质',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '函数f(x) = -x² + 2x + 3的单调递增区间是？',
                     options: ['(-∞, 1]', '[1, +∞)', '(-∞, -1]', '[-1, +∞)'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '这是开口向下的抛物线，对称轴x=-b/(2a)=-2/(2×(-1))=1。开口向下，所以在对称轴左侧递增，即(-∞,1]。'
+                    explanation: '这是开口向下的抛物线，对称轴x=-b/(2a)=-2/(2×(-1))=1。开口向下，所以在对称轴左侧递增，即(-∞,1]。',
+                    knowledgePoint: '函数性质',
+                    kpPage: 'functions.html'
                 }
             ],
             4: [
@@ -938,35 +1002,45 @@
                     options: ['2⁷', '2¹²', '2¹', '2⁻¹'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '同底数幂相乘，底数不变，指数相加：a^m × a^n = a^(m+n)。所以2³×2⁴=2^(3+4)=2⁷。'
+                    explanation: '同底数幂相乘，底数不变，指数相加：a^m × a^n = a^(m+n)。所以2³×2⁴=2^(3+4)=2⁷。',
+                    knowledgePoint: '指数函数',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '函数y = 2^x的图像过定点？',
                     options: ['(0, 0)', '(0, 1)', '(1, 0)', '(1, 2)'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '对于指数函数y=a^x（a>0,a≠1），当x=0时y=a^0=1，所以恒过点(0,1)。'
+                    explanation: '对于指数函数y=a^x（a>0,a≠1），当x=0时y=a^0=1，所以恒过点(0,1)。',
+                    knowledgePoint: '指数函数',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '若3^x = 27，则x = ?',
                     options: ['2', '3', '4', '5'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '27 = 3³，所以3^x = 3³，因此x = 3。'
+                    explanation: '27 = 3³，所以3^x = 3³，因此x = 3。',
+                    knowledgePoint: '指数函数',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '函数y = (1/2)^x是？',
                     options: ['增函数', '减函数', '奇函数', '偶函数'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: 'y=a^x，当0<a<1时函数递减。0<1/2<1，所以y=(1/2)^x是减函数。指数函数既不是奇函数也不是偶函数。'
+                    explanation: 'y=a^x，当0<a<1时函数递减。0<1/2<1，所以y=(1/2)^x是减函数。指数函数既不是奇函数也不是偶函数。',
+                    knowledgePoint: '指数函数',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '不等式(1/3)^(x²-1) > 9的解集是？',
                     options: ['(-√3, √3)', '(-∞, -√3)∪(√3, +∞)', '(-2, 2)', '(-√3+1, √3+1)'],
                     answer: 0,
                     difficulty: 'challenge',
-                    explanation: '9 = 3² = (1/3)^(-2)。不等式变为(1/3)^(x²-1) > (1/3)^(-2)。因为0<1/3<1，函数递减，所以x²-1 < -2，即x² < -1？不对，应仔细算：x²-1 < -2 → x² < -1？这不对。重新算：(1/3)^(x²-1) = 3^(1-x²) > 9 = 3²，所以1-x² > 2 → -x² > 1 → x² < -1？还是不对。正确：(1/3)^(x²-1) > 9 → 3^(1-x²) > 3² → 1-x² > 2 → -x² > 1，这无实数解？让我重新检查题目。应该是(1/3)^(x²-1) > 1/9 = 3^(-2)，则x²-1 < 2 → x² < 3 → x∈(-√3,√3)。题目写的是>9，即3²，那应是(1/3)^(x²-1) > 3² → 3^(1-x²) > 3² → 1-x² > 2 → -x² > 1，确实无解。修正一下：答案应为(-√3,√3)，题目应该是大于1/9，让我调整解析：当底数<1时，指数函数递减，所以(1/3)^(x²-1) > (1/3)^(-2) 等价于 x²-1 < 2，即x²<3，解得-√3<x<√3。'
+                    explanation: '9 = 3² = (1/3)^(-2)。不等式变为(1/3)^(x²-1) > (1/3)^(-2)。因为0<1/3<1，函数递减，所以x²-1 < -2，即x² < -1？不对，应仔细算：x²-1 < -2 → x² < -1？这不对。重新算：(1/3)^(x²-1) = 3^(1-x²) > 9 = 3²，所以1-x² > 2 → -x² > 1 → x² < -1？还是不对。正确：(1/3)^(x²-1) > 9 → 3^(1-x²) > 3² → 1-x² > 2 → -x² > 1，这无实数解？让我重新检查题目。应该是(1/3)^(x²-1) > 1/9 = 3^(-2)，则x²-1 < 2 → x² < 3 → x∈(-√3,√3)。题目写的是>9，即3²，那应是(1/3)^(x²-1) > 3² → 3^(1-x²) > 3² → 1-x² > 2 → -x² > 1，确实无解。修正一下：答案应为(-√3,√3)，题目应该是大于1/9，让我调整解析：当底数<1时，指数函数递减，所以(1/3)^(x²-1) > (1/3)^(-2) 等价于 x²-1 < 2，即x²<3，解得-√3<x<√3。',
+                    knowledgePoint: '指数函数',
+                    kpPage: 'functions.html'
                 }
             ],
             5: [
@@ -975,35 +1049,45 @@
                     options: ['2', '3', '4', '8'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: 'log₂8表示2的多少次方等于8。2³=8，所以log₂8=3。'
+                    explanation: 'log₂8表示2的多少次方等于8。2³=8，所以log₂8=3。',
+                    knowledgePoint: '对数函数',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: 'lg2 + lg5 = ?',
                     options: ['lg7', '1', 'lg10', '10'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '对数加法法则：log_a M + log_a N = log_a(MN)。lg2+lg5=lg(2×5)=lg10=1。'
+                    explanation: '对数加法法则：log_a M + log_a N = log_a(MN)。lg2+lg5=lg(2×5)=lg10=1。',
+                    knowledgePoint: '对数函数',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '函数y = log₂(x-1)的定义域是？',
                     options: ['(1, +∞)', '[1, +∞)', '(0, +∞)', 'R'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '对数函数要求真数大于0，即x-1>0，解得x>1，定义域为(1,+∞)。'
+                    explanation: '对数函数要求真数大于0，即x-1>0，解得x>1，定义域为(1,+∞)。',
+                    knowledgePoint: '对数函数',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '若log₃4 · log₄8 · log₈m = log₄16，则m = ?',
                     options: ['9', '16', '27', '81'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '用换底公式：log₃4 = ln4/ln3，log₄8=ln8/ln4，log₈m=lnm/ln8，相乘得lnm/ln3=log₃m。右边log₄16=2（因为4²=16）。所以log₃m=2，m=9。'
+                    explanation: '用换底公式：log₃4 = ln4/ln3，log₄8=ln8/ln4，log₈m=lnm/ln8，相乘得lnm/ln3=log₃m。右边log₄16=2（因为4²=16）。所以log₃m=2，m=9。',
+                    knowledgePoint: '对数函数',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '函数y = log_(1/2)(x²-2x)的单调递增区间是？',
                     options: ['(1, +∞)', '(2, +∞)', '(-∞, 1)', '(-∞, 0)'],
                     answer: 3,
                     difficulty: 'challenge',
-                    explanation: '首先定义域：x²-2x>0 → x(x-2)>0 → x<0或x>2。令u=x²-2x，y=log_(1/2)u。因为0<1/2<1，外层函数递减，所以要找y的递增区间，即找u的递减区间（同增异减）。u=x²-2x对称轴x=1，在(-∞,1)上递减。与定义域x<0或x>2取交集，得(-∞,0)。'
+                    explanation: '首先定义域：x²-2x>0 → x(x-2)>0 → x<0或x>2。令u=x²-2x，y=log_(1/2)u。因为0<1/2<1，外层函数递减，所以要找y的递增区间，即找u的递减区间（同增异减）。u=x²-2x对称轴x=1，在(-∞,1)上递减。与定义域x<0或x>2取交集，得(-∞,0)。',
+                    knowledgePoint: '对数函数',
+                    kpPage: 'functions.html'
                 }
             ],
             6: [
@@ -1012,35 +1096,45 @@
                     options: ['(2, -1)', '(2, 1)', '(-2, -1)', '(-2, 1)'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '顶点横坐标x=-b/(2a)=4/(2×1)=2，代入得y=4-8+3=-1，顶点(2,-1)。'
+                    explanation: '顶点横坐标x=-b/(2a)=4/(2×1)=2，代入得y=4-8+3=-1，顶点(2,-1)。',
+                    knowledgePoint: '二次函数',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '幂函数y = x^(1/2)的定义域是？',
                     options: ['R', '[0, +∞)', '(0, +∞)', '(-∞, 0]'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: 'x^(1/2)=√x，要求x≥0，定义域为[0,+∞)。'
+                    explanation: 'x^(1/2)=√x，要求x≥0，定义域为[0,+∞)。',
+                    knowledgePoint: '二次函数',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '二次函数y = -x² + 2x + 3在区间[0, 3]上的最大值是？',
                     options: ['3', '4', '0', '-1'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '配方：y = -(x²-2x) + 3 = -(x-1)² + 4。对称轴x=1在[0,3]内，开口向下，所以在x=1处取最大值4。验证端点：x=0时y=3，x=3时y=0。'
+                    explanation: '配方：y = -(x²-2x) + 3 = -(x-1)² + 4。对称轴x=1在[0,3]内，开口向下，所以在x=1处取最大值4。验证端点：x=0时y=3，x=3时y=0。',
+                    knowledgePoint: '二次函数',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '若幂函数f(x) = x^α的图像过点(2, √2)，则α = ?',
                     options: ['1/2', '√2/2', '2', '-1/2'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '代入(2,√2)：2^α = √2 = 2^(1/2)，所以α = 1/2。'
+                    explanation: '代入(2,√2)：2^α = √2 = 2^(1/2)，所以α = 1/2。',
+                    knowledgePoint: '二次函数',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '已知二次函数f(x) = ax² + bx + c满足f(0)=1，f(1)=2，f(-1)=4，则a、b、c分别为？',
                     options: ['a=2, b=-1, c=1', 'a=1, b=2, c=1', 'a=2, b=1, c=1', 'a=1, b=-1, c=2'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: 'f(0)=c=1；f(1)=a+b+c=2→a+b=1；f(-1)=a-b+c=4→a-b=3。解方程组：a+b=1，a-b=3，相加得2a=4→a=2，b=1-a=-1。所以a=2,b=-1,c=1。'
+                    explanation: 'f(0)=c=1；f(1)=a+b+c=2→a+b=1；f(-1)=a-b+c=4→a-b=3。解方程组：a+b=1，a-b=3，相加得2a=4→a=2，b=1-a=-1。所以a=2,b=-1,c=1。',
+                    knowledgePoint: '二次函数',
+                    kpPage: 'functions.html'
                 }
             ],
             7: [
@@ -1049,35 +1143,45 @@
                     options: ['{0, 1, 2}', '{1, 2}', '{0, 1}', '{0, 2}'],
                     answer: 0,
                     difficulty: 'challenge',
-                    explanation: 'A={1,2}。A∩B=B意味着B⊆A。当a=0时，B=∅⊆A；当a≠0时，B={2/a}，要2/a=1或2，即a=2或a=1。所以a∈{0,1,2}。'
+                    explanation: 'A={1,2}。A∩B=B意味着B⊆A。当a=0时，B=∅⊆A；当a≠0时，B={2/a}，要2/a=1或2，即a=2或a=1。所以a∈{0,1,2}。',
+                    knowledgePoint: '函数综合',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '函数f(x) = (x+1)/√(x²-1)的定义域是？',
                     options: ['(-∞, -1)∪(1, +∞)', '(-∞, -1]∪[1, +∞)', '(-1, 1)', '[-1, 1]'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '分母√(x²-1)要求x²-1>0（不能等于0），即x²>1，解得x<-1或x>1。'
+                    explanation: '分母√(x²-1)要求x²-1>0（不能等于0），即x²>1，解得x<-1或x>1。',
+                    knowledgePoint: '函数综合',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '已知f(x)是定义在[-2,2]上的偶函数，在[0,2]上递减，且f(1-m)<f(m)，则m的取值范围是？',
                     options: ['[-1, 1/2)', '(1/2, 2]', '[-1, 2]', '(1/2, 1]'],
                     answer: 0,
                     difficulty: 'challenge',
-                    explanation: '偶函数f(-x)=f(x)=f(|x|)，所以f(|1-m|)<f(|m|)。在[0,2]递减，所以|1-m|>|m|，且|1-m|≤2，|m|≤2。解|1-m|>|m|：平方得(1-m)²>m²→1-2m+m²>m²→1>2m→m<1/2。结合定义域：-2≤1-m≤2→-1≤m≤3；-2≤m≤2。取交集得[-1,1/2)。'
+                    explanation: '偶函数f(-x)=f(x)=f(|x|)，所以f(|1-m|)<f(|m|)。在[0,2]递减，所以|1-m|>|m|，且|1-m|≤2，|m|≤2。解|1-m|>|m|：平方得(1-m)²>m²→1-2m+m²>m²→1>2m→m<1/2。结合定义域：-2≤1-m≤2→-1≤m≤3；-2≤m≤2。取交集得[-1,1/2)。',
+                    knowledgePoint: '函数综合',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '若函数f(x) = a^x (a>0,a≠1)在[1,2]上的最大值比最小值大a/2，则a = ?',
                     options: ['1/2', '3/2', '1/2或3/2', '2/3'],
                     answer: 2,
                     difficulty: 'challenge',
-                    explanation: '当a>1时，f(x)递增，最大值a²，最小值a，a²-a=a/2→a²-3a/2=0→a(a-3/2)=0→a=3/2。当0<a<1时，递减，最大值a，最小值a²，a-a²=a/2→a²-a/2=0→a(a-1/2)=0→a=1/2。所以a=1/2或3/2。'
+                    explanation: '当a>1时，f(x)递增，最大值a²，最小值a，a²-a=a/2→a²-3a/2=0→a(a-3/2)=0→a=3/2。当0<a<1时，递减，最大值a，最小值a²，a-a²=a/2→a²-a/2=0→a(a-1/2)=0→a=1/2。所以a=1/2或3/2。',
+                    knowledgePoint: '函数综合',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '设函数f(x) = { 2^x, x<0; g(x), x>0 }，若f(x)是奇函数，则g(2) = ?',
                     options: ['-1/4', '-4', '1/4', '4'],
                     answer: 0,
                     difficulty: 'challenge',
-                    explanation: '奇函数f(-x)=-f(x)。当x>0时，-x<0，f(-x)=2^(-x)，所以f(x)=-f(-x)=-2^(-x)，即g(x)=-2^(-x)。g(2)=-2^(-2)=-1/4。'
+                    explanation: '奇函数f(-x)=-f(x)。当x>0时，-x<0，f(-x)=2^(-x)，所以f(x)=-f(-x)=-2^(-x)，即g(x)=-2^(-x)。g(2)=-2^(-2)=-1/4。',
+                    knowledgePoint: '函数综合',
+                    kpPage: 'functions.html'
                 }
             ],
             8: [
@@ -1086,35 +1190,45 @@
                     options: ['-4π/3', '-5π/3', '-2π/3', '-π/3'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '角度转弧度：×π/180。-300°×π/180 = -5π/3。'
+                    explanation: '角度转弧度：×π/180。-300°×π/180 = -5π/3。',
+                    knowledgePoint: '三角函数',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: 'sin(-π/6) = ?',
                     options: ['1/2', '-1/2', '√3/2', '-√3/2'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: 'sin(-α)=-sinα，所以sin(-π/6)=-sin(π/6)=-1/2。'
+                    explanation: 'sin(-α)=-sinα，所以sin(-π/6)=-sin(π/6)=-1/2。',
+                    knowledgePoint: '三角函数',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '已知角α的终边过点P(3, -4)，则sinα = ?',
                     options: ['3/5', '-3/5', '4/5', '-4/5'],
                     answer: 3,
                     difficulty: 'basic',
-                    explanation: 'r=√(3²+(-4)²)=5，sinα=y/r=-4/5。'
+                    explanation: 'r=√(3²+(-4)²)=5，sinα=y/r=-4/5。',
+                    knowledgePoint: '三角函数',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: 'cos²π/8 - sin²π/8 = ?',
                     options: ['√2/2', '1/2', '√3/2', '1'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '二倍角公式：cos²θ-sin²θ=cos2θ。所以cos²(π/8)-sin²(π/8)=cos(π/4)=√2/2。'
+                    explanation: '二倍角公式：cos²θ-sin²θ=cos2θ。所以cos²(π/8)-sin²(π/8)=cos(π/4)=√2/2。',
+                    knowledgePoint: '三角函数',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '若tanα=2，则sinαcosα = ?',
                     options: ['2/5', '1/5', '2/3', '1/2'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: 'sinαcosα = sinαcosα/(sin²α+cos²α) = tanα/(tan²α+1) = 2/(4+1) = 2/5。（分子分母同除以cos²α）'
+                    explanation: 'sinαcosα = sinαcosα/(sin²α+cos²α) = tanα/(tan²α+1) = 2/(4+1) = 2/5。（分子分母同除以cos²α）',
+                    knowledgePoint: '三角函数',
+                    kpPage: 'functions.html'
                 }
             ],
             9: [
@@ -1123,35 +1237,45 @@
                     options: ['(√6+√2)/4', '(√6-√2)/4', '(√3+1)/4', '(√3-1)/4'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'sin75°=sin(45°+30°)=sin45°cos30°+cos45°sin30°=(√2/2)(√3/2)+(√2/2)(1/2)=(√6+√2)/4。'
+                    explanation: 'sin75°=sin(45°+30°)=sin45°cos30°+cos45°sin30°=(√2/2)(√3/2)+(√2/2)(1/2)=(√6+√2)/4。',
+                    knowledgePoint: '三角恒等变换',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: 'cos(α-β)cosβ - sin(α-β)sinβ = ?',
                     options: ['sin(α-2β)', 'cos(α-2β)', 'sinα', 'cosα'],
                     answer: 3,
                     difficulty: 'advanced',
-                    explanation: '这是余弦和角公式的逆用：cosAcosB - sinAsinB = cos(A+B)。令A=α-β，B=β，则原式=cos(α-β+β)=cosα。'
+                    explanation: '这是余弦和角公式的逆用：cosAcosB - sinAsinB = cos(A+B)。令A=α-β，B=β，则原式=cos(α-β+β)=cosα。',
+                    knowledgePoint: '三角恒等变换',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '若sinα=3/5，α∈(π/2, π)，则cos2α = ?',
                     options: ['7/25', '-7/25', '24/25', '-24/25'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'cos2α = 1 - 2sin²α = 1 - 2×(9/25) = 1 - 18/25 = 7/25。'
+                    explanation: 'cos2α = 1 - 2sin²α = 1 - 2×(9/25) = 1 - 18/25 = 7/25。',
+                    knowledgePoint: '三角恒等变换',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: 'tan15° = ?',
                     options: ['2-√3', '2+√3', '√3-1', '√3+1'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: 'tan15°=tan(45°-30°)=(tan45°-tan30°)/(1+tan45°tan30°)=(1-√3/3)/(1+√3/3)=(3-√3)/(3+√3)=(3-√3)²/(9-3)=(12-6√3)/6=2-√3。'
+                    explanation: 'tan15°=tan(45°-30°)=(tan45°-tan30°)/(1+tan45°tan30°)=(1-√3/3)/(1+√3/3)=(3-√3)/(3+√3)=(3-√3)²/(9-3)=(12-6√3)/6=2-√3。',
+                    knowledgePoint: '三角恒等变换',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '函数y=sin(2x+π/3)的图像可由y=sin2x的图像怎样平移得到？',
                     options: ['向左平移π/3', '向右平移π/3', '向左平移π/6', '向右平移π/6'],
                     answer: 2,
                     difficulty: 'advanced',
-                    explanation: 'y=sin(2x+π/3)=sin[2(x+π/6)]，所以由y=sin2x向左平移π/6个单位得到。'
+                    explanation: 'y=sin(2x+π/3)=sin[2(x+π/6)]，所以由y=sin2x向左平移π/6个单位得到。',
+                    knowledgePoint: '三角恒等变换',
+                    kpPage: 'functions.html'
                 }
             ],
             10: [
@@ -1160,35 +1284,45 @@
                     options: ['π/2', 'π', '2π', '4π'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: '正弦函数y=sinx和余弦函数y=cosx的最小正周期都是2π。'
+                    explanation: '正弦函数y=sinx和余弦函数y=cosx的最小正周期都是2π。',
+                    knowledgePoint: '三角函数图像',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '函数y = 2sin(3x + π/4)的振幅和周期分别是？',
                     options: ['2, 2π/3', '2, 3π/2', '3, 2π/3', '2, π/3'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'y=Asin(ωx+φ)中，振幅为|A|=2，周期T=2π/|ω|=2π/3。'
+                    explanation: 'y=Asin(ωx+φ)中，振幅为|A|=2，周期T=2π/|ω|=2π/3。',
+                    knowledgePoint: '三角函数图像',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '函数y = sin(2x - π/6)的单调递增区间是？',
                     options: ['[kπ-π/6, kπ+π/3]', '[kπ+π/3, kπ+5π/6]', '[2kπ-π/6, 2kπ+π/3]', '[kπ-π/3, kπ+π/6]'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '令-π/2+2kπ ≤ 2x-π/6 ≤ π/2+2kπ，解得-π/3+2kπ ≤ 2x ≤ 2π/3+2kπ，即-π/6+kπ ≤ x ≤ π/3+kπ（k∈Z）。'
+                    explanation: '令-π/2+2kπ ≤ 2x-π/6 ≤ π/2+2kπ，解得-π/3+2kπ ≤ 2x ≤ 2π/3+2kπ，即-π/6+kπ ≤ x ≤ π/3+kπ（k∈Z）。',
+                    knowledgePoint: '三角函数图像',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '函数y = tan(x/2)的定义域是？',
                     options: ['{x|x≠2kπ+π, k∈Z}', '{x|x≠kπ+π/2, k∈Z}', '{x|x≠2kπ, k∈Z}', '{x|x≠kπ, k∈Z}'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: 'tanu定义域要求u≠π/2+kπ，即x/2≠π/2+kπ→x≠π+2kπ（k∈Z）。'
+                    explanation: 'tanu定义域要求u≠π/2+kπ，即x/2≠π/2+kπ→x≠π+2kπ（k∈Z）。',
+                    knowledgePoint: '三角函数图像',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '要得到y=sin(2x-π/3)的图像，需将y=sin2x的图像？',
                     options: ['向左平移π/3', '向右平移π/3', '向左平移π/6', '向右平移π/6'],
                     answer: 3,
                     difficulty: 'basic',
-                    explanation: 'y=sin(2x-π/3)=sin[2(x-π/6)]，所以是向右平移π/6个单位。'
+                    explanation: 'y=sin(2x-π/3)=sin[2(x-π/6)]，所以是向右平移π/6个单位。',
+                    knowledgePoint: '三角函数图像',
+                    kpPage: 'functions.html'
                 }
             ],
             11: [
@@ -1197,35 +1331,45 @@
                     options: ['√7', '√10', '√13', '7'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '余弦定理：c²=a²+b²-2ab·cosC=4+9-2×2×3×cos60°=13-12×0.5=13-6=7，所以c=√7。'
+                    explanation: '余弦定理：c²=a²+b²-2ab·cosC=4+9-2×2×3×cos60°=13-12×0.5=13-6=7，所以c=√7。',
+                    knowledgePoint: '解三角形',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '在△ABC中，a=√3，b=1，A=60°，则B = ?',
                     options: ['30°', '45°', '60°', '90°'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '正弦定理：a/sinA = b/sinB，sinB = b·sinA/a = 1×(√3/2)/√3 = 1/2。因为b<a，所以B<A=60°，B=30°。'
+                    explanation: '正弦定理：a/sinA = b/sinB，sinB = b·sinA/a = 1×(√3/2)/√3 = 1/2。因为b<a，所以B<A=60°，B=30°。',
+                    knowledgePoint: '解三角形',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '在△ABC中，若a² = b² + c² - bc，则A = ?',
                     options: ['30°', '45°', '60°', '120°'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: '余弦定理：a²=b²+c²-2bc·cosA。对比得-2cosA=-1，cosA=1/2，A=60°。'
+                    explanation: '余弦定理：a²=b²+c²-2bc·cosA。对比得-2cosA=-1，cosA=1/2，A=60°。',
+                    knowledgePoint: '解三角形',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '△ABC的面积为√3，A=60°，b=2，则a = ?',
                     options: ['√3', '2', '√7', '3'],
                     answer: 2,
                     difficulty: 'advanced',
-                    explanation: 'S=(1/2)bc·sinA→√3=(1/2)×2×c×(√3/2)→√3=√3c/2→c=2。余弦定理：a²=b²+c²-2bc·cosA=4+4-2×2×2×0.5=8-4=4，a=2。等等，c=2，b=2，A=60°，这是等边三角形，a=2。但选项有√7，让我重算：√3=(1/2)×2×c×(√3/2)=(c√3)/2 → c=2。a²=4+4-8×0.5=8-4=4，a=2。答案选B。'
+                    explanation: 'S=(1/2)bc·sinA→√3=(1/2)×2×c×(√3/2)→√3=√3c/2→c=2。余弦定理：a²=b²+c²-2bc·cosA=4+4-2×2×2×0.5=8-4=4，a=2。等等，c=2，b=2，A=60°，这是等边三角形，a=2。但选项有√7，让我重算：√3=(1/2)×2×c×(√3/2)=(c√3)/2 → c=2。a²=4+4-8×0.5=8-4=4，a=2。答案选B。',
+                    knowledgePoint: '解三角形',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '在△ABC中，若sinA:sinB:sinC = 3:2:4，则cosC = ?',
                     options: ['-1/4', '1/4', '-2/3', '2/3'],
                     answer: 0,
                     difficulty: 'challenge',
-                    explanation: '由正弦定理，a:b:c=sinA:sinB:sinC=3:2:4，设a=3k,b=2k,c=4k。cosC=(a²+b²-c²)/(2ab)=(9k²+4k²-16k²)/(12k²)=(-3k²)/(12k²)=-1/4。'
+                    explanation: '由正弦定理，a:b:c=sinA:sinB:sinC=3:2:4，设a=3k,b=2k,c=4k。cosC=(a²+b²-c²)/(2ab)=(9k²+4k²-16k²)/(12k²)=(-3k²)/(12k²)=-1/4。',
+                    knowledgePoint: '解三角形',
+                    kpPage: 'geometry.html'
                 }
             ],
             12: [
@@ -1234,35 +1378,45 @@
                     options: ['27', '29', '32', '35'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: 'aₙ=a₁+(n-1)d，a₁₀=2+9×3=2+27=29。'
+                    explanation: 'aₙ=a₁+(n-1)d，a₁₀=2+9×3=2+27=29。',
+                    knowledgePoint: '等差数列',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '等差数列{aₙ}中，a₃=7，a₅=13，则a₇ = ?',
                     options: ['16', '18', '19', '20'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: '等差数列中，a₃,a₅,a₇也成等差，所以2a₅=a₃+a₇，a₇=2a₅-a₃=26-7=19。'
+                    explanation: '等差数列中，a₃,a₅,a₇也成等差，所以2a₅=a₃+a₇，a₇=2a₅-a₃=26-7=19。',
+                    knowledgePoint: '等差数列',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '等差数列{aₙ}前n项和Sₙ，若S₁₀=100，S₂₀=400，则S₃₀ = ?',
                     options: ['700', '800', '900', '1000'],
                     answer: 2,
                     difficulty: 'advanced',
-                    explanation: '等差数列中S₁₀,S₂₀-S₁₀,S₃₀-S₂₀也成等差，即100,300,S₃₀-400成等差。所以2×300=100+S₃₀-400→600=S₃₀-300→S₃₀=900。'
+                    explanation: '等差数列中S₁₀,S₂₀-S₁₀,S₃₀-S₂₀也成等差，即100,300,S₃₀-400成等差。所以2×300=100+S₃₀-400→600=S₃₀-300→S₃₀=900。',
+                    knowledgePoint: '等差数列',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '在等差数列{aₙ}中，a₁+a₄+a₇=39，a₂+a₅+a₈=33，则a₃+a₆+a₉ = ?',
                     options: ['27', '30', '33', '36'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '设bₙ=aₙ+aₙ₊₃+aₙ₊₆，则{bₙ}也是等差数列。b₁=39,b₂=33，公差d’=-6，b₃=b₂+d’=33-6=27。'
+                    explanation: '设bₙ=aₙ+aₙ₊₃+aₙ₊₆，则{bₙ}也是等差数列。b₁=39,b₂=33，公差d’=-6，b₃=b₂+d’=33-6=27。',
+                    knowledgePoint: '等差数列',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '等差数列{aₙ}中，a₁=-2012，S₂₀₁₄/2014 - S₂₀₁₂/2012 = 2，则S₂₀₁₄ = ?',
                     options: ['2014', '-2014', '0', '4028'],
                     answer: 0,
                     difficulty: 'challenge',
-                    explanation: 'Sₙ/n = a₁ + (n-1)d/2，这是关于n的一次函数，公差为d/2。由条件，(S₂₀₁₄/2014 - S₂₀₁₂/201₂)/(2014-2012) = d/2 = 2/2 = 1，所以d=2。S₂₀₁₄ = 2014×(-2012) + 2014×2013×2/2 = 2014×(-2012+2013) = 2014。'
+                    explanation: 'Sₙ/n = a₁ + (n-1)d/2，这是关于n的一次函数，公差为d/2。由条件，(S₂₀₁₄/2014 - S₂₀₁₂/201₂)/(2014-2012) = d/2 = 2/2 = 1，所以d=2。S₂₀₁₄ = 2014×(-2012) + 2014×2013×2/2 = 2014×(-2012+2013) = 2014。',
+                    knowledgePoint: '等差数列',
+                    kpPage: 'functions.html'
                 }
             ],
             13: [
@@ -1271,35 +1425,45 @@
                     options: ['8', '16', '32', '64'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: 'aₙ=a₁q^(n-1)，a₅=1×2⁴=16。'
+                    explanation: 'aₙ=a₁q^(n-1)，a₅=1×2⁴=16。',
+                    knowledgePoint: '等比数列',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '等比数列{aₙ}中，a₂=6，a₄=24，则a₆ = ?',
                     options: ['36', '48', '96', '192'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: '等比数列中a₂,a₄,a₆也成等比，所以a₄²=a₂·a₆，a₆=a₄²/a₂=576/6=96。'
+                    explanation: '等比数列中a₂,a₄,a₆也成等比，所以a₄²=a₂·a₆，a₆=a₄²/a₂=576/6=96。',
+                    knowledgePoint: '等比数列',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '等比数列{aₙ}前n项和为Sₙ，若S₃=7，S₆=63，则a₁ = ?',
                     options: ['1', '2', '3', '-1'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '若q≠1，S₆/S₃=(1-q⁶)/(1-q³)=1+q³=63/7=9，所以q³=8，q=2。S₃=a₁(1-8)/(1-2)=7a₁=7，a₁=1。'
+                    explanation: '若q≠1，S₆/S₃=(1-q⁶)/(1-q³)=1+q³=63/7=9，所以q³=8，q=2。S₃=a₁(1-8)/(1-2)=7a₁=7，a₁=1。',
+                    knowledgePoint: '等比数列',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '等比数列{aₙ}中，a₁+a₂=3，a₂+a₃=6，则a₇ = ?',
                     options: ['64', '32', '128', '256'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'a₂+a₃=q(a₁+a₂)→6=3q→q=2。a₁+a₁q=3→3a₁=3→a₁=1。a₇=1×2⁶=64。'
+                    explanation: 'a₂+a₃=q(a₁+a₂)→6=3q→q=2。a₁+a₁q=3→3a₁=3→a₁=1。a₇=1×2⁶=64。',
+                    knowledgePoint: '等比数列',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '各项均为正数的等比数列{aₙ}中，a₁a₅=4，a₂a₄=4，则a₃ = ?',
                     options: ['2', '4', '√2', '1'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '等比数列中a₁a₅=a₂a₄=a₃²=4，又a₃>0，所以a₃=2。'
+                    explanation: '等比数列中a₁a₅=a₂a₄=a₃²=4，又a₃>0，所以a₃=2。',
+                    knowledgePoint: '等比数列',
+                    kpPage: 'functions.html'
                 }
             ],
             14: [
@@ -1308,35 +1472,45 @@
                     options: ['15', '31', '32', '63'],
                     answer: 1,
                     difficulty: 'advanced',
-                    explanation: 'a₁=1,a₂=3,a₃=7,a₄=15,a₅=31。或：aₙ₊₁+1=2(aₙ+1)，{aₙ+1}是首项2公比2的等比数列，aₙ+1=2ⁿ，a₅=2⁵-1=31。'
+                    explanation: 'a₁=1,a₂=3,a₃=7,a₄=15,a₅=31。或：aₙ₊₁+1=2(aₙ+1)，{aₙ+1}是首项2公比2的等比数列，aₙ+1=2ⁿ，a₅=2⁵-1=31。',
+                    knowledgePoint: '数列综合',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '在等比数列{aₙ}中，若a₃·a₅·a₇=8，则a₂·a₈ = ?',
                     options: ['2', '4', '6', '8'],
                     answer: 1,
                     difficulty: 'advanced',
-                    explanation: 'a₃·a₇=a₅²，所以a₃·a₅·a₇=a₅³=8→a₅=2。a₂·a₈=a₅²=4。'
+                    explanation: 'a₃·a₇=a₅²，所以a₃·a₅·a₇=a₅³=8→a₅=2。a₂·a₈=a₅²=4。',
+                    knowledgePoint: '数列综合',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '等差数列{aₙ}中，a₁>0，S₄=S₉，则Sₙ取最大值时n = ?',
                     options: ['6', '7', '6或7', '8'],
                     answer: 2,
                     difficulty: 'challenge',
-                    explanation: 'S₉-S₄=a₅+a₆+a₇+a₈+a₉=5a₇=0→a₇=0。因为a₁>0，所以a₆>0,a₇=0,a₈<0，S₆=S₇为最大值。'
+                    explanation: 'S₉-S₄=a₅+a₆+a₇+a₈+a₉=5a₇=0→a₇=0。因为a₁>0，所以a₆>0,a₇=0,a₈<0，S₆=S₇为最大值。',
+                    knowledgePoint: '数列综合',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '数列1, 1+2, 1+2+4, 1+2+4+8,...的前n项和Sₙ = ?',
                     options: ['2ⁿ', '2ⁿ-n', '2ⁿ⁺¹-n-2', 'n²+n'],
                     answer: 2,
                     difficulty: 'challenge',
-                    explanation: '第k项bₖ=1+2+4+...+2^(k-1)=2ᵏ-1。Sₙ=∑(2ᵏ-1)=(2+2²+...+2ⁿ)-n=2(2ⁿ-1)/(2-1)-n=2ⁿ⁺¹-2-n=2ⁿ⁺¹-n-2。'
+                    explanation: '第k项bₖ=1+2+4+...+2^(k-1)=2ᵏ-1。Sₙ=∑(2ᵏ-1)=(2+2²+...+2ⁿ)-n=2(2ⁿ-1)/(2-1)-n=2ⁿ⁺¹-2-n=2ⁿ⁺¹-n-2。',
+                    knowledgePoint: '数列综合',
+                    kpPage: 'functions.html'
                 },
                 {
                     q: '已知数列{aₙ}的前n项和Sₙ=n²-9n，第k项满足5<aₖ<8，则k = ?',
                     options: ['6', '7', '8', '9'],
                     answer: 2,
                     difficulty: 'challenge',
-                    explanation: 'n≥2时aₙ=Sₙ-Sₙ₋₁=(n²-9n)-((n-1)²-9(n-1))=2n-10，n=1时a₁=S₁=-8也满足。令5<2k-10<8→15<2k<18→7.5<k<9，k=8。'
+                    explanation: 'n≥2时aₙ=Sₙ-Sₙ₋₁=(n²-9n)-((n-1)²-9(n-1))=2n-10，n=1时a₁=S₁=-8也满足。令5<2k-10<8→15<2k<18→7.5<k<9，k=8。',
+                    knowledgePoint: '数列综合',
+                    kpPage: 'functions.html'
                 }
             ],
             15: [
@@ -1345,35 +1519,45 @@
                     options: ['圆柱', '正方体', '圆锥', '球'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '棱柱有两个互相平行的面（底面），其余各面都是四边形，且每相邻两个四边形的公共边互相平行。正方体是四棱柱。'
+                    explanation: '棱柱有两个互相平行的面（底面），其余各面都是四边形，且每相邻两个四边形的公共边互相平行。正方体是四棱柱。',
+                    knowledgePoint: '空间几何体',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '一个正方体的棱长为2，则其外接球的表面积是？',
                     options: ['4π', '8π', '12π', '16π'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: '正方体外接球直径等于体对角线长：2R=√3·a=2√3，R=√3。表面积=4πR²=12π。'
+                    explanation: '正方体外接球直径等于体对角线长：2R=√3·a=2√3，R=√3。表面积=4πR²=12π。',
+                    knowledgePoint: '空间几何体',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '圆锥的底面半径为3，母线长为5，则圆锥的体积是？',
                     options: ['12π', '15π', '24π', '36π'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '高h=√(l²-r²)=√(25-9)=4。体积V=(1/3)πr²h=(1/3)π·9·4=12π。'
+                    explanation: '高h=√(l²-r²)=√(25-9)=4。体积V=(1/3)πr²h=(1/3)π·9·4=12π。',
+                    knowledgePoint: '空间几何体',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '一个球的体积为36π，则其表面积为？',
                     options: ['12π', '24π', '36π', '48π'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: '(4/3)πR³=36π→R³=27→R=3。表面积=4πR²=36π。'
+                    explanation: '(4/3)πR³=36π→R³=27→R=3。表面积=4πR²=36π。',
+                    knowledgePoint: '空间几何体',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '正三棱锥的底面边长为2，侧棱长为√3，则其体积为？',
                     options: ['2√2/3', '√2/3', '√3/3', '2√3/3'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '底面正三角形面积=√3/4×4=√3。底面中心到底面顶点距离=2/3×√3=2√3/3。高h=√((√3)²-(2√3/3)²)=√(3-4/3)=√(5/3)？不对：(√3)²=3，(2√3/3)²=4×3/9=4/3，h=√(3-4/3)=√(5/3)？这给的选项不对。让我重新想：侧棱长√3，底面外接圆半径=2/3×√3=2√3/3。h²=3-4/3=5/3，h=√15/3。V=1/3×√3×√15/3=√45/9=3√5/9=√5/3。这也不在选项中。让我调整题目：底面边长√3，侧棱长√2... 不，让我改底面边长为√2，侧棱长2... 不，更简单：底面边长为√3，侧棱长为√5。底面外接圆半径=2/3×(√3/2×√3)=2/3×3/2=1。h=√(5-1)=2。底面积=√3/4×3=3√3/4。V=1/3×3√3/4×2=√3/2。还是不对。让我用简单数值：正四面体（所有棱相等）棱长为2，则高h=√(4-4/3)=√(8/3)=2√6/3，底面积√3，V=1/3×√3×2√6/3=2√18/9=6√2/9=2√2/3，选A。就当这是正四面体吧。'
+                    explanation: '底面正三角形面积=√3/4×4=√3。底面中心到底面顶点距离=2/3×√3=2√3/3。高h=√((√3)²-(2√3/3)²)=√(3-4/3)=√(5/3)？不对：(√3)²=3，(2√3/3)²=4×3/9=4/3，h=√(3-4/3)=√(5/3)？这给的选项不对。让我重新想：侧棱长√3，底面外接圆半径=2/3×√3=2√3/3。h²=3-4/3=5/3，h=√15/3。V=1/3×√3×√15/3=√45/9=3√5/9=√5/3。这也不在选项中。让我调整题目：底面边长√3，侧棱长√2... 不，让我改底面边长为√2，侧棱长2... 不，更简单：底面边长为√3，侧棱长为√5。底面外接圆半径=2/3×(√3/2×√3)=2/3×3/2=1。h=√(5-1)=2。底面积=√3/4×3=3√3/4。V=1/3×3√3/4×2=√3/2。还是不对。让我用简单数值：正四面体（所有棱相等）棱长为2，则高h=√(4-4/3)=√(8/3)=2√6/3，底面积√3，V=1/3×√3×2√6/3=2√18/9=6√2/9=2√2/3，选A。就当这是正四面体吧。',
+                    knowledgePoint: '空间几何体',
+                    kpPage: 'geometry.html'
                 }
             ],
             16: [
@@ -1382,35 +1566,45 @@
                     options: ['三点确定一个平面', '两条直线确定一个平面', '梯形一定是平面图形', '四边形一定是平面图形'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: '梯形有一组对边平行，两条平行直线确定一个平面，所以梯形是平面图形。A中三点要不共线；B中两条直线要平行或相交；D中四边形可能是空间四边形。'
+                    explanation: '梯形有一组对边平行，两条平行直线确定一个平面，所以梯形是平面图形。A中三点要不共线；B中两条直线要平行或相交；D中四边形可能是空间四边形。',
+                    knowledgePoint: '点线面关系',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '在空间中，下列命题正确的是？',
                     options: ['平行于同一直线的两平面平行', '垂直于同一直线的两平面平行', '平行于同一平面的两直线平行', '垂直于同一平面的两平面平行'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '垂直于同一直线的两个平面互相平行，这是面面平行的判定定理之一。'
+                    explanation: '垂直于同一直线的两个平面互相平行，这是面面平行的判定定理之一。',
+                    knowledgePoint: '点线面关系',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '直线l与平面α平行的充要条件是？',
                     options: ['l与α内无数条直线平行', 'l与α内一条直线平行且l不在α内', 'l与α没有公共点', 'l与α内所有直线平行'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '线面平行判定定理：平面外一条直线与平面内一条直线平行，则该直线与此平面平行。这也是充要条件。'
+                    explanation: '线面平行判定定理：平面外一条直线与平面内一条直线平行，则该直线与此平面平行。这也是充要条件。',
+                    knowledgePoint: '点线面关系',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '正方体ABCD-A₁B₁C₁D₁中，BC₁与平面BDD₁B₁所成的角是？',
                     options: ['30°', '45°', '60°', '90°'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '设棱长为1，连接A₁C₁交B₁D₁于O，连接BO。C₁O⊥B₁D₁，C₁O⊥BB₁，所以C₁O⊥平面BDD₁B₁。∠C₁BO就是线面角。C₁O=√2/2，BC₁=√2，sin∠C₁BO=C₁O/BC₁=1/2，角为30°。'
+                    explanation: '设棱长为1，连接A₁C₁交B₁D₁于O，连接BO。C₁O⊥B₁D₁，C₁O⊥BB₁，所以C₁O⊥平面BDD₁B₁。∠C₁BO就是线面角。C₁O=√2/2，BC₁=√2，sin∠C₁BO=C₁O/BC₁=1/2，角为30°。',
+                    knowledgePoint: '点线面关系',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: 'PA⊥平面ABC，AB⊥BC，则下列结论正确的个数是？①PB⊥BC；②AB⊥PC；③平面PAB⊥平面PBC；④平面PAC⊥平面ABC',
                     options: ['1', '2', '3', '4'],
                     answer: 2,
                     difficulty: 'challenge',
-                    explanation: 'PA⊥面ABC→PA⊥BC，又AB⊥BC→BC⊥面PAB→BC⊥PB（①对），且BC⊂面PBC→面PAB⊥面PBC（③对）。PA⊂面PAC→面PAC⊥面ABC（④对）。AB与PC不垂直（若垂直则AB⊥面PAC，但AB不垂直AC，除非特殊三角形），②错。共3个正确。'
+                    explanation: 'PA⊥面ABC→PA⊥BC，又AB⊥BC→BC⊥面PAB→BC⊥PB（①对），且BC⊂面PBC→面PAB⊥面PBC（③对）。PA⊂面PAC→面PAC⊥面ABC（④对）。AB与PC不垂直（若垂直则AB⊥面PAC，但AB不垂直AC，除非特殊三角形），②错。共3个正确。',
+                    knowledgePoint: '点线面关系',
+                    kpPage: 'geometry.html'
                 }
             ],
             17: [
@@ -1419,35 +1613,45 @@
                     options: ['30°', '60°', '120°', '150°'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: 'a+b=(-1,-2,-3)=-a，所以(a+b)·c=-a·c=7→a·c=-7。|a|=√(1+4+9)=√14，cos<a,c>=a·c/(|a||c|)=-7/(√14×√14)=-7/14=-1/2，夹角120°。'
+                    explanation: 'a+b=(-1,-2,-3)=-a，所以(a+b)·c=-a·c=7→a·c=-7。|a|=√(1+4+9)=√14，cos<a,c>=a·c/(|a||c|)=-7/(√14×√14)=-7/14=-1/2，夹角120°。',
+                    knowledgePoint: '空间向量',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '若a=(2,-3,1)，b=(2,0,3)，c=(0,2,2)，则a·(b+c) = ?',
                     options: ['4', '9', '7', '3'],
                     answer: 3,
                     difficulty: 'basic',
-                    explanation: 'b+c=(2,2,5)，a·(b+c)=2×2+(-3)×2+1×5=4-6+5=3。'
+                    explanation: 'b+c=(2,2,5)，a·(b+c)=2×2+(-3)×2+1×5=4-6+5=3。',
+                    knowledgePoint: '空间向量',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '已知a=(1,1,0)，b=(-1,0,2)，且ka+b与2a-b垂直，则k = ?',
                     options: ['1/5', '1', '7/5', '2'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: 'ka+b=(k-1,k,2)，2a-b=(3,2,-2)。垂直则点积为0：3(k-1)+2k-4=0→3k-3+2k-4=0→5k=7→k=7/5。'
+                    explanation: 'ka+b=(k-1,k,2)，2a-b=(3,2,-2)。垂直则点积为0：3(k-1)+2k-4=0→3k-3+2k-4=0→5k=7→k=7/5。',
+                    knowledgePoint: '空间向量',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '在平行六面体ABCD-A₁B₁C₁D₁中，M为A₁C₁与B₁D₁的交点，若向量AB=a, AD=b, AA₁=c，则向量BM = ?',
                     options: ['-1/2a+1/2b+c', '1/2a+1/2b+c', '-1/2a-1/2b+c', '1/2a-1/2b+c'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: 'BM=BB₁+B₁M=AA₁+1/2(B₁A₁+B₁C₁)=c+1/2(-a+b)=-1/2a+1/2b+c。'
+                    explanation: 'BM=BB₁+B₁M=AA₁+1/2(B₁A₁+B₁C₁)=c+1/2(-a+b)=-1/2a+1/2b+c。',
+                    knowledgePoint: '空间向量',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '正方体ABCD-A₁B₁C₁D₁棱长为1，E是A₁B₁中点，则E到平面ABC₁D₁的距离是？',
                     options: ['√2/2', '√3/2', '1/2', '√3/3'],
                     answer: 0,
                     difficulty: 'challenge',
-                    explanation: 'A₁B₁∥AB，所以A₁B₁∥面ABC₁D₁，E到面距离等于B₁到面距离。连接B₁C交BC₁于F，B₁F⊥BC₁，B₁F⊥AB（因为AB⊥面BCC₁B₁），所以B₁F⊥面ABC₁D₁。B₁F=√2/2。'
+                    explanation: 'A₁B₁∥AB，所以A₁B₁∥面ABC₁D₁，E到面距离等于B₁到面距离。连接B₁C交BC₁于F，B₁F⊥BC₁，B₁F⊥AB（因为AB⊥面BCC₁B₁），所以B₁F⊥面ABC₁D₁。B₁F=√2/2。',
+                    knowledgePoint: '空间向量',
+                    kpPage: 'geometry.html'
                 }
             ],
             18: [
@@ -1456,35 +1660,45 @@
                     options: ['36', '48', '60', '72'],
                     answer: 3,
                     difficulty: 'basic',
-                    explanation: '甲有3个位置可选（中间3个），其余4人全排列：3×4!=3×24=72。'
+                    explanation: '甲有3个位置可选（中间3个），其余4人全排列：3×4!=3×24=72。',
+                    knowledgePoint: '排列组合',
+                    kpPage: 'probability.html'
                 },
                 {
                     q: '从5名男生和4名女生中选3人参加会议，至少有1名女生的选法有多少种？',
                     options: ['60', '70', '74', '84'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: '总选法C(9,3)=84，全是男生C(5,3)=10，至少1名女生=84-10=74。'
+                    explanation: '总选法C(9,3)=84，全是男生C(5,3)=10，至少1名女生=84-10=74。',
+                    knowledgePoint: '排列组合',
+                    kpPage: 'probability.html'
                 },
                 {
                     q: '6个人排成一排，甲乙两人必须相邻的排法有多少种？',
                     options: ['120', '240', '360', '720'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '捆绑法：把甲乙看作一个整体，相当于5个元素全排列5!=120，甲乙内部排列2!=2，共120×2=240种。'
+                    explanation: '捆绑法：把甲乙看作一个整体，相当于5个元素全排列5!=120，甲乙内部排列2!=2，共120×2=240种。',
+                    knowledgePoint: '排列组合',
+                    kpPage: 'probability.html'
                 },
                 {
                     q: '将4个不同的小球放入3个不同的盒子，每个盒子至少1个球，共有多少种放法？',
                     options: ['36', '72', '18', '24'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '必有一个盒子放2个球，其余各放1个。先选2个球捆绑C(4,2)=6，再把3组（2+1+1）放入3个盒子3!=6，共6×6=36种。'
+                    explanation: '必有一个盒子放2个球，其余各放1个。先选2个球捆绑C(4,2)=6，再把3组（2+1+1）放入3个盒子3!=6，共6×6=36种。',
+                    knowledgePoint: '排列组合',
+                    kpPage: 'probability.html'
                 },
                 {
                     q: '用数字0,1,2,3,4组成没有重复数字的五位数，其中偶数有多少个？',
                     options: ['36', '60', '72', '96'],
                     answer: 1,
                     difficulty: 'challenge',
-                    explanation: '分两类：末位是0：前4位全排列4!=24；末位是2或4：末位2种选择，首位从剩余3个非0数字选1个3种，中间3位3!=6，共2×3×6=36。总计24+36=60个。'
+                    explanation: '分两类：末位是0：前4位全排列4!=24；末位是2或4：末位2种选择，首位从剩余3个非0数字选1个3种，中间3位3!=6，共2×3×6=36。总计24+36=60个。',
+                    knowledgePoint: '排列组合',
+                    kpPage: 'probability.html'
                 }
             ],
             19: [
@@ -1493,35 +1707,45 @@
                     options: ['5', '10', '15', '20'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '二项展开式通项T_{r+1}=C(5,r)x^(5-r)×1^r。令5-r=3→r=2，系数C(5,2)=10。'
+                    explanation: '二项展开式通项T_{r+1}=C(5,r)x^(5-r)×1^r。令5-r=3→r=2，系数C(5,2)=10。',
+                    knowledgePoint: '二项式定理',
+                    kpPage: 'probability.html'
                 },
                 {
                     q: '(2x-1)⁶展开式中x²的系数是？',
                     options: ['60', '120', '240', '-240'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'T_{r+1}=C(6,r)(2x)^(6-r)(-1)^r。令6-r=2→r=4。系数=C(6,4)×2²×(-1)^4=15×4×1=60。'
+                    explanation: 'T_{r+1}=C(6,r)(2x)^(6-r)(-1)^r。令6-r=2→r=4。系数=C(6,4)×2²×(-1)^4=15×4×1=60。',
+                    knowledgePoint: '二项式定理',
+                    kpPage: 'probability.html'
                 },
                 {
                     q: '(x-1/x)⁸展开式中的常数项是？',
                     options: ['56', '70', '-56', '-70'],
                     answer: 1,
                     difficulty: 'advanced',
-                    explanation: 'T_{r+1}=C(8,r)x^(8-r)(-1/x)^r=C(8,r)(-1)^r·x^(8-2r)。令8-2r=0→r=4。常数项=C(8,4)(-1)^4=70。'
+                    explanation: 'T_{r+1}=C(8,r)x^(8-r)(-1/x)^r=C(8,r)(-1)^r·x^(8-2r)。令8-2r=0→r=4。常数项=C(8,4)(-1)^4=70。',
+                    knowledgePoint: '二项式定理',
+                    kpPage: 'probability.html'
                 },
                 {
                     q: '(1+x)+(1+x)²+...+(1+x)ⁿ展开式中x²项的系数是？',
                     options: ['C(n,3)', 'C(n+1,3)', 'C(n,2)+C(n,3)', 'C(n+1,2)'],
                     answer: 1,
                     difficulty: 'challenge',
-                    explanation: 'x²系数为C(2,2)+C(3,2)+...+C(n,2)=C(n+1,3)。利用组合恒等式C(m,k)+C(m,k+1)=C(m+1,k+1)累加可得。'
+                    explanation: 'x²系数为C(2,2)+C(3,2)+...+C(n,2)=C(n+1,3)。利用组合恒等式C(m,k)+C(m,k+1)=C(m+1,k+1)累加可得。',
+                    knowledgePoint: '二项式定理',
+                    kpPage: 'probability.html'
                 },
                 {
                     q: '若(1-2x)ⁿ展开式中，第二项与第七项的二项式系数相等，则n = ?',
                     options: ['7', '8', '9', '10'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '第二项系数C(n,1)，第七项系数C(n,6)。C(n,1)=C(n,6)→C(n,1)=C(n,n-6)→1=n-6→n=7。'
+                    explanation: '第二项系数C(n,1)，第七项系数C(n,6)。C(n,1)=C(n,6)→C(n,1)=C(n,n-6)→1=n-6→n=7。',
+                    knowledgePoint: '二项式定理',
+                    kpPage: 'probability.html'
                 }
             ],
             20: [
@@ -1530,35 +1754,45 @@
                     options: ['1/8', '3/8', '7/8', '1'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: 'P(至少1次正面)=1-P(全反面)=1-(1/2)³=7/8。'
+                    explanation: 'P(至少1次正面)=1-P(全反面)=1-(1/2)³=7/8。',
+                    knowledgePoint: '概率分布',
+                    kpPage: 'probability.html'
                 },
                 {
                     q: '从1,2,3,4,5中任取2个不同的数，两数都是奇数的概率是？',
                     options: ['2/5', '3/10', '3/5', '1/2'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '总取法C(5,2)=10，奇数有1,3,5共3个，取2个奇数C(3,2)=3，概率=3/10。'
+                    explanation: '总取法C(5,2)=10，奇数有1,3,5共3个，取2个奇数C(3,2)=3，概率=3/10。',
+                    knowledgePoint: '概率分布',
+                    kpPage: 'probability.html'
                 },
                 {
                     q: '随机变量X服从二项分布B(4, 1/2)，则E(X) = ?',
                     options: ['1', '2', '3', '4'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '二项分布B(n,p)的期望E(X)=np=4×1/2=2。'
+                    explanation: '二项分布B(n,p)的期望E(X)=np=4×1/2=2。',
+                    knowledgePoint: '概率分布',
+                    kpPage: 'probability.html'
                 },
                 {
                     q: '甲、乙两人独立解同一题，甲解出的概率为0.6，乙解出的概率为0.5，则恰有1人解出的概率是？',
                     options: ['0.3', '0.5', '0.6', '0.8'],
                     answer: 1,
                     difficulty: 'advanced',
-                    explanation: 'P(甲中乙不中)+P(甲不中乙中)=0.6×0.5+0.4×0.5=0.3+0.2=0.5。'
+                    explanation: 'P(甲中乙不中)+P(甲不中乙中)=0.6×0.5+0.4×0.5=0.3+0.2=0.5。',
+                    knowledgePoint: '概率分布',
+                    kpPage: 'probability.html'
                 },
                 {
                     q: '正态分布N(μ,σ²)中，P(μ-σ<X<μ+σ)≈0.6827，P(μ-2σ<X<μ+2σ)≈0.9545。若X~N(1,4)，则P(-1<X<3)≈？',
                     options: ['0.6827', '0.9545', '0.3173', '0.1587'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: 'μ=1,σ²=4→σ=2。μ-σ=-1,μ+σ=3，所以P(-1<X<3)=P(μ-σ<X<μ+σ)≈0.6827。'
+                    explanation: 'μ=1,σ²=4→σ=2。μ-σ=-1,μ+σ=3，所以P(-1<X<3)=P(μ-σ<X<μ+σ)≈0.6827。',
+                    knowledgePoint: '概率分布',
+                    kpPage: 'probability.html'
                 }
             ],
             21: [
@@ -1567,35 +1801,45 @@
                     options: ['2', '√2', '4', '10'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '平均数=4，方差=[(2-4)²+(3-4)²+(4-4)²+(5-4)²+(6-4)²]/5=(4+1+0+1+4)/5=2。'
+                    explanation: '平均数=4，方差=[(2-4)²+(3-4)²+(4-4)²+(5-4)²+(6-4)²]/5=(4+1+0+1+4)/5=2。',
+                    knowledgePoint: '统计综合',
+                    kpPage: 'probability.html'
                 },
                 {
                     q: '某校有学生2000人，其中高一800人，高二600人，高三600人。用分层抽样抽取50人，则高二应抽取？',
                     options: ['15', '20', '25', '30'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '抽样比=50/2000=1/40，高二抽取600×1/40=15人。'
+                    explanation: '抽样比=50/2000=1/40，高二抽取600×1/40=15人。',
+                    knowledgePoint: '统计综合',
+                    kpPage: 'probability.html'
                 },
                 {
                     q: '从5个红球和3个白球中任取2个，所取2球颜色相同的概率是？',
                     options: ['13/28', '15/28', '1/2', '9/28'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '总取法C(8,2)=28。同色=两红+两白=C(5,2)+C(3,2)=10+3=13，概率=13/28。'
+                    explanation: '总取法C(8,2)=28。同色=两红+两白=C(5,2)+C(3,2)=10+3=13，概率=13/28。',
+                    knowledgePoint: '统计综合',
+                    kpPage: 'probability.html'
                 },
                 {
                     q: '随机变量X的分布列为P(X=k)=c/2^k (k=1,2,3,4)，则c = ?',
                     options: ['8/15', '16/15', '1', '15/16'],
                     answer: 1,
                     difficulty: 'advanced',
-                    explanation: '∑P(X=k)=c(1/2+1/4+1/8+1/16)=c(15/16)=1→c=16/15。'
+                    explanation: '∑P(X=k)=c(1/2+1/4+1/8+1/16)=c(15/16)=1→c=16/15。',
+                    knowledgePoint: '统计综合',
+                    kpPage: 'probability.html'
                 },
                 {
                     q: '某人射击命中率为p，射击3次，命中次数X的方差D(X)=21/25，则p = ?',
                     options: ['2/5', '3/5', '3/5或2/5', '1/5'],
                     answer: 2,
                     difficulty: 'challenge',
-                    explanation: 'X~B(3,p)，D(X)=3p(1-p)=21/25→p(1-p)=7/25→25p²-25p+7=0→p=(25±√(625-700))/50？不对，判别式625-700<0？改D(X)=18/25：3p(1-p)=18/25→p(1-p)=6/25→25p²-25p+6=0→(5p-2)(5p-3)=0→p=2/5或3/5，选C。'
+                    explanation: 'X~B(3,p)，D(X)=3p(1-p)=21/25→p(1-p)=7/25→25p²-25p+7=0→p=(25±√(625-700))/50？不对，判别式625-700<0？改D(X)=18/25：3p(1-p)=18/25→p(1-p)=6/25→25p²-25p+6=0→(5p-2)(5p-3)=0→p=2/5或3/5，选C。',
+                    knowledgePoint: '统计综合',
+                    kpPage: 'probability.html'
                 }
             ],
             22: [
@@ -1604,35 +1848,45 @@
                     options: ['3x-y-1=0', '3x+y-5=0', 'x-3y+5=0', 'x+3y-7=0'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '点斜式：y-2=3(x-1)，整理得3x-y-1=0。'
+                    explanation: '点斜式：y-2=3(x-1)，整理得3x-y-1=0。',
+                    knowledgePoint: '直线方程',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '直线2x+y-3=0的斜率是？',
                     options: ['2', '-2', '1/2', '-1/2'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '化为斜截式y=-2x+3，斜率k=-2。'
+                    explanation: '化为斜截式y=-2x+3，斜率k=-2。',
+                    knowledgePoint: '直线方程',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '点(1,2)到直线3x+4y-5=0的距离是？',
                     options: ['1', '6/5', '2', '13/5'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: 'd=|3×1+4×2-5|/√(9+16)=|3+8-5|/5=6/5。'
+                    explanation: 'd=|3×1+4×2-5|/√(9+16)=|3+8-5|/5=6/5。',
+                    knowledgePoint: '直线方程',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '两条平行直线3x+4y-5=0与3x+4y+5=0之间的距离是？',
                     options: ['1', '2', '10', '2/5'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: 'd=|C1-C2|/√(A²+B²)=|-5-5|/5=10/5=2。'
+                    explanation: 'd=|C1-C2|/√(A²+B²)=|-5-5|/5=10/5=2。',
+                    knowledgePoint: '直线方程',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '过点(2,1)且与直线2x+y-10=0垂直的直线方程是？',
                     options: ['x-2y=0', 'x+2y-4=0', '2x-y-3=0', '2x+y-5=0'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '已知直线斜率-2，垂直直线斜率为1/2。过(2,1)：y-1=(1/2)(x-2)→x-2y=0。'
+                    explanation: '已知直线斜率-2，垂直直线斜率为1/2。过(2,1)：y-1=(1/2)(x-2)→x-2y=0。',
+                    knowledgePoint: '直线方程',
+                    kpPage: 'geometry.html'
                 }
             ],
             23: [
@@ -1641,35 +1895,45 @@
                     options: ['(0,0), r=2', '(0,0), r=4', '(2,2), r=2', '(0,0), r=√2'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '标准方程(x-a)²+(y-b)²=r²，圆心(0,0)，r²=4→r=2。'
+                    explanation: '标准方程(x-a)²+(y-b)²=r²，圆心(0,0)，r²=4→r=2。',
+                    knowledgePoint: '圆的方程',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '圆x²+y²-2x+4y-4=0的圆心和半径是？',
                     options: ['(1,-2), r=3', '(1,2), r=3', '(-1,2), r=9', '(1,-2), r=9'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '配方：(x-1)²-1+(y+2)²-4-4=0→(x-1)²+(y+2)²=9，圆心(1,-2)，r=3。'
+                    explanation: '配方：(x-1)²-1+(y+2)²-4-4=0→(x-1)²+(y+2)²=9，圆心(1,-2)，r=3。',
+                    knowledgePoint: '圆的方程',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '点P(2,3)与圆x²+y²=4的位置关系是？',
                     options: ['在圆内', '在圆上', '在圆外', '无法确定'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: 'd²=4+9=13>4=r²，所以P在圆外。'
+                    explanation: 'd²=4+9=13>4=r²，所以P在圆外。',
+                    knowledgePoint: '圆的方程',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '直线y=x+1与圆x²+y²=1的位置关系是？',
                     options: ['相离', '相切', '相交且过圆心', '相交不过圆心'],
                     answer: 3,
                     difficulty: 'basic',
-                    explanation: '圆心(0,0)到直线距离d=|0-0+1|/√2=√2/2<1=r，且圆心不在直线上（0≠0+1），所以相交不过圆心。'
+                    explanation: '圆心(0,0)到直线距离d=|0-0+1|/√2=√2/2<1=r，且圆心不在直线上（0≠0+1），所以相交不过圆心。',
+                    knowledgePoint: '圆的方程',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '过点A(1,2)且与圆x²+y²=1相切的直线方程是？',
                     options: ['3x-4y+5=0', 'x=1或3x-4y+5=0', '4x-3y+2=0', 'y=2或3x-4y+5=0'],
                     answer: 1,
                     difficulty: 'challenge',
-                    explanation: 'x=1时，1+y²=1→y=0，切点(1,0)，是切线。另设y-2=k(x-1)即kx-y+2-k=0，d=|2-k|/√(k²+1)=1→(2-k)²=k²+1→4-4k+k²=k²+1→k=3/4，切线3x-4y+5=0。共两条切线。'
+                    explanation: 'x=1时，1+y²=1→y=0，切点(1,0)，是切线。另设y-2=k(x-1)即kx-y+2-k=0，d=|2-k|/√(k²+1)=1→(2-k)²=k²+1→4-4k+k²=k²+1→k=3/4，切线3x-4y+5=0。共两条切线。',
+                    knowledgePoint: '圆的方程',
+                    kpPage: 'geometry.html'
                 }
             ],
             24: [
@@ -1678,35 +1942,45 @@
                     options: ['√7/4', '3/4', '√7/3', '4/5'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'a²=16,b²=9,c²=a²-b²=7,c=√7,e=c/a=√7/4。'
+                    explanation: 'a²=16,b²=9,c²=a²-b²=7,c=√7,e=c/a=√7/4。',
+                    knowledgePoint: '椭圆',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '椭圆x²/25+y²/16=1的焦点坐标是？',
                     options: ['(±3, 0)', '(0, ±3)', '(±√41, 0)', '(0, ±√41)'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'a²=25,b²=16,c²=9,c=3。焦点在x轴上，坐标(±3,0)。'
+                    explanation: 'a²=25,b²=16,c²=9,c=3。焦点在x轴上，坐标(±3,0)。',
+                    knowledgePoint: '椭圆',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '椭圆x²/4+y²/m=1的离心率为1/2，则m = ?',
                     options: ['3', '3或16/3', '16/3', '√3或4√3/3'],
                     answer: 1,
                     difficulty: 'advanced',
-                    explanation: '若m<4（焦点在x轴），c²=4-m,e²=(4-m)/4=1/4→4-m=1→m=3；若m>4（焦点在y轴），c²=m-4,e²=(m-4)/m=1/4→4m-16=m→3m=16→m=16/3。'
+                    explanation: '若m<4（焦点在x轴），c²=4-m,e²=(4-m)/4=1/4→4-m=1→m=3；若m>4（焦点在y轴），c²=m-4,e²=(m-4)/m=1/4→4m-16=m→3m=16→m=16/3。',
+                    knowledgePoint: '椭圆',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '已知椭圆过点(2,√3)，焦点(±2,0)，则椭圆方程是？',
                     options: ['x²/8+y²/4=1', 'x²/16+y²/12=1', 'x²/12+y²/8=1', 'x²/16+y²/4=1'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '焦点在x轴，c=2，设x²/a²+y²/b²=1，b²=a²-4。代入(2,√3)：4/a²+3/(a²-4)=1→4(a²-4)+3a²=a²(a²-4)→7a²-16=a⁴-4a²→a⁴-11a²+16=0？不对，应该是4(a²-4)+3a²=a²(a²-4)→7a²-16=a⁴-4a²→a⁴-11a²+16=0无整数解。调整点(2,0)不行，点(3,0)太简单。用点(2,√3)，焦点(±1,0)，c=1，b²=a²-1，4/a²+3/(a²-1)=1→4(a²-1)+3a²=a²(a²-1)→7a²-4=a⁴-a²→a⁴-8a²+4=0也不好。让我改焦点(±√5,0)，点(3,0)，则a=3,c=√5,b²=4，方程x²/9+y²/4=1，但不经过(2,√3)：4/9+3/4≠1。让我直接给方程x²/8+y²/4=1，c²=4，焦点(±2,0)，代入(2,√3)：4/8+3/4=1/2+3/4=5/4≠1。那给点(2,√2)：4/8+2/4=1/2+1/2=1。题目改点(2,√2)。那就选A，解析中说明c=2,a²=8,b²=4。'
+                    explanation: '焦点在x轴，c=2，设x²/a²+y²/b²=1，b²=a²-4。代入(2,√3)：4/a²+3/(a²-4)=1→4(a²-4)+3a²=a²(a²-4)→7a²-16=a⁴-4a²→a⁴-11a²+16=0？不对，应该是4(a²-4)+3a²=a²(a²-4)→7a²-16=a⁴-4a²→a⁴-11a²+16=0无整数解。调整点(2,0)不行，点(3,0)太简单。用点(2,√3)，焦点(±1,0)，c=1，b²=a²-1，4/a²+3/(a²-1)=1→4(a²-1)+3a²=a²(a²-1)→7a²-4=a⁴-a²→a⁴-8a²+4=0也不好。让我改焦点(±√5,0)，点(3,0)，则a=3,c=√5,b²=4，方程x²/9+y²/4=1，但不经过(2,√3)：4/9+3/4≠1。让我直接给方程x²/8+y²/4=1，c²=4，焦点(±2,0)，代入(2,√3)：4/8+3/4=1/2+3/4=5/4≠1。那给点(2,√2)：4/8+2/4=1/2+1/2=1。题目改点(2,√2)。那就选A，解析中说明c=2,a²=8,b²=4。',
+                    knowledgePoint: '椭圆',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '椭圆x²/4+y²=1上的点到直线2x+4y-√2=0的距离最大值是？',
                     options: ['√10/2', '√10', '√10/5', '2√10/5'],
                     answer: 1,
                     difficulty: 'challenge',
-                    explanation: '设椭圆上点(2cosθ,sinθ)，d=|4cosθ+4sinθ-√2|/√20=|4√2sin(θ+π/4)-√2|/(2√5)。最大值为|4√2×(-1)-√2|/(2√5)=|-5√2|/(2√5)=5√2/(2√5)=√10/2？不对，5√2/(2√5)=5√10/(2×5)=√10/2，选A。'
+                    explanation: '设椭圆上点(2cosθ,sinθ)，d=|4cosθ+4sinθ-√2|/√20=|4√2sin(θ+π/4)-√2|/(2√5)。最大值为|4√2×(-1)-√2|/(2√5)=|-5√2|/(2√5)=5√2/(2√5)=√10/2？不对，5√2/(2√5)=5√10/(2×5)=√10/2，选A。',
+                    knowledgePoint: '椭圆',
+                    kpPage: 'geometry.html'
                 }
             ],
             25: [
@@ -1715,35 +1989,45 @@
                     options: ['y=±(3/4)x', 'y=±(4/3)x', 'y=±(16/9)x', 'y=±(9/16)x'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '双曲线x²/a²-y²/b²=1的渐近线为y=±(b/a)x。a=3,b=4，渐近线y=±(4/3)x。'
+                    explanation: '双曲线x²/a²-y²/b²=1的渐近线为y=±(b/a)x。a=3,b=4，渐近线y=±(4/3)x。',
+                    knowledgePoint: '双曲线与抛物线',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '抛物线y²=8x的焦点坐标是？',
                     options: ['(2, 0)', '(4, 0)', '(0, 2)', '(0, 4)'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'y²=2px的焦点(p/2,0)。2p=8→p=4，焦点(2,0)。'
+                    explanation: 'y²=2px的焦点(p/2,0)。2p=8→p=4，焦点(2,0)。',
+                    knowledgePoint: '双曲线与抛物线',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '双曲线x²/4-y²/12=1的离心率是？',
                     options: ['2', '√3', '√3/2', '2√3'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'a²=4,b²=12,c²=a²+b²=16,c=4,e=c/a=2。'
+                    explanation: 'a²=4,b²=12,c²=a²+b²=16,c=4,e=c/a=2。',
+                    knowledgePoint: '双曲线与抛物线',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '抛物线y=4x²的准线方程是？',
                     options: ['x=-1', 'y=-1', 'y=-1/16', 'y=1/16'],
                     answer: 2,
                     difficulty: 'advanced',
-                    explanation: '化为标准式x²=(1/4)y，2p=1/4→p=1/8，焦点在y轴正半轴，准线y=-p/2=-1/16。'
+                    explanation: '化为标准式x²=(1/4)y，2p=1/4→p=1/8，焦点在y轴正半轴，准线y=-p/2=-1/16。',
+                    knowledgePoint: '双曲线与抛物线',
+                    kpPage: 'geometry.html'
                 },
                 {
                     q: '双曲线x²/a²-y²/b²=1(a>0,b>0)的渐近线与圆(x-2)²+y²=1相切，则b/a = ?',
                     options: ['√3/3', '√3', '1/2', '1'],
                     answer: 0,
                     difficulty: 'challenge',
-                    explanation: '渐近线bx±ay=0，圆心(2,0)到渐近线距离d=|2b|/√(a²+b²)=1（等于半径）。4b²=a²+b²→3b²=a²→b/a=√3/3。'
+                    explanation: '渐近线bx±ay=0，圆心(2,0)到渐近线距离d=|2b|/√(a²+b²)=1（等于半径）。4b²=a²+b²→3b²=a²→b/a=√3/3。',
+                    knowledgePoint: '双曲线与抛物线',
+                    kpPage: 'geometry.html'
                 }
             ],
             26: [
@@ -1752,35 +2036,45 @@
                     options: ['x', '2x', 'x²', '2'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '幂函数求导公式：(xⁿ)\’=nx^(n-1)。(x²)\’=2x。'
+                    explanation: '幂函数求导公式：(xⁿ)\’=nx^(n-1)。(x²)\’=2x。',
+                    knowledgePoint: '导数概念',
+                    kpPage: 'calculus.html'
                 },
                 {
                     q: '函数f(x)=sinx的导数是？',
                     options: ['-cosx', 'cosx', '-sinx', 'tanx'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '基本导数公式：(sinx)\’=cosx。'
+                    explanation: '基本导数公式：(sinx)\’=cosx。',
+                    knowledgePoint: '导数概念',
+                    kpPage: 'calculus.html'
                 },
                 {
                     q: '函数f(x)=e^x的导数是？',
                     options: ['e^x', 'xe^(x-1)', 'e^(x-1)', '1'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '指数函数导数：(e^x)\’=e^x。'
+                    explanation: '指数函数导数：(e^x)\’=e^x。',
+                    knowledgePoint: '导数概念',
+                    kpPage: 'calculus.html'
                 },
                 {
                     q: 'f(x)=x³-2x+1在x=1处的导数值是？',
                     options: ['0', '1', '2', '3'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: 'f\’(x)=3x²-2，f\’(1)=3-2=1。'
+                    explanation: 'f\’(x)=3x²-2，f\’(1)=3-2=1。',
+                    knowledgePoint: '导数概念',
+                    kpPage: 'calculus.html'
                 },
                 {
                     q: '函数f(x)=x·lnx的导数f\’(x) = ?',
                     options: ['lnx', 'lnx+1', '1/x', '1+1/x'],
                     answer: 1,
                     difficulty: 'advanced',
-                    explanation: '乘积法则：(uv)\’=u\’v+uv\’。f\’(x)=1·lnx+x·(1/x)=lnx+1。'
+                    explanation: '乘积法则：(uv)\’=u\’v+uv\’。f\’(x)=1·lnx+x·(1/x)=lnx+1。',
+                    knowledgePoint: '导数概念',
+                    kpPage: 'calculus.html'
                 }
             ],
             27: [
@@ -1789,35 +2083,45 @@
                     options: ['x=-1', 'x=0', 'x=1', 'x=2'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'f\’(x)=3x²-3=3(x-1)(x+1)。x<-1时f\’>0，-1<x<1时f\’<0，所以x=-1是极大值点。'
+                    explanation: 'f\’(x)=3x²-3=3(x-1)(x+1)。x<-1时f\’>0，-1<x<1时f\’<0，所以x=-1是极大值点。',
+                    knowledgePoint: '导数应用',
+                    kpPage: 'calculus.html'
                 },
                 {
                     q: '函数f(x)=x²-2x+3在[0,3]上的最小值是？',
                     options: ['2', '3', '6', '0'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'f\’(x)=2x-2=0→x=1。f(1)=1-2+3=2，f(0)=3，f(3)=6。最小值为2。'
+                    explanation: 'f\’(x)=2x-2=0→x=1。f(1)=1-2+3=2，f(0)=3，f(3)=6。最小值为2。',
+                    knowledgePoint: '导数应用',
+                    kpPage: 'calculus.html'
                 },
                 {
                     q: '曲线y=x³在点(1,1)处的切线方程是？',
                     options: ['y=3x-2', 'y=3x+2', 'y=2x-1', 'y=x'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'y\’=3x²，x=1时k=3。切线：y-1=3(x-1)→y=3x-2。'
+                    explanation: 'y\’=3x²，x=1时k=3。切线：y-1=3(x-1)→y=3x-2。',
+                    knowledgePoint: '导数应用',
+                    kpPage: 'calculus.html'
                 },
                 {
                     q: '函数f(x)=x-lnx的单调递减区间是？',
                     options: ['(0, 1)', '(1, +∞)', '(-∞, 1)', '(0, +∞)'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '定义域x>0，f\’(x)=1-1/x=(x-1)/x。令f\’(x)<0，得0<x<1。'
+                    explanation: '定义域x>0，f\’(x)=1-1/x=(x-1)/x。令f\’(x)<0，得0<x<1。',
+                    knowledgePoint: '导数应用',
+                    kpPage: 'calculus.html'
                 },
                 {
                     q: '已知函数f(x)=x³+ax²+bx+a²在x=1处有极值10，则f(2) = ?',
                     options: ['11', '18', '11或18', '17'],
                     answer: 1,
                     difficulty: 'challenge',
-                    explanation: 'f\’(x)=3x²+2ax+b，f\’(1)=3+2a+b=0；f(1)=1+a+b+a²=10。解得a=4,b=-11（a=-3时b=3，此时f\’(x)=3x²-6x+3=3(x-1)²≥0，x=1不是极值点，舍去）。f(2)=8+16-22+16=18。'
+                    explanation: 'f\’(x)=3x²+2ax+b，f\’(1)=3+2a+b=0；f(1)=1+a+b+a²=10。解得a=4,b=-11（a=-3时b=3，此时f\’(x)=3x²-6x+3=3(x-1)²≥0，x=1不是极值点，舍去）。f(2)=8+16-22+16=18。',
+                    knowledgePoint: '导数应用',
+                    kpPage: 'calculus.html'
                 }
             ],
             28: [
@@ -1826,35 +2130,45 @@
                     options: ['0', '1', '2', 'x²'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '∫2xdx=x²，从0到1：1²-0²=1。'
+                    explanation: '∫2xdx=x²，从0到1：1²-0²=1。',
+                    knowledgePoint: '定积分',
+                    kpPage: 'calculus.html'
                 },
                 {
                     q: '∫₀^π sinx dx = ?',
                     options: ['0', '1', '2', 'π'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: '∫sinxdx=-cosx，从0到π：-cosπ+cos0=-(-1)+1=2。'
+                    explanation: '∫sinxdx=-cosx，从0到π：-cosπ+cos0=-(-1)+1=2。',
+                    knowledgePoint: '定积分',
+                    kpPage: 'calculus.html'
                 },
                 {
                     q: '∫₀¹ e^x dx = ?',
                     options: ['0', '1', 'e', 'e-1'],
                     answer: 3,
                     difficulty: 'basic',
-                    explanation: '∫e^xdx=e^x，从0到1：e¹-e⁰=e-1。'
+                    explanation: '∫e^xdx=e^x，从0到1：e¹-e⁰=e-1。',
+                    knowledgePoint: '定积分',
+                    kpPage: 'calculus.html'
                 },
                 {
                     q: '∫₀² √(4-x²) dx = ?',
                     options: ['π', '2π', 'π/2', '4π'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: 'y=√(4-x²)是上半圆x²+y²=4(y≥0)，从0到2的积分是1/4圆面积=(1/4)π·4=π。'
+                    explanation: 'y=√(4-x²)是上半圆x²+y²=4(y≥0)，从0到2的积分是1/4圆面积=(1/4)π·4=π。',
+                    knowledgePoint: '定积分',
+                    kpPage: 'calculus.html'
                 },
                 {
                     q: '∫₋₁¹ (x³cosx+√(1-x²)) dx = ?',
                     options: ['0', 'π/2', 'π', '2'],
                     answer: 1,
                     difficulty: 'challenge',
-                    explanation: 'x³cosx是奇函数，在[-1,1]上积分为0。√(1-x²)是上半圆y=√(1-x²)，从-1到1积分是半圆面积=(1/2)π·1=π/2。'
+                    explanation: 'x³cosx是奇函数，在[-1,1]上积分为0。√(1-x²)是上半圆y=√(1-x²)，从-1到1积分是半圆面积=(1/2)π·1=π/2。',
+                    knowledgePoint: '定积分',
+                    kpPage: 'calculus.html'
                 }
             ],
             29: [
@@ -1863,35 +2177,45 @@
                     options: ['-1/5+2/5i', '-1/5-2/5i', '1/5+2/5i', '1/5-2/5i'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '分母实数化：(1+2i)(3+4i)/((3-4i)(3+4i))=(3+4i+6i+8i²)/(9+16)=(3+10i-8)/25=(-5+10i)/25=-1/5+2/5i。'
+                    explanation: '分母实数化：(1+2i)(3+4i)/((3-4i)(3+4i))=(3+4i+6i+8i²)/(9+16)=(3+10i-8)/25=(-5+10i)/25=-1/5+2/5i。',
+                    knowledgePoint: '复数与选修',
+                    kpPage: 'elective.html'
                 },
                 {
                     q: '复数z=1-i的模|z| = ?',
                     options: ['0', '1', '√2', '2'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: '|a+bi|=√(a²+b²)，|1-i|=√(1+1)=√2。'
+                    explanation: '|a+bi|=√(a²+b²)，|1-i|=√(1+1)=√2。',
+                    knowledgePoint: '复数与选修',
+                    kpPage: 'elective.html'
                 },
                 {
                     q: 'i^2024 = ?（i为虚数单位）',
                     options: ['1', '-1', 'i', '-i'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'i的周期为4：i¹=i,i²=-1,i³=-i,i⁴=1。2024是4的倍数，i^2024=(i⁴)^506=1^506=1。'
+                    explanation: 'i的周期为4：i¹=i,i²=-1,i³=-i,i⁴=1。2024是4的倍数，i^2024=(i⁴)^506=1^506=1。',
+                    knowledgePoint: '复数与选修',
+                    kpPage: 'elective.html'
                 },
                 {
                     q: '(1+i)/(1-i) = ?',
                     options: ['1', '-1', 'i', '-i'],
                     answer: 2,
                     difficulty: 'basic',
-                    explanation: '(1+i)(1+i)/((1-i)(1+i))=(1+2i+i²)/2=(2i)/2=i。'
+                    explanation: '(1+i)(1+i)/((1-i)(1+i))=(1+2i+i²)/2=(2i)/2=i。',
+                    knowledgePoint: '复数与选修',
+                    kpPage: 'elective.html'
                 },
                 {
                     q: '若复数z满足z(1+i)=2i，则z的虚部是？',
                     options: ['-1', '0', '1', 'i'],
                     answer: 2,
                     difficulty: 'advanced',
-                    explanation: 'z=2i/(1+i)=2i(1-i)/2=(2i-2i²)/2=(2i+2)/2=1+i，虚部为1。'
+                    explanation: 'z=2i/(1+i)=2i(1-i)/2=(2i-2i²)/2=(2i+2)/2=1+i，虚部为1。',
+                    knowledgePoint: '复数与选修',
+                    kpPage: 'elective.html'
                 }
             ],
             30: [
@@ -2073,7 +2397,10 @@
             bestCombo: 0,
             soundEnabled: true,
             saveTimestamp: null,
-            totalPlayTime: 0
+            totalPlayTime: 0,
+            wrongQuestions: [],
+            masteredQuestions: [],
+            seenQuestionKeys: {}
         };
 
         let gameState = { ...DEFAULT_GAME_STATE };
@@ -2085,7 +2412,9 @@
             questions: [],
             correctCount: 0,
             combo: 0,
-            shuffledQuestions: []
+            shuffledQuestions: [],
+            mode: 'normal',
+            wrongQuestionIndices: []
         };
 
         function loadGameState() {
@@ -2096,9 +2425,12 @@
                     // Merge with defaults to handle old saves missing new fields
                     gameState = { ...DEFAULT_GAME_STATE, ...parsed };
                     // Ensure arrays are arrays (corruption protection)
-                    ['completedDays','starRecords','unlockedConstellations','dailyQuests'].forEach(k => {
+                    ['completedDays','starRecords','unlockedConstellations','dailyQuests','wrongQuestions','masteredQuestions'].forEach(k => {
                         if (!Array.isArray(gameState[k])) gameState[k] = [];
                     });
+                    if (typeof gameState.seenQuestionKeys !== 'object' || gameState.seenQuestionKeys === null) {
+                        gameState.seenQuestionKeys = {};
+                    }
                     // 30-day expiry check (show warning but don't delete)
                     if (gameState.saveTimestamp) {
                         const daysSince = Math.floor((Date.now() - gameState.saveTimestamp) / 86400000);
@@ -2462,10 +2794,13 @@
 
         function switchTab(tab) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+            const tabId = 'tab' + tab.charAt(0).toUpperCase() + tab.slice(1);
+            const tabBtn = document.getElementById(tabId);
+            if (tabBtn) tabBtn.classList.add('active');
             document.getElementById('calendarView').classList.add('hidden');
             document.getElementById('dailyView').classList.add('hidden');
             document.getElementById('constellationView').classList.add('hidden');
+            document.getElementById('wrongbookView').classList.add('hidden');
             
             if (tab === 'calendar') {
                 document.getElementById('calendarView').classList.remove('hidden');
@@ -2476,22 +2811,94 @@
             } else if (tab === 'constellation') {
                 document.getElementById('constellationView').classList.remove('hidden');
                 renderConstellations();
+            } else if (tab === 'wrongbook') {
+                document.getElementById('wrongbookView').classList.remove('hidden');
+                renderWrongBook();
             }
         }
 
-        function startQuiz(day) {
+        function getQuestionKey(q) {
+            // Generate a unique key for a question based on its text
+            return q.q.substring(0, 50);
+        }
+
+        function pickQuestionsForDay(day, count) {
+            const rawQ = questionBank[day] || questionBank[1];
+            const seen = gameState.seenQuestionKeys || {};
+            const dayKey = 'day' + day;
+            const seenSet = new Set(seen[dayKey] || []);
+
+            // Split into unseen and seen questions
+            const unseen = rawQ.filter(q => !seenSet.has(getQuestionKey(q)));
+            const seenQs = rawQ.filter(q => seenSet.has(getQuestionKey(q)));
+
+            let selected;
+            if (unseen.length >= count) {
+                // Enough new questions - shuffle and pick
+                selected = shuffleArray(unseen).slice(0, count);
+            } else {
+                // Not enough new - take all unseen + fill with random seen
+                selected = [...unseen];
+                const shuffledSeen = shuffleArray(seenQs);
+                selected = selected.concat(shuffledSeen.slice(0, count - selected.length));
+            }
+
+            // Remember these questions as seen
+            if (!seen[dayKey]) seen[dayKey] = [];
+            selected.forEach(q => {
+                const key = getQuestionKey(q);
+                if (!seen[dayKey].includes(key)) seen[dayKey].push(key);
+            });
+            // Keep seen list manageable (remember last 20 per day)
+            if (seen[dayKey].length > 20) seen[dayKey] = seen[dayKey].slice(-20);
+            gameState.seenQuestionKeys = seen;
+
+            return selected.map(q => shuffleOptions(q));
+        }
+
+        function shuffleArray(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function startQuiz(day, mode) {
             playClick();
             currentQuiz.day = day;
+            currentQuiz.mode = mode || 'normal';
             currentQuiz.currentQuestion = 0;
             currentQuiz.answers = [];
             currentQuiz.combo = 0;
-            const rawQ = questionBank[day] || questionBank[1];
-            currentQuiz.questions = rawQ.map(q => shuffleOptions(q));
             currentQuiz.correctCount = 0;
+            currentQuiz.wrongQuestionIndices = [];
+
+            if (mode === 'revenge') {
+                // Revenge mode: use wrong questions
+                const wrongQs = gameState.wrongQuestions.map(w => ({
+                    q: w.q, options: w.options, answer: w.answer,
+                    difficulty: w.difficulty, explanation: w.explanation,
+                    knowledgePoint: w.knowledgePoint, kpPage: w.kpPage,
+                    day: w.day, _originalKey: w._key
+                }));
+                currentQuiz.questions = wrongQs.map(q => shuffleOptions(q));
+            } else {
+                // Normal mode: pick smart questions (unseen first, seen fill)
+                const poolSize = Math.min(5, (questionBank[day] || questionBank[1]).length);
+                currentQuiz.questions = pickQuestionsForDay(day, poolSize);
+            }
             
             document.getElementById('comboDisplay').classList.add('hidden');
-            const topic = dayTopics.find(t => t.day === day);
-            document.getElementById('quizTitle').textContent = `Day ${day} - ${topic.title}`;
+            let title;
+            if (mode === 'revenge') {
+                title = `⚔️ 复仇模式 - 错题反攻 (${currentQuiz.questions.length}题)`;
+            } else {
+                const topic = dayTopics.find(t => t.day === day);
+                title = `Day ${day} - ${topic.title}`;
+            }
+            document.getElementById('quizTitle').textContent = title;
             document.getElementById('quizModal').classList.remove('hidden');
             const modal = document.querySelector('#quizModal .modal-content');
             modal.classList.add('question-enter');
@@ -2598,19 +3005,61 @@
                     }
                 }
                 updateDailyQuestProgress('correctAnswer', 1);
+
+                // If in revenge mode and got it right, remove from wrong book
+                if (currentQuiz.mode === 'revenge' && q._originalKey) {
+                    gameState.wrongQuestions = gameState.wrongQuestions.filter(
+                        w => w._key !== q._originalKey
+                    );
+                    gameState.masteredQuestions.push({
+                        _key: q._originalKey, q: q.q, masteredAt: Date.now()
+                    });
+                }
             } else {
                 currentQuiz.combo = 0;
+                currentQuiz.wrongQuestionIndices.push(currentQuiz.currentQuestion);
                 playWrong();
                 document.querySelector('.modal-content').classList.add('shake');
                 setTimeout(() => document.querySelector('.modal-content').classList.remove('shake'), 500);
+
+                // Add to wrong questions book (avoid duplicates)
+                const qKey = getQuestionKey(q);
+                const existing = gameState.wrongQuestions.find(w => w._key === qKey);
+                if (!existing) {
+                    gameState.wrongQuestions.push({
+                        _key: qKey,
+                        day: currentQuiz.day || 0,
+                        q: q.q,
+                        options: q.options,
+                        answer: q.answer,
+                        difficulty: q.difficulty,
+                        explanation: q.explanation,
+                        knowledgePoint: q.knowledgePoint || '数学',
+                        kpPage: q.kpPage || 'index.html',
+                        wrongCount: 1,
+                        lastWrong: Date.now()
+                    });
+                } else {
+                    existing.wrongCount = (existing.wrongCount || 1) + 1;
+                    existing.lastWrong = Date.now();
+                }
             }
             
             document.getElementById('explanationText').textContent = q.explanation;
+            const kpLink = document.getElementById('kpLink');
+            if (q.kpPage && q.knowledgePoint) {
+                kpLink.href = q.kpPage;
+                kpLink.title = '复习：' + q.knowledgePoint;
+                kpLink.style.display = 'inline-flex';
+            } else {
+                kpLink.style.display = 'none';
+            }
             document.getElementById('explanationBox').classList.remove('hidden');
             
             setTimeout(() => renderQuestion(), 100);
-            // 每答完一题自动保存，防止刷新/关闭页面丢失进度
+            // 每答完一题自动保存
             saveGameState();
+            updateWrongBookBadge();
         }
 
         function prevQuestion() {
@@ -2638,33 +3087,43 @@
             playStar();
             const totalQ = currentQuiz.questions.length;
             const correct = currentQuiz.correctCount;
+            const wrong = totalQ - correct;
             const accuracy = correct / totalQ;
+            const isRevenge = currentQuiz.mode === 'revenge';
             
             let stars = 1;
             if (accuracy >= 0.8) stars = 3;
             else if (accuracy >= 0.6) stars = 2;
             
             const comboBonus = Math.min(currentQuiz.combo * 5, 50);
-            const expEarned = 20 + stars * 10 + comboBonus;
-            const moraEarned = 200 + stars * 100 + comboBonus * 2;
-            const primogemEarned = 5 + stars * 5 + (accuracy === 1 ? 10 : 0);
-            
-            if (!gameState.completedDays.includes(currentQuiz.day)) {
-                gameState.completedDays.push(currentQuiz.day);
-                updateDailyQuestProgress('completeDay', 1);
-            }
-            
-            const existingStar = gameState.starRecords.find(s => s.day === currentQuiz.day);
-            if (existingStar) {
-                if (stars > existingStar.stars) {
-                    existingStar.stars = stars;
-                }
+            // Revenge mode: reduced rewards (no day completion bonuses)
+            let expEarned, moraEarned, primogemEarned;
+            if (isRevenge) {
+                expEarned = Math.round((10 + correct * 5 + comboBonus) * 0.5);
+                moraEarned = Math.round((100 + correct * 30 + comboBonus) * 0.5);
+                primogemEarned = accuracy === 1 ? 5 : Math.floor(correct / 2);
             } else {
-                gameState.starRecords.push({ day: currentQuiz.day, stars: stars });
+                expEarned = 20 + stars * 10 + comboBonus;
+                moraEarned = 200 + stars * 100 + comboBonus * 2;
+                primogemEarned = 5 + stars * 5 + (accuracy === 1 ? 10 : 0);
             }
             
-            if (stars === 3) {
-                updateDailyQuestProgress('threeStar', 1);
+            if (!isRevenge) {
+                if (!gameState.completedDays.includes(currentQuiz.day)) {
+                    gameState.completedDays.push(currentQuiz.day);
+                    updateDailyQuestProgress('completeDay', 1);
+                }
+                
+                const existingStar = gameState.starRecords.find(s => s.day === currentQuiz.day);
+                if (existingStar) {
+                    if (stars > existingStar.stars) existingStar.stars = stars;
+                } else {
+                    gameState.starRecords.push({ day: currentQuiz.day, stars: stars });
+                }
+                
+                if (stars === 3) {
+                    updateDailyQuestProgress('threeStar', 1);
+                }
             }
             
             updateDailyQuestProgress('totalCorrect', correct);
@@ -2673,19 +3132,29 @@
             gameState.mora += moraEarned;
             gameState.primogem += primogemEarned;
             
-            const prevConstellations = [...gameState.unlockedConstellations];
-            checkConstellations();
-            const newConstellation = constellations.find(c => 
-                !prevConstellations.includes(c.id) && gameState.unlockedConstellations.includes(c.id)
-            );
+            let newConstellation = null;
+            if (!isRevenge) {
+                const prevConstellations = [...gameState.unlockedConstellations];
+                checkConstellations();
+                newConstellation = constellations.find(c => 
+                    !prevConstellations.includes(c.id) && gameState.unlockedConstellations.includes(c.id)
+                );
+            }
             
             saveGameState();
             
             document.getElementById('quizModal').classList.add('hidden');
             document.getElementById('resultModal').classList.remove('hidden');
             
-            const topic = dayTopics.find(t => t.day === currentQuiz.day);
-            document.getElementById('resultDay').textContent = `Day ${currentQuiz.day} - ${topic.title}`;
+            let dayTitle;
+            if (isRevenge) {
+                const remaining = gameState.wrongQuestions.length;
+                dayTitle = `⚔️ 复仇模式 - ${remaining === 0 ? '全部攻克！' : `还剩${remaining}道错题`}`;
+            } else {
+                const topic = dayTopics.find(t => t.day === currentQuiz.day);
+                dayTitle = `Day ${currentQuiz.day} - ${topic.title}`;
+            }
+            document.getElementById('resultDay').textContent = dayTitle;
             document.getElementById('correctCount').textContent = correct;
             document.getElementById('accuracy').textContent = Math.round(accuracy * 100) + '%';
             document.getElementById('earnedExp').textContent = expEarned;
@@ -2693,11 +3162,16 @@
             document.getElementById('earnedPrimogem').textContent = '+' + primogemEarned;
             
             const starContainer = document.getElementById('starRating');
-            starContainer.innerHTML = [1,2,3].map((i, idx) => 
-                `<i data-lucide="star" class="w-10 h-10 ${i <= stars ? 'star fill-current star-pop' : 'star empty'}" style="animation-delay: ${idx * 0.2}s; opacity: 0;"></i>`
-            ).join('');
-            if (stars >= 1) {
-                setTimeout(() => spawnParticles(window.innerWidth/2, window.innerHeight/2 - 100, '#FFD700', 20), 300);
+            // Hide stars in revenge mode if not perfect
+            if (isRevenge && accuracy < 1) {
+                starContainer.innerHTML = `<div class="text-sm py-2" style="color:var(--text-secondary)">继续加油，征服错题！</div>`;
+            } else {
+                starContainer.innerHTML = [1,2,3].map((i, idx) => 
+                    `<i data-lucide="star" class="w-10 h-10 ${i <= stars ? 'star fill-current star-pop' : 'star empty'}" style="animation-delay: ${idx * 0.2}s; opacity: 0;"></i>`
+                ).join('');
+                if (stars >= 1) {
+                    setTimeout(() => spawnParticles(window.innerWidth/2, window.innerHeight/2 - 100, '#FFD700', 20), 300);
+                }
             }
             
             const newAchDiv = document.getElementById('newAchievement');
@@ -2707,23 +3181,181 @@
             } else {
                 newAchDiv.classList.add('hidden');
             }
+
+            // Wrong question summary
+            const wrongDiv = document.getElementById('wrongSummary');
+            if (wrong > 0) {
+                wrongDiv.classList.remove('hidden');
+                document.getElementById('wrongCountText').textContent = wrong;
+            } else {
+                wrongDiv.classList.add('hidden');
+            }
             
             lucide.createIcons();
             updateUI();
+            updateWrongBookBadge();
         }
 
         function closeQuiz() {
             if (confirm('确定要退出挑战吗？当前进度将不会保存。')) {
                 document.getElementById('quizModal').classList.add('hidden');
-                currentQuiz = { day: null, currentQuestion: 0, answers: [], questions: [], correctCount: 0, combo: 0, shuffledQuestions: [] };
+                resetCurrentQuiz();
             }
         }
 
         function closeResult() {
             playClick();
             document.getElementById('resultModal').classList.add('hidden');
-            currentQuiz = { day: null, currentQuestion: 0, answers: [], questions: [], correctCount: 0, combo: 0, shuffledQuestions: [] };
+            const wasRevenge = currentQuiz.mode === 'revenge';
+            const lastDay = currentQuiz.day;
+            resetCurrentQuiz();
             renderCalendar();
+            if (wasRevenge) {
+                switchTab('wrongbook');
+            }
+        }
+
+        function resetCurrentQuiz() {
+            currentQuiz = { day: null, currentQuestion: 0, answers: [], questions: [], correctCount: 0, combo: 0, shuffledQuestions: [], mode: 'normal', wrongQuestionIndices: [] };
+        }
+
+        function retryQuiz() {
+            playClick();
+            document.getElementById('resultModal').classList.add('hidden');
+            if (currentQuiz.mode === 'revenge') {
+                startRevengeMode();
+            } else {
+                startQuiz(currentQuiz.day);
+            }
+        }
+
+        function updateWrongBookBadge() {
+            const badge = document.getElementById('wrongBookBadge');
+            if (!badge) return;
+            const count = gameState.wrongQuestions.length;
+            if (count > 0) {
+                badge.textContent = count > 99 ? '99+' : count;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function startRevengeMode() {
+            playClick();
+            if (gameState.wrongQuestions.length === 0) {
+                showSaveNotification('错题本是空的，太棒了！', 'success');
+                return;
+            }
+            // Sort by wrongCount desc, lastWrong desc
+            const sorted = [...gameState.wrongQuestions].sort((a, b) => {
+                if ((b.wrongCount||1) !== (a.wrongCount||1)) return (b.wrongCount||1) - (a.wrongCount||1);
+                return (b.lastWrong||0) - (a.lastWrong||0);
+            });
+            // Take up to 10 wrong questions
+            const selected = sorted.slice(0, Math.min(10, sorted.length));
+            gameState.wrongQuestions = selected.map(w => ({...w})); // will be filtered as answered correctly
+            // Set currentQuiz for revenge
+            currentQuiz.day = 0;
+            currentQuiz.mode = 'revenge';
+            currentQuiz.currentQuestion = 0;
+            currentQuiz.answers = [];
+            currentQuiz.combo = 0;
+            currentQuiz.correctCount = 0;
+            currentQuiz.wrongQuestionIndices = [];
+            currentQuiz.questions = selected.map(w => shuffleOptions({
+                q: w.q, options: [...w.options], answer: w.answer,
+                difficulty: w.difficulty, explanation: w.explanation,
+                knowledgePoint: w.knowledgePoint, kpPage: w.kpPage,
+                _originalKey: w._key, day: w.day
+            }));
+
+            document.getElementById('comboDisplay').classList.add('hidden');
+            document.getElementById('quizTitle').textContent = `⚔️ 复仇模式 - 错题反攻 (${currentQuiz.questions.length}题)`;
+            document.getElementById('resultModal').classList.add('hidden');
+            document.getElementById('quizModal').classList.remove('hidden');
+            const modal = document.querySelector('#quizModal .modal-content');
+            modal.classList.add('question-enter');
+            setTimeout(() => modal.classList.remove('question-enter'), 300);
+            renderQuestion();
+        }
+
+        function clearWrongBook() {
+            if (gameState.wrongQuestions.length === 0) {
+                showSaveNotification('错题本已经是空的', 'info');
+                return;
+            }
+            if (!confirm(`确定清空错题本吗？将删除 ${gameState.wrongQuestions.length} 道错题记录。`)) return;
+            gameState.wrongQuestions = [];
+            saveGameState();
+            renderWrongBook();
+            updateWrongBookBadge();
+            showSaveNotification('错题本已清空', 'success');
+        }
+
+        function renderWrongBook() {
+            const container = document.getElementById('wrongBookList');
+            const wrongs = gameState.wrongQuestions;
+            if (wrongs.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-16">
+                        <i data-lucide="check-circle-2" class="w-16 h-16 mx-auto mb-4" style="color:#4CAF50;"></i>
+                        <h3 class="text-xl font-bold mb-2" style="color:var(--primary-gold-light);">没有错题！</h3>
+                        <p style="color:var(--text-secondary);">继续保持，你是数学天才！</p>
+                    </div>`;
+                lucide.createIcons();
+                return;
+            }
+
+            // Group by knowledge point
+            const grouped = {};
+            wrongs.forEach(w => {
+                const kp = w.knowledgePoint || '其他';
+                if (!grouped[kp]) grouped[kp] = [];
+                grouped[kp].push(w);
+            });
+
+            let html = '';
+            const diffColors = { basic: '#4CAF50', advanced: '#FF9800', challenge: '#F44336' };
+            const diffNames = { basic: '基础', advanced: '进阶', challenge: '挑战' };
+
+            Object.keys(grouped).forEach(kp => {
+                const items = grouped[kp];
+                const kpPage = items[0].kpPage || 'index.html';
+                html += `<div class="mb-4 p-4 rounded-lg" style="background: rgba(20,15,40,0.6); border: 1px solid var(--border-color);">
+                    <div class="flex items-center justify-between mb-3">
+                        <h4 class="font-bold flex items-center gap-2" style="color:var(--primary-gold-light);">
+                            <i data-lucide="book-open" class="w-4 h-4"></i>${kp}
+                            <span class="text-xs px-2 py-0.5 rounded-full" style="background:rgba(244,67,54,0.2);color:#F44336;">${items.length}题</span>
+                        </h4>
+                        <a href="${kpPage}" target="_blank" class="text-xs px-3 py-1.5 rounded-lg transition hover:brightness-125 inline-flex items-center gap-1" style="background:linear-gradient(135deg,rgba(76,194,240,0.15),rgba(76,194,240,0.05));border:1px solid rgba(76,194,240,0.3);color:#4CC2F0;">
+                            <i data-lucide="book-marked" class="w-3 h-3"></i>复习知识点
+                        </a>
+                    </div>
+                    <div class="space-y-2">`;
+                items.forEach((w, idx) => {
+                    const wrongTimes = w.wrongCount || 1;
+                    const dayLabel = w.day > 0 ? `Day${w.day}` : '复习';
+                    html += `<div class="p-3 rounded-lg" style="background:rgba(0,0,0,0.3);border-left:3px solid ${diffColors[w.difficulty]||'#F44336'};">
+                        <div class="flex items-start justify-between gap-2 mb-2">
+                            <span class="text-xs px-2 py-0.5 rounded" style="background:${diffColors[w.difficulty]||'#F44336'}22;color:${diffColors[w.difficulty]||'#F44336'};">${diffNames[w.difficulty]||'基础'} · ${dayLabel}</span>
+                            <span class="text-xs" style="color:var(--text-secondary);">错${wrongTimes}次</span>
+                        </div>
+                        <p class="text-sm mb-2" style="color:var(--text-primary);">${w.q}</p>
+                        <details class="text-xs">
+                            <summary style="color:var(--primary-gold);cursor:pointer;" class="hover:brightness-125">查看解析 ▾</summary>
+                            <div class="mt-2 p-2 rounded" style="background:rgba(76,194,161,0.08);color:var(--text-secondary);line-height:1.6;">
+                                <p style="color:#4CAF50;margin-bottom:4px;">正确答案：${String.fromCharCode(65 + w.answer)}. ${w.options[w.answer]}</p>
+                                <p>${w.explanation}</p>
+                            </div>
+                        </details>
+                    </div>`;
+                });
+                html += '</div></div>';
+            });
+
+            container.innerHTML = html;
+            lucide.createIcons();
         }
 
         function updateDailyQuestProgress(type, amount) {
@@ -2788,6 +3420,7 @@
             
             loadGameState();
             renderCalendar();
+            updateWrongBookBadge();
             lucide.createIcons();
             
             requestAnimationFrame(() => {
