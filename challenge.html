@@ -389,9 +389,178 @@
             align-items: center;
             justify-content: center;
         }
+
+        /* ===== 新增趣味化动画 ===== */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @keyframes correctPulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(76,175,80,0.7); }
+            50% { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(76,175,80,0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(76,175,80,0); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+
+        @keyframes comboFloat {
+            0% { opacity: 0; transform: translateY(0) scale(0.5); }
+            20% { opacity: 1; transform: translateY(-20px) scale(1.2); }
+            100% { opacity: 0; transform: translateY(-80px) scale(0.8); }
+        }
+
+        @keyframes particleBurst {
+            0% { opacity: 1; transform: translate(0, 0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes starPop {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            50% { transform: scale(1.3) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(200,169,91,0.3); }
+            50% { box-shadow: 0 0 20px rgba(200,169,91,0.6), 0 0 40px rgba(200,169,91,0.2); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .shake { animation: shake 0.5s ease; }
+        .correct-pulse { animation: correctPulse 0.6s ease; }
+        .wrong-shake { animation: wrongShake 0.5s ease; }
+        .combo-popup {
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #FF9800;
+            text-shadow: 0 0 20px rgba(255,152,0,0.8), 0 2px 4px rgba(0,0,0,0.5);
+            z-index: 200;
+            pointer-events: none;
+            animation: comboFloat 1.2s ease forwards;
+        }
+        .combo-popup.perfect { color: #FFD700; text-shadow: 0 0 30px rgba(255,215,0,1), 0 0 60px rgba(255,215,0,0.5); }
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleBurst 0.8s ease forwards;
+        }
+        .day-card.animate-in { animation: slideUp 0.5s ease forwards; opacity: 0; }
+        .day-card.unlocked:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(200,169,91,0.3);
+        }
+        .day-card.completed {
+            border: 2px solid var(--primary-gold);
+            animation: glow 2s ease-in-out infinite;
+        }
+        .option-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .option-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            transition: left 0.5s ease;
+        }
+        .option-btn:hover:not(.disabled)::before { left: 100%; }
+        .option-btn:active:not(.disabled) { transform: scale(0.98); }
+        .option-btn.correct {
+            animation: correctPulse 0.6s ease;
+        }
+        .option-btn.wrong {
+            animation: wrongShake 0.5s ease;
+        }
+        .star-pop { animation: starPop 0.5s ease forwards; }
+        .question-enter { animation: fadeScale 0.3s ease; }
+        .combo-display {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(255,152,0,0.2), rgba(255,87,34,0.1));
+            border: 1px solid rgba(255,152,0,0.4);
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #FF9800;
+        }
+        .combo-display.hot {
+            background: linear-gradient(135deg, rgba(255,215,0,0.25), rgba(255,152,0,0.15));
+            border-color: #FFD700;
+            color: #FFD700;
+            box-shadow: 0 0 15px rgba(255,215,0,0.3);
+        }
+        .sound-toggle {
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .sound-toggle:hover { background: rgba(255,255,255,0.1); }
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-darker);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .loading-overlay.hidden { opacity: 0; pointer-events: none; }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(200,169,91,0.2);
+            border-top-color: var(--primary-gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .progress-fill { will-change: width; }
+        .stars { will-change: opacity; }
+        .btn-gold { will-change: transform; }
     </style>
 </head>
 <body>
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="text-center">
+            <div class="loading-spinner mx-auto mb-4"></div>
+            <p style="color: var(--primary-gold); font-weight: bold;">正在传送至秘境...</p>
+        </div>
+    </div>
     <div class="starfield">
         <div class="stars"></div>
     </div>
@@ -492,7 +661,14 @@
                     <p class="text-sm" style="color: var(--text-secondary);">第 <span id="currentQuestionNum">1</span>/5 题</p>
                 </div>
                 <div class="flex items-center gap-2">
+                    <div id="comboDisplay" class="combo-display hidden">
+                        <i data-lucide="flame" class="w-4 h-4"></i>
+                        <span id="comboCount">0</span>连击
+                    </div>
                     <span id="difficultyBadge" class="difficulty-badge difficulty-basic">基础</span>
+                    <button id="soundToggle" onclick="toggleSound()" class="sound-toggle" title="音效开关">
+                        <i data-lucide="volume-2" class="w-5 h-5"></i>
+                    </button>
                     <button onclick="closeQuiz()" class="p-2 hover:bg-white/10 rounded-lg transition">
                         <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
@@ -1066,7 +1242,7 @@
                     options: ['27', '30', '33', '36'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '设bₙ=aₙ+aₙ₊₃+aₙ₊₆，则{bₙ}也是等差数列。b₁=39,b₂=33，公差d'=-6，b₃=b₂+d'=33-6=27。'
+                    explanation: '设bₙ=aₙ+aₙ₊₃+aₙ₊₆，则{bₙ}也是等差数列。b₁=39,b₂=33，公差d’=-6，b₃=b₂+d’=33-6=27。'
                 },
                 {
                     q: '等差数列{aₙ}中，a₁=-2012，S₂₀₁₄/2014 - S₂₀₁₂/2012 = 2，则S₂₀₁₄ = ?',
@@ -1559,39 +1735,39 @@
             ],
             26: [
                 {
-                    q: '函数f(x)=x²的导数f\'(x) = ?',
+                    q: '函数f(x)=x²的导数f\’(x) = ?',
                     options: ['x', '2x', 'x²', '2'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '幂函数求导公式：(xⁿ)\'=nx^(n-1)。(x²)\'=2x。'
+                    explanation: '幂函数求导公式：(xⁿ)\’=nx^(n-1)。(x²)\’=2x。'
                 },
                 {
                     q: '函数f(x)=sinx的导数是？',
                     options: ['-cosx', 'cosx', '-sinx', 'tanx'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: '基本导数公式：(sinx)\'=cosx。'
+                    explanation: '基本导数公式：(sinx)\’=cosx。'
                 },
                 {
                     q: '函数f(x)=e^x的导数是？',
                     options: ['e^x', 'xe^(x-1)', 'e^(x-1)', '1'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '指数函数导数：(e^x)\'=e^x。'
+                    explanation: '指数函数导数：(e^x)\’=e^x。'
                 },
                 {
                     q: 'f(x)=x³-2x+1在x=1处的导数值是？',
                     options: ['0', '1', '2', '3'],
                     answer: 1,
                     difficulty: 'basic',
-                    explanation: 'f\'(x)=3x²-2，f\'(1)=3-2=1。'
+                    explanation: 'f\’(x)=3x²-2，f\’(1)=3-2=1。'
                 },
                 {
-                    q: '函数f(x)=x·lnx的导数f\'(x) = ?',
+                    q: '函数f(x)=x·lnx的导数f\’(x) = ?',
                     options: ['lnx', 'lnx+1', '1/x', '1+1/x'],
                     answer: 1,
                     difficulty: 'advanced',
-                    explanation: '乘积法则：(uv)\'=u\'v+uv\'。f\'(x)=1·lnx+x·(1/x)=lnx+1。'
+                    explanation: '乘积法则：(uv)\’=u\’v+uv\’。f\’(x)=1·lnx+x·(1/x)=lnx+1。'
                 }
             ],
             27: [
@@ -1600,35 +1776,35 @@
                     options: ['x=-1', 'x=0', 'x=1', 'x=2'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'f\'(x)=3x²-3=3(x-1)(x+1)。x<-1时f\'>0，-1<x<1时f\'<0，所以x=-1是极大值点。'
+                    explanation: 'f\’(x)=3x²-3=3(x-1)(x+1)。x<-1时f\’>0，-1<x<1时f\’<0，所以x=-1是极大值点。'
                 },
                 {
                     q: '函数f(x)=x²-2x+3在[0,3]上的最小值是？',
                     options: ['2', '3', '6', '0'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'f\'(x)=2x-2=0→x=1。f(1)=1-2+3=2，f(0)=3，f(3)=6。最小值为2。'
+                    explanation: 'f\’(x)=2x-2=0→x=1。f(1)=1-2+3=2，f(0)=3，f(3)=6。最小值为2。'
                 },
                 {
                     q: '曲线y=x³在点(1,1)处的切线方程是？',
                     options: ['y=3x-2', 'y=3x+2', 'y=2x-1', 'y=x'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: 'y\'=3x²，x=1时k=3。切线：y-1=3(x-1)→y=3x-2。'
+                    explanation: 'y\’=3x²，x=1时k=3。切线：y-1=3(x-1)→y=3x-2。'
                 },
                 {
                     q: '函数f(x)=x-lnx的单调递减区间是？',
                     options: ['(0, 1)', '(1, +∞)', '(-∞, 1)', '(0, +∞)'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '定义域x>0，f\'(x)=1-1/x=(x-1)/x。令f\'(x)<0，得0<x<1。'
+                    explanation: '定义域x>0，f\’(x)=1-1/x=(x-1)/x。令f\’(x)<0，得0<x<1。'
                 },
                 {
                     q: '已知函数f(x)=x³+ax²+bx+a²在x=1处有极值10，则f(2) = ?',
                     options: ['11', '18', '11或18', '17'],
                     answer: 1,
                     difficulty: 'challenge',
-                    explanation: 'f\'(x)=3x²+2ax+b，f\'(1)=3+2a+b=0；f(1)=1+a+b+a²=10。解得a=4,b=-11（a=-3时b=3，此时f\'(x)=3x²-6x+3=3(x-1)²≥0，x=1不是极值点，舍去）。f(2)=8+16-22+16=18。'
+                    explanation: 'f\’(x)=3x²+2ax+b，f\’(1)=3+2a+b=0；f(1)=1+a+b+a²=10。解得a=4,b=-11（a=-3时b=3，此时f\’(x)=3x²-6x+3=3(x-1)²≥0，x=1不是极值点，舍去）。f(2)=8+16-22+16=18。'
                 }
             ],
             28: [
@@ -1718,7 +1894,7 @@
                     options: ['2', '0', '-2', '4'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: 'f\'(x)=3x²-6x=3x(x-2)。在[-1,0]上f\'>0，[0,1]上f\'<0，所以f(0)=2是极大值。f(-1)=-2,f(1)=0。最大值2。'
+                    explanation: 'f\’(x)=3x²-6x=3x(x-2)。在[-1,0]上f\’>0，[0,1]上f\’<0，所以f(0)=2是极大值。f(-1)=-2,f(1)=0。最大值2。'
                 },
                 {
                     q: '已知椭圆C:x²/a²+y²/b²=1(a>b>0)的离心率为√3/2，短轴长为2，则椭圆C的方程是？',
@@ -1739,7 +1915,7 @@
                     options: ['(e, +∞)', '(0, e)', '(1, +∞)', '(0, 1)'],
                     answer: 0,
                     difficulty: 'challenge',
-                    explanation: 'f(x)=0→a=e^x/x(x>0,因为x≤0时e^x>0,-ax≥0,f(x)>0)。令g(x)=e^x/x,g\'(x)=e^x(x-1)/x²。g(x)在(0,1)递减,(1,+∞)递增,g(1)=e。当x→0+时g→+∞,x→+∞时g→+∞。所以a>e时,y=a与g(x)有两个交点，即f(x)有两个零点。'
+                    explanation: 'f(x)=0→a=e^x/x(x>0,因为x≤0时e^x>0,-ax≥0,f(x)>0)。令g(x)=e^x/x,g\’(x)=e^x(x-1)/x²。g(x)在(0,1)递减,(1,+∞)递增,g(1)=e。当x→0+时g→+∞,x→+∞时g→+∞。所以a>e时,y=a与g(x)有两个交点，即f(x)有两个零点。'
                 }
             ]
         };
@@ -1762,6 +1938,113 @@
             { id: 'd4', desc: '累计答对20道题', target: 20, type: 'totalCorrect', reward: { mora: 500, primogem: 15 } }
         ];
 
+        /* ===== 音效系统（Web Audio API，无需外部文件） ===== */
+        let audioCtx = null;
+        let soundEnabled = true;
+
+        function initAudio() {
+            if (!audioCtx) {
+                try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+            }
+        }
+
+        function playTone(freq, duration, type = 'sine', volume = 0.15) {
+            if (!soundEnabled || !audioCtx) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        function playCorrect() {
+            initAudio();
+            playTone(523, 0.1, 'sine', 0.12);
+            setTimeout(() => playTone(659, 0.1, 'sine', 0.12), 100);
+            setTimeout(() => playTone(784, 0.2, 'sine', 0.15), 200);
+        }
+
+        function playWrong() {
+            initAudio();
+            playTone(200, 0.15, 'sawtooth', 0.1);
+            setTimeout(() => playTone(150, 0.2, 'sawtooth', 0.1), 150);
+        }
+
+        function playCombo(n) {
+            initAudio();
+            const base = 400 + Math.min(n, 10) * 50;
+            playTone(base, 0.08, 'square', 0.08);
+            setTimeout(() => playTone(base * 1.25, 0.08, 'square', 0.08), 80);
+            setTimeout(() => playTone(base * 1.5, 0.15, 'square', 0.1), 160);
+        }
+
+        function playStar() {
+            initAudio();
+            [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => playTone(f, 0.15, 'triangle', 0.1), i * 120));
+        }
+
+        function playClick() {
+            initAudio();
+            playTone(800, 0.05, 'sine', 0.06);
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            localStorage.setItem('genshinMathSound', soundEnabled);
+            const icon = document.querySelector('#soundToggle i');
+            if (icon) {
+                icon.setAttribute('data-lucide', soundEnabled ? 'volume-2' : 'volume-x');
+                lucide.createIcons();
+            }
+            if (soundEnabled) playClick();
+        }
+
+        /* ===== 粒子特效 ===== */
+        function spawnParticles(x, y, color, count = 12) {
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const angle = (Math.PI * 2 / count) * i + Math.random() * 0.5;
+                const dist = 40 + Math.random() * 60;
+                p.style.cssText = `
+                    left: ${x}px; top: ${y}px;
+                    background: ${color};
+                    --tx: ${Math.cos(angle) * dist}px;
+                    --ty: ${Math.sin(angle) * dist}px;
+                    box-shadow: 0 0 6px ${color};
+                `;
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 800);
+            }
+        }
+
+        /* ===== 选项洗牌（Fisher-Yates） ===== */
+        function shuffleOptions(q) {
+            const correctText = q.options[q.answer];
+            const shuffled = [...q.options];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            const newAnswer = shuffled.indexOf(correctText);
+            return { ...q, options: shuffled, answer: newAnswer };
+        }
+
+        /* ===== 连击提示 ===== */
+        function showComboPopup(n) {
+            const el = document.createElement('div');
+            el.className = 'combo-popup' + (n >= 5 ? ' perfect' : '');
+            const texts = { 3: '不错！', 4: '厉害！', 5: '完美连击！', 7: '超神！', 10: '数学大师！' };
+            el.textContent = `${n}连击 ${texts[n] || '🔥'}`;
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 1200);
+        }
+
         let gameState = {
             adventureRank: 1,
             currentExp: 0,
@@ -1773,7 +2056,9 @@
             totalCorrect: 0,
             unlockedConstellations: [],
             dailyQuests: [],
-            lastDailyReset: null
+            lastDailyReset: null,
+            bestCombo: 0,
+            soundEnabled: true
         };
 
         let currentQuiz = {
@@ -1781,7 +2066,9 @@
             currentQuestion: 0,
             answers: [],
             questions: [],
-            correctCount: 0
+            correctCount: 0,
+            combo: 0,
+            shuffledQuestions: []
         };
 
         function loadGameState() {
@@ -1876,6 +2163,7 @@
             container.innerHTML = '';
             
             let dayCounter = 1;
+            let cardIndex = 0;
             nations.forEach(nation => {
                 const nationDiv = document.createElement('div');
                 nationDiv.className = 'mb-8';
@@ -1897,7 +2185,7 @@
                         </span>
                     </div>
                     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
-                        ${daysInNation.map(d => renderDayCard(d, nation.color)).join('')}
+                        ${daysInNation.map(d => renderDayCard(d, nation.color, cardIndex++)).join('')}
                     </div>
                 `;
                 container.appendChild(nationDiv);
@@ -1906,7 +2194,7 @@
             lucide.createIcons();
         }
 
-        function renderDayCard(day, nationColor) {
+        function renderDayCard(day, nationColor, index) {
             const isCompleted = gameState.completedDays.includes(day.day);
             const isUnlocked = day.day === 1 || gameState.completedDays.includes(day.day - 1);
             const starRecord = gameState.starRecords.find(s => s.day === day.day);
@@ -1917,7 +2205,8 @@
             const difficultyText = day.difficulty === 'basic' ? '基础' : day.difficulty === 'advanced' ? '进阶' : '挑战';
             
             return `
-                <div class="day-card nation-${day.nation} ${isCompleted ? 'completed' : ''} ${isUnlocked ? 'unlocked' : 'locked'}"
+                <div class="day-card nation-${day.nation} ${isCompleted ? 'completed' : ''} ${isUnlocked ? 'unlocked' : 'locked'} animate-in"
+                     style="animation-delay: ${index * 0.05}s;"
                      onclick="${isUnlocked ? `startQuiz(${day.day})` : ''}">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-sm font-bold" style="color: ${nationColor};">Day ${day.day}</span>
@@ -2024,15 +2313,22 @@
         }
 
         function startQuiz(day) {
+            playClick();
             currentQuiz.day = day;
             currentQuiz.currentQuestion = 0;
             currentQuiz.answers = [];
-            currentQuiz.questions = questionBank[day] || questionBank[1];
+            currentQuiz.combo = 0;
+            const rawQ = questionBank[day] || questionBank[1];
+            currentQuiz.questions = rawQ.map(q => shuffleOptions(q));
             currentQuiz.correctCount = 0;
             
+            document.getElementById('comboDisplay').classList.add('hidden');
             const topic = dayTopics.find(t => t.day === day);
             document.getElementById('quizTitle').textContent = `Day ${day} - ${topic.title}`;
             document.getElementById('quizModal').classList.remove('hidden');
+            const modal = document.querySelector('#quizModal .modal-content');
+            modal.classList.add('question-enter');
+            setTimeout(() => modal.classList.remove('question-enter'), 300);
             renderQuestion();
         }
 
@@ -2051,6 +2347,15 @@
             const diffBadge = document.getElementById('difficultyBadge');
             diffBadge.className = `difficulty-badge ${diffClass}`;
             diffBadge.textContent = diffText;
+            
+            const comboDisp = document.getElementById('comboDisplay');
+            if (currentQuiz.combo >= 2) {
+                comboDisp.classList.remove('hidden');
+                comboDisp.classList.toggle('hot', currentQuiz.combo >= 5);
+                document.getElementById('comboCount').textContent = currentQuiz.combo;
+            } else {
+                comboDisp.classList.add('hidden');
+            }
             
             const optionsContainer = document.getElementById('optionsContainer');
             const labels = ['A', 'B', 'C', 'D'];
@@ -2073,6 +2378,11 @@
                 `;
             }).join('');
             
+            const qContainer = document.getElementById('questionContainer');
+            qContainer.classList.remove('question-enter');
+            void qContainer.offsetWidth;
+            qContainer.classList.add('question-enter');
+            
             document.getElementById('explanationBox').classList.add('hidden');
             document.getElementById('prevQuestion').disabled = currentQuiz.currentQuestion === 0;
             document.getElementById('prevQuestion').classList.toggle('opacity-50', currentQuiz.currentQuestion === 0);
@@ -2080,6 +2390,8 @@
             const nextBtn = document.getElementById('nextQuestion');
             if (currentQuiz.currentQuestion === totalQ - 1 && answered) {
                 nextBtn.innerHTML = '查看结果<i data-lucide="trophy" class="w-4 h-4 inline ml-1"></i>';
+                nextBtn.disabled = false;
+                nextBtn.classList.remove('opacity-50');
             } else {
                 nextBtn.innerHTML = '下一题<i data-lucide="chevron-right" class="w-4 h-4 inline ml-1"></i>';
                 nextBtn.disabled = !answered;
@@ -2097,19 +2409,43 @@
             gameState.totalAnswered++;
             
             const isCorrect = index === q.answer;
+            const btn = event.currentTarget;
+            const rect = btn.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            
             if (isCorrect) {
                 currentQuiz.correctCount++;
+                currentQuiz.combo++;
                 gameState.totalCorrect++;
+                if (currentQuiz.combo > (gameState.bestCombo || 0)) {
+                    gameState.bestCombo = currentQuiz.combo;
+                }
+                playCorrect();
+                spawnParticles(cx, cy, '#4CAF50', 10);
+                if (currentQuiz.combo >= 3) {
+                    playCombo(currentQuiz.combo);
+                    showComboPopup(currentQuiz.combo);
+                    if (currentQuiz.combo >= 5) {
+                        spawnParticles(cx, cy, '#FFD700', 8);
+                    }
+                }
                 updateDailyQuestProgress('correctAnswer', 1);
+            } else {
+                currentQuiz.combo = 0;
+                playWrong();
+                document.querySelector('.modal-content').classList.add('shake');
+                setTimeout(() => document.querySelector('.modal-content').classList.remove('shake'), 500);
             }
             
             document.getElementById('explanationText').textContent = q.explanation;
             document.getElementById('explanationBox').classList.remove('hidden');
             
-            renderQuestion();
+            setTimeout(() => renderQuestion(), 100);
         }
 
         function prevQuestion() {
+            playClick();
             if (currentQuiz.currentQuestion > 0) {
                 currentQuiz.currentQuestion--;
                 renderQuestion();
@@ -2117,6 +2453,7 @@
         }
 
         function nextQuestion() {
+            playClick();
             const totalQ = currentQuiz.questions.length;
             if (currentQuiz.currentQuestion === totalQ - 1) {
                 if (currentQuiz.answers[currentQuiz.currentQuestion] !== undefined) {
@@ -2129,6 +2466,7 @@
         }
 
         function finishQuiz() {
+            playStar();
             const totalQ = currentQuiz.questions.length;
             const correct = currentQuiz.correctCount;
             const accuracy = correct / totalQ;
@@ -2137,9 +2475,10 @@
             if (accuracy >= 0.8) stars = 3;
             else if (accuracy >= 0.6) stars = 2;
             
-            const expEarned = 20 + stars * 10;
-            const moraEarned = 200 + stars * 100;
-            const primogemEarned = 5 + stars * 5;
+            const comboBonus = Math.min(currentQuiz.combo * 5, 50);
+            const expEarned = 20 + stars * 10 + comboBonus;
+            const moraEarned = 200 + stars * 100 + comboBonus * 2;
+            const primogemEarned = 5 + stars * 5 + (accuracy === 1 ? 10 : 0);
             
             if (!gameState.completedDays.includes(currentQuiz.day)) {
                 gameState.completedDays.push(currentQuiz.day);
@@ -2185,9 +2524,12 @@
             document.getElementById('earnedPrimogem').textContent = '+' + primogemEarned;
             
             const starContainer = document.getElementById('starRating');
-            starContainer.innerHTML = [1,2,3].map(i => 
-                `<i data-lucide="star" class="w-10 h-10 ${i <= stars ? 'star fill-current' : 'star empty'}"></i>`
+            starContainer.innerHTML = [1,2,3].map((i, idx) => 
+                `<i data-lucide="star" class="w-10 h-10 ${i <= stars ? 'star fill-current star-pop' : 'star empty'}" style="animation-delay: ${idx * 0.2}s; opacity: 0;"></i>`
             ).join('');
+            if (stars >= 1) {
+                setTimeout(() => spawnParticles(window.innerWidth/2, window.innerHeight/2 - 100, '#FFD700', 20), 300);
+            }
             
             const newAchDiv = document.getElementById('newAchievement');
             if (newConstellation) {
@@ -2204,13 +2546,14 @@
         function closeQuiz() {
             if (confirm('确定要退出挑战吗？当前进度将不会保存。')) {
                 document.getElementById('quizModal').classList.add('hidden');
-                currentQuiz = { day: null, currentQuestion: 0, answers: [], questions: [], correctCount: 0 };
+                currentQuiz = { day: null, currentQuestion: 0, answers: [], questions: [], correctCount: 0, combo: 0, shuffledQuestions: [] };
             }
         }
 
         function closeResult() {
+            playClick();
             document.getElementById('resultModal').classList.add('hidden');
-            currentQuiz = { day: null, currentQuestion: 0, answers: [], questions: [], correctCount: 0 };
+            currentQuiz = { day: null, currentQuestion: 0, answers: [], questions: [], correctCount: 0, combo: 0, shuffledQuestions: [] };
             renderCalendar();
         }
 
@@ -2271,9 +2614,21 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            const savedSound = localStorage.getItem('genshinMathSound');
+            if (savedSound !== null) soundEnabled = savedSound === 'true';
+            
             loadGameState();
             renderCalendar();
             lucide.createIcons();
+            
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    const overlay = document.getElementById('loadingOverlay');
+                    if (overlay) overlay.classList.add('hidden');
+                }, 300);
+            });
+            
+            document.addEventListener('click', () => initAudio(), { once: true });
         });
     </script>
 </body>
