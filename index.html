@@ -331,6 +331,10 @@ body { line-height: 1.75; }
             <span class="w-2 h-2 rounded-full shrink-0" style="background:#7BC94A;"></span>
             <span>选修拓展</span>
           </a>
+          <a href="challenge.html" data-nav-key="challenge" class="nav-link flex items-center gap-2 px-3 py-2 text-sm whitespace-nowrap rounded-lg" style="background: linear-gradient(135deg, rgba(200,169,91,0.15), rgba(200,169,91,0.05)); border: 1px solid rgba(200,169,91,0.3); color: #C8A95B; font-weight: 600;">
+            <i data-lucide="swords" class="w-4 h-4"></i>
+            <span>秘境试炼</span>
+          </a>
         </div>
         <button id="mobile-menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" class="sm:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-primary); border: 1px solid var(--genshin-border);">
           <svg class="menu-icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -344,6 +348,7 @@ body { line-height: 1.75; }
           <a data-nav-key="probability" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#A85AF5;"></span>概率与统计</a>
           <a data-nav-key="calculus" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#4CC2F0;"></span>导数与应用</a>
           <a data-nav-key="elective" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#7BC94A;"></span>选修拓展</a>
+          <a href="challenge.html" data-nav-key="challenge" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors" style="background: rgba(200,169,91,0.1); color: #C8A95B; font-weight: 600;"><i data-lucide="swords" class="w-4 h-4"></i>秘境试炼</a>
         </div>
       </div>
     </nav>
@@ -362,10 +367,16 @@ body { line-height: 1.75; }
         <span class="hero-reveal text-xs md:text-sm tracking-[0.35em] uppercase mb-6 whitespace-nowrap" style="color: var(--genshin-primary); --hero-delay: 0ms;">原神视觉 · 高中数学</span>
         <h1 class="hero-reveal font-display text-6xl md:text-7xl mb-6 bg-gradient-to-b from-[#F3E8C2] to-[#C8A95B] bg-clip-text text-transparent" style="text-wrap: balance; word-break: keep-all; overflow-wrap: break-word; --hero-delay: 100ms;">提瓦特数学图鉴</h1>
         <p class="hero-reveal text-base md:text-lg mb-10 max-w-2xl leading-relaxed" style="color: var(--genshin-muted-foreground); --hero-delay: 200ms;">以提瓦特大陆的奇幻美学，重构高中三年数学知识体系</p>
-        <a href="functions.html" class="hero-reveal inline-flex items-center gap-2 px-8 py-3.5 rounded-lg text-base font-medium cursor-pointer transition hover:brightness-110" style="background-color: #C8A95B; color: #1A1408; --hero-delay: 300ms;">
-          开启旅途
-          <i data-lucide="arrow-right" class="w-5 h-5"></i>
-        </a>
+        <div class="hero-reveal flex flex-col sm:flex-row items-center gap-4" style="--hero-delay: 300ms;">
+          <a href="functions.html" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg text-base font-medium cursor-pointer transition hover:brightness-110" style="background-color: #C8A95B; color: #1A1408;">
+            开启旅途
+            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          </a>
+          <a href="challenge.html" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg text-base font-medium cursor-pointer transition hover:brightness-110" style="background: linear-gradient(135deg, rgba(200,169,91,0.2), rgba(200,169,91,0.1)); border: 1.5px solid rgba(200,169,91,0.5); color: #C8A95B;">
+            <i data-lucide="swords" class="w-5 h-5"></i>
+            秘境试炼
+          </a>
+        </div>
         <div class="hero-reveal mt-12 flex items-center gap-2 text-sm" style="color: var(--genshin-muted-foreground); --hero-delay: 400ms;">
           <span class="whitespace-nowrap">5大模块</span>
           <span style="color: var(--genshin-primary);">·</span>
