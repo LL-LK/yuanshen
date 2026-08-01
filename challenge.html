@@ -156,24 +156,6 @@
         .nation-fontaine { border-left: 4px solid var(--fontaine); }
         .nation-sumeru { border-left: 4px solid var(--sumeru); }
 
-        .char-avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            position: absolute;
-            right: 10px;
-            top: 36px;
-            object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.25);
-            background: rgba(30,25,60,0.8);
-            z-index: 2;
-        }
-
-        .day-card:hover .char-avatar {
-            transform: scale(1.15);
-            border-color: var(--primary-gold);
-        }
-
         .char-avatar-fallback {
             width: 44px;
             height: 44px;
@@ -189,6 +171,7 @@
             border: 2px solid rgba(255,255,255,0.25);
             background: linear-gradient(135deg, rgba(100,80,200,0.6), rgba(50,40,100,0.8));
             z-index: 2;
+            animation: charBreath 3s ease-in-out infinite;
         }
 
         .quiz-char-portrait {
@@ -250,7 +233,7 @@
             transform: scale(1.05);
         }
 
-        /* Element particles floating on card */
+        /* ===== 七元素粒子特效容器 ===== */
         .element-particles {
             position: absolute;
             inset: 0;
@@ -260,20 +243,214 @@
             z-index: 0;
         }
 
-        .element-particle {
+        .el-particle {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            opacity: 0;
-            animation: elementDrift linear infinite;
+            pointer-events: none;
         }
 
-        @keyframes elementDrift {
-            0% { opacity: 0; transform: translateY(20px) scale(0); }
-            20% { opacity: 0.5; transform: translateY(0) scale(1); }
-            80% { opacity: 0.3; }
-            100% { opacity: 0; transform: translateY(-80px) scale(0.3); }
+        /* 风元素：旋转的风痕 */
+        .el-anemo .el-particle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(116,194,168,0.7) 0%, transparent 70%);
+            animation: anemoDrift 5s linear infinite;
+        }
+        @keyframes anemoDrift {
+            0% { opacity: 0; transform: translate(0, 20px) rotate(0deg) scale(0); }
+            15% { opacity: 0.6; transform: translate(5px, 5px) rotate(90deg) scale(1); }
+            50% { opacity: 0.4; transform: translate(-10px, -20px) rotate(180deg) scale(0.8); }
+            100% { opacity: 0; transform: translate(15px, -70px) rotate(360deg) scale(0.2); }
+        }
+
+        /* 岩元素：六边形晶体 */
+        .el-geo .el-particle {
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-bottom: 7px solid rgba(240,182,50,0.6);
+            filter: drop-shadow(0 0 4px rgba(240,182,50,0.5));
+            animation: geoFloat 6s ease-in-out infinite;
+        }
+        @keyframes geoFloat {
+            0% { opacity: 0; transform: translateY(15px) rotate(0deg) scale(0); }
+            20% { opacity: 0.7; transform: translateY(-5px) rotate(120deg) scale(1); }
+            80% { opacity: 0.5; transform: translateY(-40px) rotate(240deg) scale(0.9); }
+            100% { opacity: 0; transform: translateY(-70px) rotate(360deg) scale(0.3); }
+        }
+
+        /* 雷元素：电弧闪烁 */
+        .el-electro .el-particle {
+            width: 3px;
+            height: 10px;
+            background: linear-gradient(to top, rgba(176,136,232,0.8), transparent);
+            border-radius: 2px;
+            box-shadow: 0 0 6px rgba(176,136,232,0.8), 0 0 12px rgba(176,136,232,0.4);
+            animation: electroSpark 2.5s ease-in-out infinite;
+        }
+        @keyframes electroSpark {
+            0%, 100% { opacity: 0; transform: translateY(10px) scaleY(0.5); }
+            10% { opacity: 1; transform: translateY(0) scaleY(1.2); }
+            20% { opacity: 0.3; transform: translateY(-10px) scaleY(0.8); }
+            30% { opacity: 0.9; transform: translateY(-20px) scaleY(1.1); }
+            50% { opacity: 0; transform: translateY(-50px) scaleY(0.3); }
+        }
+
+        /* 草元素：飘落的叶子 */
+        .el-dendro .el-particle {
+            width: 8px;
+            height: 6px;
+            background: radial-gradient(ellipse, rgba(123,201,74,0.7) 0%, transparent 70%);
+            border-radius: 50% 0 50% 50%;
+            animation: dendroLeaf 7s ease-in-out infinite;
+        }
+        @keyframes dendroLeaf {
+            0% { opacity: 0; transform: translate(0, 10px) rotate(-30deg) scale(0); }
+            20% { opacity: 0.6; transform: translate(8px, -5px) rotate(15deg) scale(1); }
+            50% { opacity: 0.5; transform: translate(-5px, -30px) rotate(-20deg) scale(0.9); }
+            80% { opacity: 0.3; transform: translate(10px, -55px) rotate(25deg) scale(0.7); }
+            100% { opacity: 0; transform: translate(-8px, -75px) rotate(-10deg) scale(0.2); }
+        }
+
+        /* 水元素：气泡上升 */
+        .el-hydro .el-particle {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(76,194,240,0.5) 50%, transparent);
+            border: 1px solid rgba(76,194,240,0.4);
+            animation: hydroBubble 4s ease-in infinite;
+        }
+        @keyframes hydroBubble {
+            0% { opacity: 0; transform: translateY(15px) scale(0.3); }
+            20% { opacity: 0.7; transform: translateY(0) scale(1); }
+            60% { opacity: 0.5; transform: translateY(-30px) translateX(5px) scale(0.9); }
+            100% { opacity: 0; transform: translateY(-70px) translateX(-3px) scale(0.4); }
+        }
+
+        /* 火元素：跳动的火焰 */
+        .el-pyro .el-particle {
+            width: 5px;
+            height: 8px;
+            background: radial-gradient(ellipse at bottom, rgba(255,120,40,0.9), rgba(255,200,50,0.4) 60%, transparent);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            filter: blur(0.5px);
+            animation: pyroFlame 2s ease-in-out infinite;
+        }
+        @keyframes pyroFlame {
+            0% { opacity: 0; transform: translateY(10px) scale(0.5) skewX(0deg); }
+            25% { opacity: 0.9; transform: translateY(-5px) scale(1.1) skewX(-5deg); }
+            50% { opacity: 0.7; transform: translateY(-25px) scale(0.9) skewX(5deg); }
+            75% { opacity: 0.4; transform: translateY(-45px) scale(0.7) skewX(-3deg); }
+            100% { opacity: 0; transform: translateY(-65px) scale(0.2) skewX(0deg); }
+        }
+
+        /* 冰元素：雪花冰晶 */
+        .el-cryo .el-particle {
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, rgba(212,238,249,0.9) 0%, rgba(160,215,239,0.3) 60%, transparent);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: cryoSnow 6s linear infinite;
+        }
+        @keyframes cryoSnow {
+            0% { opacity: 0; transform: translateY(15px) rotate(0deg) scale(0); }
+            20% { opacity: 0.8; transform: translateY(0) rotate(72deg) scale(1); }
+            50% { opacity: 0.6; transform: translateY(-30px) translateX(8px) rotate(180deg) scale(0.8); }
+            80% { opacity: 0.3; transform: translateY(-55px) translateX(-5px) rotate(288deg) scale(0.5); }
+            100% { opacity: 0; transform: translateY(-75px) rotate(360deg) scale(0.1); }
+        }
+
+        /* ===== 角色头像呼吸浮动+边框流光 ===== */
+        .char-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            position: absolute;
+            right: 10px;
+            top: 36px;
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,0.25);
+            background: rgba(30,25,60,0.8);
+            z-index: 2;
+            animation: charBreath 3s ease-in-out infinite;
+            box-shadow: 0 0 8px rgba(255,255,255,0.1);
+        }
+
+        .day-card:hover .char-avatar {
+            animation: charBreath 2s ease-in-out infinite, charGlowPulse 1.5s ease-in-out infinite;
+            border-color: var(--primary-gold);
+        }
+
+        @keyframes charBreath {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-3px) scale(1.03); }
+        }
+
+        @keyframes charGlowPulse {
+            0%, 100% { box-shadow: 0 0 8px rgba(200,169,91,0.3), 0 0 16px rgba(200,169,91,0.1); }
+            50% { box-shadow: 0 0 14px rgba(200,169,91,0.6), 0 0 28px rgba(200,169,91,0.2); }
+        }
+
+        /* 元素标识徽章 */
+        .element-badge {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            z-index: 4;
+            border: 1.5px solid rgba(255,255,255,0.4);
+            box-shadow: 0 0 6px currentColor;
+        }
+
+        /* ===== 答题角色反应动画 ===== */
+        @keyframes charEnter {
+            0% { opacity: 0; transform: translateX(-20px) scale(0.8) rotate(-10deg); }
+            60% { opacity: 1; transform: translateX(3px) scale(1.05) rotate(2deg); }
+            100% { opacity: 1; transform: translateX(0) scale(1) rotate(0deg); }
+        }
+
+        @keyframes charHappy {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.15) rotate(-5deg); }
+            50% { transform: scale(1.1) rotate(5deg) translateY(-5px); }
+            75% { transform: scale(1.12) rotate(-3deg); }
+        }
+
+        @keyframes charSad {
+            0%, 100% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+            20% { transform: scale(0.92) rotate(-8deg); filter: brightness(0.7) saturate(0.5); }
+            40% { transform: scale(0.95) rotate(6deg); filter: brightness(0.8) saturate(0.6); }
+            60% { transform: scale(0.93) rotate(-4deg); filter: brightness(0.75) saturate(0.5); }
+            80% { transform: scale(0.96) rotate(2deg); filter: brightness(0.85) saturate(0.7); }
+        }
+
+        .quiz-char-portrait.char-enter { animation: charEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .quiz-char-portrait.char-happy { animation: charHappy 0.6s ease-in-out; }
+        .quiz-char-portrait.char-sad { animation: charSad 0.5s ease-in-out; }
+
+        /* 答题界面元素粒子爆发 */
+        .quiz-element-burst {
+            position: absolute;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* ===== 卡片hover时元素能量聚集 ===== */
+        .day-card.unlocked:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .day-card.unlocked:hover .element-particles .el-particle {
+            animation-duration: 2s !important;
+            opacity: 1 !important;
         }
 
         .char-name-tag {
@@ -285,15 +462,6 @@
             display: inline-block;
             margin-left: 6px;
             font-weight: normal;
-        }
-
-        @keyframes charFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
-        }
-
-        .char-avatar {
-            animation: charFloat 3s ease-in-out infinite;
         }
 
         .knowledge-tip {
@@ -988,125 +1156,135 @@
         ];
 
         const CHAR_CDN = 'https://genshin.jmp.blue/characters/';
+        // Elements: anemo(风), geo(岩), electro(雷), dendro(草), hydro(水), pyro(火), cryo(冰)
+        const ELEMENTS = {
+            anemo:  { color: '#74C2A8', glow: '#A8E6CF', name: '风', icon: '🌪️' },
+            geo:    { color: '#F0B632', glow: '#FFD866', name: '岩', icon: '🪨' },
+            electro:{ color: '#B088E8', glow: '#D4B3FF', name: '雷', icon: '⚡' },
+            dendro: { color: '#7BC94A', glow: '#A8E27D', name: '草', icon: '🍃' },
+            hydro:  { color: '#4CC2F0', glow: '#7DDAFF', name: '水', icon: '💧' },
+            pyro:   { color: '#EF7A35', glow: '#FFB088', name: '火', icon: '🔥' },
+            cryo:   { color: '#A0D7EF', glow: '#D4EEF9', name: '冰', icon: '❄️' }
+        };
         const dayTopics = [
             { day: 1, title: '集合与逻辑', nation: 'mondstadt', difficulty: 'basic',
-              char: { name: '温迪', slug: 'venti', title: '风色诗人',
+              char: { name: '温迪', slug: 'venti', title: '风色诗人', element: 'anemo',
                 quote: '诶嘿~集合与逻辑是数学的风，来和我一起自由地学习吧！',
                 tip: '交集∩找共同元素，并集∪合并所有元素，补集是全集的另一半。' } },
             { day: 2, title: '函数概念', nation: 'mondstadt', difficulty: 'basic',
-              char: { name: '琴', slug: 'jean', title: '蒲公英骑士',
+              char: { name: '琴', slug: 'jean', title: '蒲公英骑士', element: 'anemo',
                 quote: '函数如同骑士的职责，每一个输入都对应着确定的输出。',
                 tip: '函数三要素：定义域、值域、对应法则f(x)，缺一不可。' } },
             { day: 3, title: '单调性与奇偶性', nation: 'mondstadt', difficulty: 'basic',
-              char: { name: '魈', slug: 'xiao', title: '护法夜叉',
+              char: { name: '魈', slug: 'xiao', title: '护法夜叉', element: 'anemo',
                 quote: '函数的升降如夜叉的战斗节奏，奇偶对称蕴含天地之道。',
                 tip: '奇函数f(-x)=-f(x)关于原点对称，偶函数f(-x)=f(x)关于y轴对称。' } },
             { day: 4, title: '指数函数', nation: 'mondstadt', difficulty: 'basic',
-              char: { name: '枫原万叶', slug: 'kazuha', title: '红叶逐荒波',
+              char: { name: '枫原万叶', slug: 'kazuha', title: '红叶逐荒波', element: 'anemo',
                 quote: '一叶落知天下秋，指数增长如秋风扫落叶，势不可挡。',
                 tip: 'y=aˣ(a>0,a≠1)过(0,1)点，a>1递增，0<a<1递减。' } },
             { day: 5, title: '对数函数', nation: 'mondstadt', difficulty: 'advanced',
-              char: { name: '流浪者', slug: 'wanderer', title: '久世浮倾',
+              char: { name: '流浪者', slug: 'wanderer', title: '久世浮倾', element: 'anemo',
                 quote: '对数是指数的逆旅，正如我在世间漂泊中寻找归处。',
                 tip: 'logₐ(MN)=logₐM+logₐN，logₐ(M/N)=logₐM-logₐN，换底公式万能。' } },
             { day: 6, title: '幂函数与二次函数', nation: 'mondstadt', difficulty: 'advanced',
-              char: { name: '可莉', slug: 'klee', title: '逃跑的太阳',
+              char: { name: '可莉', slug: 'klee', title: '逃跑的太阳', element: 'pyro',
                 quote: '嘣嘣炸弹！二次函数的抛物线就像炸弹飞行的弧线~',
                 tip: '二次函数y=ax²+bx+c顶点坐标(-b/2a, (4ac-b²)/4a)，a定开口方向。' } },
             { day: 7, title: '函数周测', nation: 'mondstadt', difficulty: 'challenge',
-              char: { name: '迪卢克', slug: 'diluc', title: '晨曦的暗面',
+              char: { name: '迪卢克', slug: 'diluc', title: '晨曦的暗面', element: 'pyro',
                 quote: '通过试炼者，方可窥见晨曦的光辉。',
                 tip: '综合运用函数所有知识点，注意定义域优先原则。' } },
             { day: 8, title: '任意角三角函数', nation: 'liyue', difficulty: 'basic',
-              char: { name: '钟离', slug: 'zhongli', title: '尘世闲游',
+              char: { name: '钟离', slug: 'zhongli', title: '尘世闲游', element: 'geo',
                 quote: '角的推广如同契约的延展，从0到360度乃至无穷。',
                 tip: '任意角终边定义：sinα=y/r，cosα=x/r，tanα=y/x，r=√(x²+y²)。' } },
             { day: 9, title: '三角恒等变换', nation: 'liyue', difficulty: 'advanced',
-              char: { name: '胡桃', slug: 'hu-tao', title: '雪晴梅香',
+              char: { name: '胡桃', slug: 'hu-tao', title: '雪晴梅香', element: 'pyro',
                 quote: '三角恒等变换？就像往生堂的仪式，公式搭配要恰到好处~',
                 tip: 'sin(α±β)=sinαcosβ±cosαsinβ，cos(α±β)=cosαcosβ∓sinαsinβ。' } },
             { day: 10, title: '三角函数图像', nation: 'liyue', difficulty: 'basic',
-              char: { name: '甘雨', slug: 'ganyu', title: '循循守月',
+              char: { name: '甘雨', slug: 'ganyu', title: '循循守月', element: 'cryo',
                 quote: '正弦余弦如同月相盈亏，周而复始，绵延千年。',
                 tip: 'y=Asin(ωx+φ)周期T=2π/|ω|，A是振幅，φ决定左右平移。' } },
             { day: 11, title: '解三角形', nation: 'liyue', difficulty: 'advanced',
-              char: { name: '夜兰', slug: 'yelan', title: '兰生幽谷',
+              char: { name: '夜兰', slug: 'yelan', title: '兰生幽谷', element: 'hydro',
                 quote: '知三边而求角度，正如情报分析，线索皆在其中。',
                 tip: '正弦定理a/sinA=b/sinB=c/sinC=2R，余弦定理c²=a²+b²-2ab·cosC。' } },
             { day: 12, title: '等差数列', nation: 'liyue', difficulty: 'basic',
-              char: { name: '凝光', slug: 'ningguang', title: '掩月天权',
+              char: { name: '凝光', slug: 'ningguang', title: '掩月天权', element: 'geo',
                 quote: '等差之数，如摩拉的积累，稳扎稳打，步步生财。',
                 tip: '通项aₙ=a₁+(n-1)d，前n项和Sₙ=n(a₁+aₙ)/2=na₁+n(n-1)d/2。' } },
             { day: 13, title: '等比数列', nation: 'liyue', difficulty: 'advanced',
-              char: { name: '刻晴', slug: 'keqing', title: '霆霓快雨',
+              char: { name: '刻晴', slug: 'keqing', title: '霆霓快雨', element: 'electro',
                 quote: '等比数列的增长如雷霆万钧，变革之势锐不可当！',
                 tip: '通项aₙ=a₁·qⁿ⁻¹，Sₙ=a₁(1-qⁿ)/(1-q)(q≠1)，别忘q=1特殊情况。' } },
             { day: 14, title: '数列周测', nation: 'liyue', difficulty: 'challenge',
-              char: { name: '宵宫', slug: 'yoimiya', title: '琉焰华舞',
+              char: { name: '宵宫', slug: 'yoimiya', title: '琉焰华舞', element: 'pyro',
                 quote: '烟花绽放前需要精密计算，数列亦如是！',
                 tip: '数列求通项常用：累加法、累乘法、构造法（待定系数）。' } },
             { day: 15, title: '空间几何体', nation: 'inazuma', difficulty: 'basic',
-              char: { name: '雷电将军', slug: 'raiden', title: '一心净土',
+              char: { name: '雷电将军', slug: 'raiden', title: '一心净土', element: 'electro',
                 quote: '空间几何体，是心中净土的投影，三维万象皆在其中。',
                 tip: '柱体V=Sh，锥体V=Sh/3，球V=4πr³/3、S=4πr²。' } },
             { day: 16, title: '点线面关系', nation: 'inazuma', difficulty: 'advanced',
-              char: { name: '八重神子', slug: 'yae-miko', title: '浮世笑百姿',
+              char: { name: '八重神子', slug: 'yae-miko', title: '浮世笑百姿', element: 'electro',
                 quote: '点线面的关系如鸣神大社的势力网，错综复杂却有迹可循~',
                 tip: '线面平行：面外线平行面内线；面面平行：两组相交线分别平行。' } },
             { day: 17, title: '空间向量', nation: 'inazuma', difficulty: 'advanced',
-              char: { name: '神里绫华', slug: 'ayaka', title: '白鹭霜华',
+              char: { name: '神里绫华', slug: 'ayaka', title: '白鹭霜华', element: 'cryo',
                 quote: '空间向量是有方向的力量，如同剑术，讲究的是精准与方向。',
                 tip: '法向量求法：设n=(x,y,z)与面内两向量点积为0，解方程组。' } },
             { day: 18, title: '排列组合', nation: 'inazuma', difficulty: 'advanced',
-              char: { name: '神里绫人', slug: 'ayato', title: '磐祭叶守',
+              char: { name: '神里绫人', slug: 'ayato', title: '磐祭叶守', element: 'hydro',
                 quote: '排列组合如棋局博弈，每种排布都是一种策略。',
                 tip: '有序用排列A(n,m)，无序用组合C(n,m)，C(n,m)=C(n,n-m)。' } },
             { day: 19, title: '二项式定理', nation: 'inazuma', difficulty: 'advanced',
-              char: { name: '托马', slug: 'thoma', title: '渡来介者',
+              char: { name: '托马', slug: 'thoma', title: '渡来介者', element: 'pyro',
                 quote: '二项式展开就像家政管理，各项系数要分配妥当！',
                 tip: '(a+b)ⁿ=ΣC(n,k)aⁿ⁻ᵏbᵏ，通项T(k+1)=C(n,k)aⁿ⁻ᵏbᵏ，系数用杨辉三角。' } },
             { day: 20, title: '概率分布', nation: 'inazuma', difficulty: 'challenge',
-              char: { name: '珊瑚宫心海', slug: 'kokomi', title: '真珠之智',
+              char: { name: '珊瑚宫心海', slug: 'kokomi', title: '真珠之智', element: 'hydro',
                 quote: '概率分布是兵法的精髓，知己知彼方能百战不殆。',
                 tip: '二项分布X~B(n,p)期望E(X)=np，正态分布N(μ,σ²)关于x=μ对称。' } },
             { day: 21, title: '统计周测', nation: 'inazuma', difficulty: 'challenge',
-              char: { name: '荒泷一斗', slug: 'arataki-itto', title: '花坂豪快',
+              char: { name: '荒泷一斗', slug: 'arataki-itto', title: '花坂豪快', element: 'geo',
                 quote: '哈哈！本大爷就是统计里最耀眼的异常值！',
                 tip: '方差s²=Σ(xi-x̄)²/n衡量数据波动，回归方程y=bx+a必过(x̄,ȳ)。' } },
             { day: 22, title: '直线方程', nation: 'fontaine', difficulty: 'basic',
-              char: { name: '达达利亚', slug: 'tartaglia', title: '「公子」',
+              char: { name: '达达利亚', slug: 'tartaglia', title: '「公子」', element: 'hydro',
                 quote: '直线是最短的距离，就像我的箭矢，直达目标。',
                 tip: '点斜式y-y₀=k(x-x₀)，斜截式y=kx+b，平行k₁=k₂，垂直k₁k₂=-1。' } },
             { day: 23, title: '圆的方程', nation: 'fontaine', difficulty: 'basic',
-              char: { name: '莫娜', slug: 'mona', title: '星天水镜',
+              char: { name: '莫娜', slug: 'mona', title: '星天水镜', element: 'hydro',
                 quote: '圆是命运的轨迹，水占术能看见它，方程能描述它。',
                 tip: '标准方程(x-a)²+(y-b)²=r²，圆心(a,b)半径r；一般式用配方法化标准。' } },
             { day: 24, title: '椭圆', nation: 'fontaine', difficulty: 'advanced',
-              char: { name: '妮露', slug: 'nilou', title: '莲光落舞筵',
+              char: { name: '妮露', slug: 'nilou', title: '莲光落舞筵', element: 'hydro',
                 quote: '椭圆的轨迹如我的舞步，优雅而不失韵律。',
                 tip: 'x²/a²+y²/b²=1(a>b>0)，c²=a²-b²，离心率e=c/a∈(0,1)。' } },
             { day: 25, title: '双曲线与抛物线', nation: 'fontaine', difficulty: 'advanced',
-              char: { name: '赛诺', slug: 'cyno', title: '缄秘的裁遣',
+              char: { name: '赛诺', slug: 'cyno', title: '缄秘的裁遣', element: 'electro',
                 quote: '双曲线与抛物线，是圆锥曲线的审判，各有其轨迹与法则。',
                 tip: '双曲线c²=a²+b²，渐近线y=±(b/a)x；抛物线y²=2px焦点(p/2,0)。' } },
             { day: 26, title: '导数概念与运算', nation: 'fontaine', difficulty: 'advanced',
-              char: { name: '提纳里', slug: 'tighnari', title: '浅蔚轻行',
+              char: { name: '提纳里', slug: 'tighnari', title: '浅蔚轻行', element: 'dendro',
                 quote: '导数是变化率，如同森林中学徒成长的速度，要循序渐进。',
                 tip: '(xⁿ)=nxⁿ⁻¹，(sinx)=cosx，(eˣ)=eˣ，(lnx)=1/x，乘法法则、链式法则。' } },
             { day: 27, title: '导数应用', nation: 'fontaine', difficulty: 'challenge',
-              char: { name: '艾尔海森', slug: 'alhaitham', title: '诲韬诤言',
+              char: { name: '艾尔海森', slug: 'alhaitham', title: '诲韬诤言', element: 'dendro',
                 quote: '导数求极值，理性分析是获得最优解的唯一路径。',
                 tip: 'f(x)>0递增f(x)<0递减；极值点f(x)=0且左右变号；最值比较端点。' } },
             { day: 28, title: '定积分', nation: 'fontaine', difficulty: 'challenge',
-              char: { name: '迪希雅', slug: 'dehya', title: '炽鬃之狮',
+              char: { name: '迪希雅', slug: 'dehya', title: '炽鬃之狮', element: 'pyro',
                 quote: '积分是累积，正如沙漠佣兵的经验，一分一毫皆有用。',
                 tip: '牛顿莱布尼茨公式：∫[a,b]f(x)dx=F(b)-F(a)，F是f的一个原函数。' } },
             { day: 29, title: '复数与选修', nation: 'sumeru', difficulty: 'advanced',
-              char: { name: '纳西妲', slug: 'nahida', title: '净善摩诃慧',
+              char: { name: '纳西妲', slug: 'nahida', title: '净善摩诃慧', element: 'dendro',
                 quote: '虚数单位i的平方是-1，世界的真理往往超乎想象~',
                 tip: 'i²=-1，复数z=a+bi，模|z|=√(a²+b²)，除法分母实数化(乘共轭)。' } },
             { day: 30, title: '终极综合挑战', nation: 'sumeru', difficulty: 'challenge',
-              char: { name: '绮良良', slug: 'kirara', title: '檐宇猫游',
+              char: { name: '绮良良', slug: 'kirara', title: '檐宇猫游', element: 'dendro',
                 quote: '喵~终极挑战？别担心，把所有知识点打包送上门！',
                 tip: '综合全册知识点，保持冷静，先易后难，你一定可以！' } }
         ];
@@ -4588,7 +4766,8 @@
             const isUnlocked = day.day === 1 || gameState.completedDays.includes(day.day - 1) || isCompleted;
             const starRecord = gameState.starRecords.find(s => s.day === day.day);
             const stars = starRecord ? starRecord.stars : 0;
-            const character = day.char || { name: '旅行者', slug: 'traveler-anemo', title: '', quote: '', tip: '' };
+            const character = day.char || { name: '旅行者', slug: 'traveler-anemo', title: '', quote: '', tip: '', element: 'anemo' };
+            const el = ELEMENTS[character.element] || ELEMENTS.anemo;
             
             const difficultyClass = day.difficulty === 'basic' ? 'difficulty-basic' : 
                                     day.difficulty === 'advanced' ? 'difficulty-advanced' : 'difficulty-challenge';
@@ -4603,33 +4782,29 @@
             
             const charAvatar = isUnlocked ? 
                 `<img class="char-avatar" src="${CHAR_CDN}${character.slug}/icon-big" alt="${character.name}" loading="lazy"
+                      style="border-color:${el.color}80;box-shadow:0 0 8px ${el.color}40;"
                       onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                 <div class="char-avatar-fallback" style="display:none;color:${nationColor};">${character.name[0]}</div>` :
+                 <div class="char-avatar-fallback" style="display:none;color:${el.color};border-color:${el.color}60;background:linear-gradient(135deg, ${el.color}40, ${el.color}20);">${character.name[0]}</div>` :
                 `<div class="char-avatar-fallback" style="color:var(--text-secondary);opacity:0.4;">?</div>`;
             
-            const charGlow = isUnlocked ? `<div class="char-bg-glow" style="background:${nationColor};"></div>` : '';
+            // Element badge (top-right corner)
+            const elBadge = isUnlocked ? 
+                `<span class="element-badge" style="color:${el.color};background:${el.color}20;">${el.name}</span>` : '';
+            
+            const charGlow = isUnlocked ? `<div class="char-bg-glow" style="background:${el.color};"></div>` : '';
             const charPortraitBg = (isUnlocked && character.slug) ? 
                 `<img class="char-portrait-bg" src="${CHAR_CDN}${character.slug}/portrait" alt="" loading="lazy"
                       onerror="this.style.display='none';">` : '';
             
-            // Generate element particles
-            const nationColorMap = {
-                mondstadt: '#60C9DE',
-                liyue: '#E8B84B',
-                inazuma: '#B088E8',
-                sumeru: '#6DD58A',
-                fontaine: '#5BC8E8'
-            };
-            const particleColor = nationColorMap[day.nation] || nationColor;
+            // Generate element-specific particles
             let particles = '';
             if (isUnlocked) {
-                particles = '<div class="element-particles">';
-                for (let i = 0; i < 5; i++) {
-                    const left = 40 + Math.random() * 55;
-                    const delay = Math.random() * 6;
-                    const dur = 4 + Math.random() * 4;
-                    const size = 2 + Math.random() * 3;
-                    particles += `<span class="element-particle" style="left:${left}%;bottom:-5px;width:${size}px;height:${size}px;background:${particleColor};box-shadow:0 0 ${size*2}px ${particleColor};animation-duration:${dur}s;animation-delay:${delay}s;"></span>`;
+                particles = `<div class="element-particles el-${character.element}">`;
+                for (let i = 0; i < 6; i++) {
+                    const left = 20 + Math.random() * 75;
+                    const delay = Math.random() * 5;
+                    const dur = 3 + Math.random() * 4;
+                    particles += `<span class="el-particle" style="left:${left}%;animation-duration:${dur}s;animation-delay:${delay}s;"></span>`;
                 }
                 particles += '</div>';
             }
@@ -4641,16 +4816,17 @@
                     ${charGlow}
                     ${charPortraitBg}
                     ${particles}
+                    ${elBadge}
                     ${completedBadge}
                     ${charAvatar}
                     <div style="position:relative;z-index:1;">
                     <div class="flex items-center justify-between mb-1">
-                        <span class="text-sm font-bold" style="color: ${isCompleted ? 'var(--primary-gold)' : nationColor};">Day ${day.day}</span>
+                        <span class="text-sm font-bold" style="color: ${isCompleted ? 'var(--primary-gold)' : el.color};">Day ${day.day}</span>
                         ${statusIcon}
                     </div>
                     <p class="text-sm font-medium mb-1" style="color: var(--text-primary);">
                         ${day.title}
-                        ${isUnlocked ? `<span class="char-name-tag">${character.name}</span>` : ''}
+                        ${isUnlocked ? `<span class="char-name-tag" style="background:${el.color}20;color:${el.color};">${character.name}</span>` : ''}
                     </p>
                     <div class="flex items-center justify-between">
                         <span class="difficulty-badge ${difficultyClass}">${difficultyText}</span>
@@ -4832,7 +5008,8 @@
             document.getElementById('comboDisplay').classList.add('hidden');
             let title;
             const topic = dayTopics.find(t => t.day === day);
-            const character = (topic && topic.char) || { name: '', slug: '', quote: '', tip: '', title: '' };
+            const character = (topic && topic.char) || { name: '', slug: '', quote: '', tip: '', title: '', element: 'anemo' };
+            const el = ELEMENTS[character.element] || ELEMENTS.anemo;
             
             if (mode === 'revenge') {
                 title = `⚔️ 复仇模式 - 错题反攻 (${currentQuiz.questions.length}题)`;
@@ -4848,12 +5025,21 @@
                     portrait.src = `${CHAR_CDN}${character.slug}/icon-big`;
                     portrait.style.display = 'block';
                     portrait.alt = character.name;
+                    portrait.style.borderColor = el.color;
+                    portrait.style.boxShadow = `0 0 12px ${el.color}60`;
+                    // Reset animation classes and trigger enter animation
+                    portrait.classList.remove('char-happy', 'char-sad', 'char-enter');
+                    void portrait.offsetWidth;
+                    portrait.classList.add('char-enter');
+                    setTimeout(() => portrait.classList.remove('char-enter'), 600);
                 } else {
                     document.getElementById('quizCharPortrait').style.display = 'none';
                 }
                 const nameTag = document.getElementById('quizCharName');
                 nameTag.textContent = character.name + (character.title ? ` · ${character.title}` : '');
                 nameTag.style.display = character.name ? 'inline-block' : 'none';
+                nameTag.style.background = `${el.color}20`;
+                nameTag.style.color = el.color;
                 const quoteEl = document.getElementById('quizCharQuote');
                 if (character.quote) {
                     quoteEl.textContent = `「${character.quote}」`;
@@ -4865,6 +5051,8 @@
                 if (character.tip) {
                     document.getElementById('quizTipText').textContent = character.tip;
                     tipBox.style.display = 'block';
+                    tipBox.style.borderLeftColor = el.color;
+                    tipBox.style.background = `${el.color}10`;
                 } else {
                     tipBox.style.display = 'none';
                 }
@@ -4968,6 +5156,21 @@
                 }
                 playCorrect();
                 spawnParticles(cx, cy, '#4CAF50', 10);
+                // Character happy reaction
+                const portrait = document.getElementById('quizCharPortrait');
+                if (portrait) {
+                    portrait.classList.remove('char-sad', 'char-enter');
+                    portrait.classList.add('char-happy');
+                    setTimeout(() => portrait.classList.remove('char-happy'), 600);
+                }
+                // Spawn element-colored burst particles
+                if (currentQuiz.mode !== 'revenge') {
+                    const topic = dayTopics.find(t => t.day === currentQuiz.day);
+                    if (topic && topic.char && topic.char.element) {
+                        const eColor = (ELEMENTS[topic.char.element] || ELEMENTS.anemo).color;
+                        spawnParticles(cx, cy, eColor, 6);
+                    }
+                }
                 if (currentQuiz.combo >= 3) {
                     playCombo(currentQuiz.combo);
                     showComboPopup(currentQuiz.combo);
@@ -4992,6 +5195,13 @@
                 playWrong();
                 document.querySelector('.modal-content').classList.add('shake');
                 setTimeout(() => document.querySelector('.modal-content').classList.remove('shake'), 500);
+                // Character sad reaction
+                const portrait = document.getElementById('quizCharPortrait');
+                if (portrait) {
+                    portrait.classList.remove('char-happy', 'char-enter');
+                    portrait.classList.add('char-sad');
+                    setTimeout(() => portrait.classList.remove('char-sad'), 500);
+                }
 
                 // Add to wrong questions book (avoid duplicates)
                 const qKey = getQuestionKey(q);
