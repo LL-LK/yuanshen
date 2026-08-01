@@ -143,6 +143,11 @@
 
         .day-card.completed {
             border: 2px solid var(--primary-gold);
+            background: rgba(200, 169, 91, 0.08);
+        }
+
+        .day-card.completed:hover {
+            box-shadow: 0 0 20px rgba(200, 169, 91, 0.3);
         }
 
         .nation-mondstadt { border-left: 4px solid var(--mondstadt); }
@@ -150,6 +155,110 @@
         .nation-inazuma { border-left: 4px solid var(--inazuma); }
         .nation-fontaine { border-left: 4px solid var(--fontaine); }
         .nation-sumeru { border-left: 4px solid var(--sumeru); }
+
+        .char-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            position: absolute;
+            right: 10px;
+            top: 36px;
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,0.25);
+            background: rgba(30,25,60,0.8);
+            z-index: 2;
+        }
+
+        .day-card:hover .char-avatar {
+            transform: scale(1.15);
+            border-color: var(--primary-gold);
+        }
+
+        .char-avatar-fallback {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            position: absolute;
+            right: 10px;
+            top: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            border: 2px solid rgba(255,255,255,0.25);
+            background: linear-gradient(135deg, rgba(100,80,200,0.6), rgba(50,40,100,0.8));
+            z-index: 2;
+        }
+
+        .quiz-char-portrait {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-gold);
+            flex-shrink: 0;
+        }
+
+        .quiz-char-info {
+            flex: 1;
+        }
+
+        .quiz-char-quote {
+            font-size: 12px;
+            font-style: italic;
+            opacity: 0.8;
+            margin-top: 2px;
+            color: var(--text-secondary);
+        }
+
+        .day-card .char-bg-glow {
+            position: absolute;
+            right: -20px;
+            top: -20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            filter: blur(25px);
+            opacity: 0.15;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .day-card:hover .char-bg-glow {
+            opacity: 0.3;
+        }
+
+        .char-name-tag {
+            font-size: 10px;
+            padding: 1px 6px;
+            border-radius: 4px;
+            background: rgba(200,169,91,0.2);
+            color: var(--primary-gold);
+            display: inline-block;
+            margin-left: 6px;
+            font-weight: normal;
+        }
+
+        @keyframes charFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .char-avatar {
+            animation: charFloat 3s ease-in-out infinite;
+        }
+
+        .knowledge-tip {
+            font-size: 11px;
+            padding: 6px 8px;
+            margin-top: 6px;
+            border-radius: 6px;
+            background: rgba(200,169,91,0.08);
+            border-left: 2px solid var(--primary-gold);
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
 
         .option-btn {
             background: rgba(40, 35, 70, 0.8);
@@ -687,10 +796,16 @@
 
     <div id="quizModal" class="modal-overlay hidden">
         <div class="modal-content gold-border p-6">
-            <div class="flex items-center justify-between mb-4">
-                <div>
-                    <h3 class="text-xl font-bold" id="quizTitle">Day 1 - 集合与逻辑</h3>
-                    <p class="text-sm" style="color: var(--text-secondary);">第 <span id="currentQuestionNum">1</span>/5 题</p>
+            <div class="flex items-start gap-3 mb-4">
+                <img id="quizCharPortrait" class="quiz-char-portrait" src="" alt="" style="display:none;"
+                     onerror="this.style.display='none';">
+                <div class="quiz-char-info flex-1">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <h3 class="text-xl font-bold" id="quizTitle">Day 1 - 集合与逻辑</h3>
+                        <span id="quizCharName" class="char-name-tag" style="display:none;"></span>
+                    </div>
+                    <p id="quizCharQuote" class="quiz-char-quote" style="display:none;"></p>
+                    <p class="text-sm mt-1" style="color: var(--text-secondary);">第 <span id="currentQuestionNum">1</span>/5 题</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <div id="comboDisplay" class="combo-display hidden">
@@ -705,6 +820,10 @@
                         <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
                 </div>
+            </div>
+            <div id="quizTipBox" class="knowledge-tip mb-3" style="display:none;">
+                <i data-lucide="sparkles" class="w-3 h-3 inline mr-1" style="color:var(--primary-gold);"></i>
+                <span id="quizTipText"></span>
             </div>
             <div class="progress-bar mb-6">
                 <div class="progress-fill" id="quizProgress" style="width: 20%"></div>
@@ -821,37 +940,128 @@
             { id: 'sumeru', name: '须弥·草之国度', color: '#7BC94A', days: 2, icon: 'leaf' }
         ];
 
+        const CHAR_CDN = 'https://genshin.jmp.blue/characters/';
         const dayTopics = [
-            { day: 1, title: '集合与逻辑', nation: 'mondstadt', difficulty: 'basic' },
-            { day: 2, title: '函数概念', nation: 'mondstadt', difficulty: 'basic' },
-            { day: 3, title: '单调性与奇偶性', nation: 'mondstadt', difficulty: 'basic' },
-            { day: 4, title: '指数函数', nation: 'mondstadt', difficulty: 'basic' },
-            { day: 5, title: '对数函数', nation: 'mondstadt', difficulty: 'advanced' },
-            { day: 6, title: '幂函数与二次函数', nation: 'mondstadt', difficulty: 'advanced' },
-            { day: 7, title: '函数周测', nation: 'mondstadt', difficulty: 'challenge' },
-            { day: 8, title: '任意角三角函数', nation: 'liyue', difficulty: 'basic' },
-            { day: 9, title: '三角恒等变换', nation: 'liyue', difficulty: 'advanced' },
-            { day: 10, title: '三角函数图像', nation: 'liyue', difficulty: 'basic' },
-            { day: 11, title: '解三角形', nation: 'liyue', difficulty: 'advanced' },
-            { day: 12, title: '等差数列', nation: 'liyue', difficulty: 'basic' },
-            { day: 13, title: '等比数列', nation: 'liyue', difficulty: 'advanced' },
-            { day: 14, title: '数列周测', nation: 'liyue', difficulty: 'challenge' },
-            { day: 15, title: '空间几何体', nation: 'inazuma', difficulty: 'basic' },
-            { day: 16, title: '点线面关系', nation: 'inazuma', difficulty: 'advanced' },
-            { day: 17, title: '空间向量', nation: 'inazuma', difficulty: 'advanced' },
-            { day: 18, title: '排列组合', nation: 'inazuma', difficulty: 'advanced' },
-            { day: 19, title: '二项式定理', nation: 'inazuma', difficulty: 'advanced' },
-            { day: 20, title: '概率分布', nation: 'inazuma', difficulty: 'challenge' },
-            { day: 21, title: '统计周测', nation: 'inazuma', difficulty: 'challenge' },
-            { day: 22, title: '直线方程', nation: 'fontaine', difficulty: 'basic' },
-            { day: 23, title: '圆的方程', nation: 'fontaine', difficulty: 'basic' },
-            { day: 24, title: '椭圆', nation: 'fontaine', difficulty: 'advanced' },
-            { day: 25, title: '双曲线与抛物线', nation: 'fontaine', difficulty: 'advanced' },
-            { day: 26, title: '导数概念与运算', nation: 'fontaine', difficulty: 'advanced' },
-            { day: 27, title: '导数应用', nation: 'fontaine', difficulty: 'challenge' },
-            { day: 28, title: '定积分', nation: 'fontaine', difficulty: 'challenge' },
-            { day: 29, title: '复数与选修', nation: 'sumeru', difficulty: 'advanced' },
-            { day: 30, title: '终极综合挑战', nation: 'sumeru', difficulty: 'challenge' }
+            { day: 1, title: '集合与逻辑', nation: 'mondstadt', difficulty: 'basic',
+              char: { name: '温迪', slug: 'venti', title: '风色诗人',
+                quote: '诶嘿~集合与逻辑是数学的风，来和我一起自由地学习吧！',
+                tip: '交集∩找共同元素，并集∪合并所有元素，补集是全集的另一半。' } },
+            { day: 2, title: '函数概念', nation: 'mondstadt', difficulty: 'basic',
+              char: { name: '琴', slug: 'jean', title: '蒲公英骑士',
+                quote: '函数如同骑士的职责，每一个输入都对应着确定的输出。',
+                tip: '函数三要素：定义域、值域、对应法则f(x)，缺一不可。' } },
+            { day: 3, title: '单调性与奇偶性', nation: 'mondstadt', difficulty: 'basic',
+              char: { name: '魈', slug: 'xiao', title: '护法夜叉',
+                quote: '函数的升降如夜叉的战斗节奏，奇偶对称蕴含天地之道。',
+                tip: '奇函数f(-x)=-f(x)关于原点对称，偶函数f(-x)=f(x)关于y轴对称。' } },
+            { day: 4, title: '指数函数', nation: 'mondstadt', difficulty: 'basic',
+              char: { name: '枫原万叶', slug: 'kazuha', title: '红叶逐荒波',
+                quote: '一叶落知天下秋，指数增长如秋风扫落叶，势不可挡。',
+                tip: 'y=aˣ(a>0,a≠1)过(0,1)点，a>1递增，0<a<1递减。' } },
+            { day: 5, title: '对数函数', nation: 'mondstadt', difficulty: 'advanced',
+              char: { name: '流浪者', slug: 'wanderer', title: '久世浮倾',
+                quote: '对数是指数的逆旅，正如我在世间漂泊中寻找归处。',
+                tip: 'logₐ(MN)=logₐM+logₐN，logₐ(M/N)=logₐM-logₐN，换底公式万能。' } },
+            { day: 6, title: '幂函数与二次函数', nation: 'mondstadt', difficulty: 'advanced',
+              char: { name: '可莉', slug: 'klee', title: '逃跑的太阳',
+                quote: '嘣嘣炸弹！二次函数的抛物线就像炸弹飞行的弧线~',
+                tip: '二次函数y=ax²+bx+c顶点坐标(-b/2a, (4ac-b²)/4a)，a定开口方向。' } },
+            { day: 7, title: '函数周测', nation: 'mondstadt', difficulty: 'challenge',
+              char: { name: '迪卢克', slug: 'diluc', title: '晨曦的暗面',
+                quote: '通过试炼者，方可窥见晨曦的光辉。',
+                tip: '综合运用函数所有知识点，注意定义域优先原则。' } },
+            { day: 8, title: '任意角三角函数', nation: 'liyue', difficulty: 'basic',
+              char: { name: '钟离', slug: 'zhongli', title: '尘世闲游',
+                quote: '角的推广如同契约的延展，从0到360度乃至无穷。',
+                tip: '任意角终边定义：sinα=y/r，cosα=x/r，tanα=y/x，r=√(x²+y²)。' } },
+            { day: 9, title: '三角恒等变换', nation: 'liyue', difficulty: 'advanced',
+              char: { name: '胡桃', slug: 'hu-tao', title: '雪晴梅香',
+                quote: '三角恒等变换？就像往生堂的仪式，公式搭配要恰到好处~',
+                tip: 'sin(α±β)=sinαcosβ±cosαsinβ，cos(α±β)=cosαcosβ∓sinαsinβ。' } },
+            { day: 10, title: '三角函数图像', nation: 'liyue', difficulty: 'basic',
+              char: { name: '甘雨', slug: 'ganyu', title: '循循守月',
+                quote: '正弦余弦如同月相盈亏，周而复始，绵延千年。',
+                tip: 'y=Asin(ωx+φ)周期T=2π/|ω|，A是振幅，φ决定左右平移。' } },
+            { day: 11, title: '解三角形', nation: 'liyue', difficulty: 'advanced',
+              char: { name: '夜兰', slug: 'yelan', title: '兰生幽谷',
+                quote: '知三边而求角度，正如情报分析，线索皆在其中。',
+                tip: '正弦定理a/sinA=b/sinB=c/sinC=2R，余弦定理c²=a²+b²-2ab·cosC。' } },
+            { day: 12, title: '等差数列', nation: 'liyue', difficulty: 'basic',
+              char: { name: '凝光', slug: 'ningguang', title: '掩月天权',
+                quote: '等差之数，如摩拉的积累，稳扎稳打，步步生财。',
+                tip: '通项aₙ=a₁+(n-1)d，前n项和Sₙ=n(a₁+aₙ)/2=na₁+n(n-1)d/2。' } },
+            { day: 13, title: '等比数列', nation: 'liyue', difficulty: 'advanced',
+              char: { name: '刻晴', slug: 'keqing', title: '霆霓快雨',
+                quote: '等比数列的增长如雷霆万钧，变革之势锐不可当！',
+                tip: '通项aₙ=a₁·qⁿ⁻¹，Sₙ=a₁(1-qⁿ)/(1-q)(q≠1)，别忘q=1特殊情况。' } },
+            { day: 14, title: '数列周测', nation: 'liyue', difficulty: 'challenge',
+              char: { name: '宵宫', slug: 'yoimiya', title: '琉焰华舞',
+                quote: '烟花绽放前需要精密计算，数列亦如是！',
+                tip: '数列求通项常用：累加法、累乘法、构造法（待定系数）。' } },
+            { day: 15, title: '空间几何体', nation: 'inazuma', difficulty: 'basic',
+              char: { name: '雷电将军', slug: 'raiden', title: '一心净土',
+                quote: '空间几何体，是心中净土的投影，三维万象皆在其中。',
+                tip: '柱体V=Sh，锥体V=Sh/3，球V=4πr³/3、S=4πr²。' } },
+            { day: 16, title: '点线面关系', nation: 'inazuma', difficulty: 'advanced',
+              char: { name: '八重神子', slug: 'yae-miko', title: '浮世笑百姿',
+                quote: '点线面的关系如鸣神大社的势力网，错综复杂却有迹可循~',
+                tip: '线面平行：面外线平行面内线；面面平行：两组相交线分别平行。' } },
+            { day: 17, title: '空间向量', nation: 'inazuma', difficulty: 'advanced',
+              char: { name: '神里绫华', slug: 'ayaka', title: '白鹭霜华',
+                quote: '空间向量是有方向的力量，如同剑术，讲究的是精准与方向。',
+                tip: '法向量求法：设n=(x,y,z)与面内两向量点积为0，解方程组。' } },
+            { day: 18, title: '排列组合', nation: 'inazuma', difficulty: 'advanced',
+              char: { name: '神里绫人', slug: 'ayato', title: '磐祭叶守',
+                quote: '排列组合如棋局博弈，每种排布都是一种策略。',
+                tip: '有序用排列A(n,m)，无序用组合C(n,m)，C(n,m)=C(n,n-m)。' } },
+            { day: 19, title: '二项式定理', nation: 'inazuma', difficulty: 'advanced',
+              char: { name: '托马', slug: 'thoma', title: '渡来介者',
+                quote: '二项式展开就像家政管理，各项系数要分配妥当！',
+                tip: '(a+b)ⁿ=ΣC(n,k)aⁿ⁻ᵏbᵏ，通项T(k+1)=C(n,k)aⁿ⁻ᵏbᵏ，系数用杨辉三角。' } },
+            { day: 20, title: '概率分布', nation: 'inazuma', difficulty: 'challenge',
+              char: { name: '珊瑚宫心海', slug: 'kokomi', title: '真珠之智',
+                quote: '概率分布是兵法的精髓，知己知彼方能百战不殆。',
+                tip: '二项分布X~B(n,p)期望E(X)=np，正态分布N(μ,σ²)关于x=μ对称。' } },
+            { day: 21, title: '统计周测', nation: 'inazuma', difficulty: 'challenge',
+              char: { name: '荒泷一斗', slug: 'arataki-itto', title: '花坂豪快',
+                quote: '哈哈！本大爷就是统计里最耀眼的异常值！',
+                tip: '方差s²=Σ(xi-x̄)²/n衡量数据波动，回归方程y=bx+a必过(x̄,ȳ)。' } },
+            { day: 22, title: '直线方程', nation: 'fontaine', difficulty: 'basic',
+              char: { name: '达达利亚', slug: 'tartaglia', title: '「公子」',
+                quote: '直线是最短的距离，就像我的箭矢，直达目标。',
+                tip: '点斜式y-y₀=k(x-x₀)，斜截式y=kx+b，平行k₁=k₂，垂直k₁k₂=-1。' } },
+            { day: 23, title: '圆的方程', nation: 'fontaine', difficulty: 'basic',
+              char: { name: '莫娜', slug: 'mona', title: '星天水镜',
+                quote: '圆是命运的轨迹，水占术能看见它，方程能描述它。',
+                tip: '标准方程(x-a)²+(y-b)²=r²，圆心(a,b)半径r；一般式用配方法化标准。' } },
+            { day: 24, title: '椭圆', nation: 'fontaine', difficulty: 'advanced',
+              char: { name: '妮露', slug: 'nilou', title: '莲光落舞筵',
+                quote: '椭圆的轨迹如我的舞步，优雅而不失韵律。',
+                tip: 'x²/a²+y²/b²=1(a>b>0)，c²=a²-b²，离心率e=c/a∈(0,1)。' } },
+            { day: 25, title: '双曲线与抛物线', nation: 'fontaine', difficulty: 'advanced',
+              char: { name: '赛诺', slug: 'cyno', title: '缄秘的裁遣',
+                quote: '双曲线与抛物线，是圆锥曲线的审判，各有其轨迹与法则。',
+                tip: '双曲线c²=a²+b²，渐近线y=±(b/a)x；抛物线y²=2px焦点(p/2,0)。' } },
+            { day: 26, title: '导数概念与运算', nation: 'fontaine', difficulty: 'advanced',
+              char: { name: '提纳里', slug: 'tighnari', title: '浅蔚轻行',
+                quote: '导数是变化率，如同森林中学徒成长的速度，要循序渐进。',
+                tip: '(xⁿ)=nxⁿ⁻¹，(sinx)=cosx，(eˣ)=eˣ，(lnx)=1/x，乘法法则、链式法则。' } },
+            { day: 27, title: '导数应用', nation: 'fontaine', difficulty: 'challenge',
+              char: { name: '艾尔海森', slug: 'alhaitham', title: '诲韬诤言',
+                quote: '导数求极值，理性分析是获得最优解的唯一路径。',
+                tip: 'f(x)>0递增f(x)<0递减；极值点f(x)=0且左右变号；最值比较端点。' } },
+            { day: 28, title: '定积分', nation: 'fontaine', difficulty: 'challenge',
+              char: { name: '迪希雅', slug: 'dehya', title: '炽鬃之狮',
+                quote: '积分是累积，正如沙漠佣兵的经验，一分一毫皆有用。',
+                tip: '牛顿莱布尼茨公式：∫[a,b]f(x)dx=F(b)-F(a)，F是f的一个原函数。' } },
+            { day: 29, title: '复数与选修', nation: 'sumeru', difficulty: 'advanced',
+              char: { name: '纳西妲', slug: 'nahida', title: '净善摩诃慧',
+                quote: '虚数单位i的平方是-1，世界的真理往往超乎想象~',
+                tip: 'i²=-1，复数z=a+bi，模|z|=√(a²+b²)，除法分母实数化(乘共轭)。' } },
+            { day: 30, title: '终极综合挑战', nation: 'sumeru', difficulty: 'challenge',
+              char: { name: '绮良良', slug: 'kirara', title: '檐宇猫游',
+                quote: '喵~终极挑战？别担心，把所有知识点打包送上门！',
+                tip: '综合全册知识点，保持冷静，先易后难，你一定可以！' } }
         ];
 
         const questionBank = {
@@ -4287,16 +4497,19 @@
             }
         }
 
+        let calendarFirstRender = true;
         function renderCalendar() {
             const container = document.getElementById('nationSections');
             container.innerHTML = '';
+            
+            const animate = calendarFirstRender;
+            calendarFirstRender = false;
             
             let dayCounter = 1;
             let cardIndex = 0;
             nations.forEach(nation => {
                 const nationDiv = document.createElement('div');
                 nationDiv.className = 'mb-8';
-                nationDiv.style.animationDelay = `${nations.indexOf(nation) * 0.1}s`;
                 
                 const daysInNation = [];
                 for (let i = 0; i < nation.days; i++) {
@@ -4314,7 +4527,7 @@
                         </span>
                     </div>
                     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
-                        ${daysInNation.map(d => renderDayCard(d, nation.color, cardIndex++)).join('')}
+                        ${daysInNation.map(d => renderDayCard(d, nation.color, cardIndex++, animate)).join('')}
                     </div>
                 `;
                 container.appendChild(nationDiv);
@@ -4323,27 +4536,47 @@
             lucide.createIcons();
         }
 
-        function renderDayCard(day, nationColor, index) {
+        function renderDayCard(day, nationColor, index, animate) {
             const isCompleted = gameState.completedDays.includes(day.day);
-            const isUnlocked = day.day === 1 || gameState.completedDays.includes(day.day - 1);
+            const isUnlocked = day.day === 1 || gameState.completedDays.includes(day.day - 1) || isCompleted;
             const starRecord = gameState.starRecords.find(s => s.day === day.day);
             const stars = starRecord ? starRecord.stars : 0;
+            const character = day.char || { name: '旅行者', slug: 'traveler-anemo', title: '', quote: '', tip: '' };
             
             const difficultyClass = day.difficulty === 'basic' ? 'difficulty-basic' : 
                                     day.difficulty === 'advanced' ? 'difficulty-advanced' : 'difficulty-challenge';
             const difficultyText = day.difficulty === 'basic' ? '基础' : day.difficulty === 'advanced' ? '进阶' : '挑战';
             
+            const animClass = animate ? 'animate-in' : '';
+            const animStyle = animate ? `animation-delay: ${index * 0.05}s;` : '';
+            const statusIcon = !isUnlocked ? '<i data-lucide="lock" class="w-4 h-4" style="color: var(--text-secondary);"></i>' : 
+                              isCompleted ? '<i data-lucide="rotate-ccw" class="w-4 h-4" style="color: var(--primary-gold);"></i>' :
+                              '<i data-lucide="play-circle" class="w-4 h-4" style="color: var(--primary-gold);"></i>';
+            const completedBadge = isCompleted ? '<span class="absolute top-1 right-1 text-[10px] px-1.5 py-0.5 rounded-full" style="background:var(--primary-gold);color:#1a1530;font-weight:bold;z-index:3;">可重玩</span>' : '';
+            
+            const charAvatar = isUnlocked ? 
+                `<img class="char-avatar" src="${CHAR_CDN}${character.slug}/icon-big" alt="${character.name}" 
+                      onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                 <div class="char-avatar-fallback" style="display:none;color:${nationColor};">${character.name[0]}</div>` :
+                `<div class="char-avatar-fallback" style="color:var(--text-secondary);opacity:0.4;">?</div>`;
+            
+            const charGlow = isUnlocked ? `<div class="char-bg-glow" style="background:${nationColor};"></div>` : '';
+            
             return `
-                <div class="day-card nation-${day.nation} ${isCompleted ? 'completed' : ''} ${isUnlocked ? 'unlocked' : 'locked'} animate-in"
-                     style="animation-delay: ${index * 0.05}s;"
-                     onclick="${isUnlocked ? `startQuiz(${day.day})` : ''}">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-sm font-bold" style="color: ${nationColor};">Day ${day.day}</span>
-                        ${!isUnlocked ? '<i data-lucide="lock" class="w-4 h-4" style="color: var(--text-secondary);"></i>' : 
-                          isCompleted ? '<i data-lucide="check-circle" class="w-4 h-4" style="color: #4CAF50;"></i>' :
-                          '<i data-lucide="play-circle" class="w-4 h-4" style="color: var(--primary-gold);"></i>'}
+                <div class="day-card nation-${day.nation} ${isCompleted ? 'completed' : ''} ${isUnlocked ? 'unlocked' : 'locked'} ${animClass}"
+                     style="${animStyle}padding-right:64px;"
+                     ${isUnlocked ? `onclick="startQuiz(${day.day})"` : ''}>
+                    ${charGlow}
+                    ${completedBadge}
+                    ${charAvatar}
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-sm font-bold" style="color: ${isCompleted ? 'var(--primary-gold)' : nationColor};">Day ${day.day}</span>
+                        ${statusIcon}
                     </div>
-                    <p class="text-sm font-medium mb-2" style="color: var(--text-primary);">${day.title}</p>
+                    <p class="text-sm font-medium mb-1" style="color: var(--text-primary);">
+                        ${day.title}
+                        ${isUnlocked ? `<span class="char-name-tag">${character.name}</span>` : ''}
+                    </p>
                     <div class="flex items-center justify-between">
                         <span class="difficulty-badge ${difficultyClass}">${difficultyText}</span>
                         <div class="flex gap-0.5">
@@ -4522,11 +4755,43 @@
             
             document.getElementById('comboDisplay').classList.add('hidden');
             let title;
+            const topic = dayTopics.find(t => t.day === day);
+            const character = (topic && topic.char) || { name: '', slug: '', quote: '', tip: '', title: '' };
+            
             if (mode === 'revenge') {
                 title = `⚔️ 复仇模式 - 错题反攻 (${currentQuiz.questions.length}题)`;
+                document.getElementById('quizCharPortrait').style.display = 'none';
+                document.getElementById('quizCharName').style.display = 'none';
+                document.getElementById('quizCharQuote').style.display = 'none';
+                document.getElementById('quizTipBox').style.display = 'none';
             } else {
-                const topic = dayTopics.find(t => t.day === day);
                 title = `Day ${day} - ${topic.title}`;
+                // Show character info
+                if (character.slug) {
+                    const portrait = document.getElementById('quizCharPortrait');
+                    portrait.src = `${CHAR_CDN}${character.slug}/icon-big`;
+                    portrait.style.display = 'block';
+                    portrait.alt = character.name;
+                } else {
+                    document.getElementById('quizCharPortrait').style.display = 'none';
+                }
+                const nameTag = document.getElementById('quizCharName');
+                nameTag.textContent = character.name + (character.title ? ` · ${character.title}` : '');
+                nameTag.style.display = character.name ? 'inline-block' : 'none';
+                const quoteEl = document.getElementById('quizCharQuote');
+                if (character.quote) {
+                    quoteEl.textContent = `「${character.quote}」`;
+                    quoteEl.style.display = 'block';
+                } else {
+                    quoteEl.style.display = 'none';
+                }
+                const tipBox = document.getElementById('quizTipBox');
+                if (character.tip) {
+                    document.getElementById('quizTipText').textContent = character.tip;
+                    tipBox.style.display = 'block';
+                } else {
+                    tipBox.style.display = 'none';
+                }
             }
             document.getElementById('quizTitle').textContent = title;
             document.getElementById('quizModal').classList.remove('hidden');
@@ -4751,7 +5016,7 @@
                     gameState.starRecords.push({ day: currentQuiz.day, stars: stars });
                 }
                 
-                if (stars === 3) {
+                if (stars === 3 && (!existingStar || existingStar.stars < 3)) {
                     updateDailyQuestProgress('threeStar', 1);
                 }
             }
