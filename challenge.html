@@ -900,6 +900,60 @@
                     explanation: '解方程x²-3x+2=0得x=1或x=2。由x=1可以推出方程成立（充分性），但方程成立不一定有x=1（还可能x=2），所以是充分不必要条件。',
                     knowledgePoint: '集合运算',
                     kpPage: 'functions.html'
+                },
+                {
+                    q: '已知全集U={1,2,3,4,5}，A={1,3,5}，B={2,3,5}，则A∪B的补集为？',
+                    options: ['{4}', '{1,2,4}', '{3,5}', '{1,2,3,5}'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'A∪B={1,2,3,5}，U中不在A∪B中的元素只有4，所以补集为{4}。',
+                    knowledgePoint: '集合运算',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '设集合A={x|x²-4≤0}，B={x|x>1}，则A∩B=？',
+                    options: ['(1,2]', '[1,2]', '(1,2)', '[-2,1]'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'A=[-2,2]，B=(1,+∞)，交集为(1,2]，注意x=2时满足x²-4=0≤0。',
+                    knowledgePoint: '集合运算',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '命题"若x>2，则x²>4"的逆否命题是？',
+                    options: ['若x²≤4，则x≤2', '若x≤2，则x²≤4', '若x²>4，则x>2', '若x<2，则x²<4'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '逆否命题：先否定结论再否定条件并交换位置。原命题p→q的逆否命题是¬q→¬p。即"若x²≤4，则x≤2"。',
+                    knowledgePoint: '集合运算',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '已知A⊆B，B⊆C，则下列正确的是？',
+                    options: ['A⊆C', 'C⊆A', 'A=C', 'A∩C=∅'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '集合的包含关系具有传递性，A⊆B且B⊆C则A⊆C。',
+                    knowledgePoint: '集合运算',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '集合M={x|x=2k,k∈Z}，N={x|x=2k+1,k∈Z}，则M∩N=？',
+                    options: ['∅', 'M', 'N', 'Z'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'M是偶数集，N是奇数集，偶数和奇数没有公共元素，交集为空集。',
+                    knowledgePoint: '集合运算',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '设p:|x-1|<2，q:0<x<3，则p是q的什么条件？',
+                    options: ['必要不充分条件', '充分不必要条件', '充要条件', '既不充分也不必要'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'p解得-1<x<3，q是0<x<3。q能推出p但p不能推出q（如x=-0.5满足p但不满足q），所以p是q的必要不充分条件。',
+                    knowledgePoint: '集合运算',
+                    kpPage: 'functions.html'
                 }
             ],
             2: [
@@ -945,6 +999,60 @@
                     answer: 0,
                     difficulty: 'advanced',
                     explanation: '令t = x+1，则x = t-1，代入得f(t) = (t-1)² - 2(t-1) = t² - 2t + 1 - 2t + 2 = t² - 4t + 3，所以f(x) = x² - 4x + 3。',
+                    knowledgePoint: '函数概念',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '函数f(x)=√(x-1)+√(3-x)的定义域为？',
+                    options: ['[1,3]', '(1,3)', '[1,3)', '(1,3]'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '要使根号有意义，需x-1≥0且3-x≥0，即x≥1且x≤3，定义域为[1,3]。',
+                    knowledgePoint: '函数概念',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '下列函数中是偶函数的是？',
+                    options: ['y=x³', 'y=x²+1', 'y=1/x', 'y=√x'],
+                    answer: 1,
+                    difficulty: 'basic',
+                    explanation: '偶函数满足f(-x)=f(x)。y=x²+1满足：(-x)²+1=x²+1=f(x)。y=x³和y=1/x是奇函数，y=√x定义域不对称。',
+                    knowledgePoint: '函数概念',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '函数f(x)=x²-2x+3的值域为？',
+                    options: ['[2,+∞)', '[3,+∞)', '[0,+∞)', 'R'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'f(x)=(x-1)²+2，顶点在x=1处，最小值为2，开口向上，值域为[2,+∞)。',
+                    knowledgePoint: '函数概念',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '已知f(x+1)=x²，则f(x)=？',
+                    options: ['(x-1)²', 'x²-1', '(x+1)²', 'x²+1'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '令t=x+1，则x=t-1，f(t)=(t-1)²，所以f(x)=(x-1)²。',
+                    knowledgePoint: '函数概念',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '函数y=|x|/x（x≠0）的值域是？',
+                    options: ['{1,-1}', '[-1,1]', '{1}', '{-1}'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'x>0时y=1，x<0时y=-1，所以函数值只有1和-1两个。',
+                    knowledgePoint: '函数概念',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '若f(x)是奇函数，且f(1)=3，则f(-1)=？',
+                    options: ['-3', '3', '0', '1'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '奇函数满足f(-x)=-f(x)，所以f(-1)=-f(1)=-3。',
                     knowledgePoint: '函数概念',
                     kpPage: 'functions.html'
                 }
@@ -994,6 +1102,60 @@
                     explanation: '这是开口向下的抛物线，对称轴x=-b/(2a)=-2/(2×(-1))=1。开口向下，所以在对称轴左侧递增，即(-∞,1]。',
                     knowledgePoint: '函数性质',
                     kpPage: 'functions.html'
+                },
+                {
+                    q: '函数f(x)=x²-4x在下列哪个区间上单调递增？',
+                    options: ['(2,+∞)', '(-∞,2)', '(-∞,0)', '(0,2)'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'f(x)=(x-2)²-4，开口向上，对称轴x=2，在(2,+∞)上单调递增。',
+                    knowledgePoint: '函数性质',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '函数f(x)=-x³+1在R上的单调性是？',
+                    options: ['单调递减', '单调递增', '先增后减', '先减后增'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'f’(x)=-3x²≤0恒成立（仅x=0时为0），所以f(x)在R上单调递减。',
+                    knowledgePoint: '函数性质',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '已知偶函数f(x)在[0,+∞)上单调递增，f(1)=2，则f(x)>2的解集为？',
+                    options: ['(-∞,-1)∪(1,+∞)', '(-1,1)', '(1,+∞)', '(-∞,-1)'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '偶函数关于y轴对称，在[0,+∞)递增则在(-∞,0]递减。f(x)>2=f(1)即|x|>1，解得x<-1或x>1。',
+                    knowledgePoint: '函数性质',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '函数f(x)=x+1/x在(0,1)上的单调性是？',
+                    options: ['单调递减', '单调递增', '先增后减', '先减后增'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'f’(x)=1-1/x²，在(0,1)上1/x²>1，所以f’(x)<0，单调递减。',
+                    knowledgePoint: '函数性质',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '下列函数中既是奇函数又是增函数的是？',
+                    options: ['y=x+1', 'y=-x', 'y=x³', 'y=1/x'],
+                    answer: 2,
+                    difficulty: 'basic',
+                    explanation: 'y=x³是奇函数((-x)³=-x³)，且导数y’=3x²≥0在R上单调递增。',
+                    knowledgePoint: '函数性质',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '函数f(x)=√(4-x²)的单调递减区间是？',
+                    options: ['[0,2]', '[-2,0]', '[-2,2]', '[0,+∞)'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'f(x)的定义域[-2,2]，图像是上半圆，在[0,2]上递减。',
+                    knowledgePoint: '函数性质',
+                    kpPage: 'functions.html'
                 }
             ],
             4: [
@@ -1039,6 +1201,60 @@
                     answer: 0,
                     difficulty: 'challenge',
                     explanation: '9 = 3² = (1/3)^(-2)。不等式变为(1/3)^(x²-1) > (1/3)^(-2)。因为0<1/3<1，函数递减，所以x²-1 < -2，即x² < -1？不对，应仔细算：x²-1 < -2 → x² < -1？这不对。重新算：(1/3)^(x²-1) = 3^(1-x²) > 9 = 3²，所以1-x² > 2 → -x² > 1 → x² < -1？还是不对。正确：(1/3)^(x²-1) > 9 → 3^(1-x²) > 3² → 1-x² > 2 → -x² > 1，这无实数解？让我重新检查题目。应该是(1/3)^(x²-1) > 1/9 = 3^(-2)，则x²-1 < 2 → x² < 3 → x∈(-√3,√3)。题目写的是>9，即3²，那应是(1/3)^(x²-1) > 3² → 3^(1-x²) > 3² → 1-x² > 2 → -x² > 1，确实无解。修正一下：答案应为(-√3,√3)，题目应该是大于1/9，让我调整解析：当底数<1时，指数函数递减，所以(1/3)^(x²-1) > (1/3)^(-2) 等价于 x²-1 < 2，即x²<3，解得-√3<x<√3。',
+                    knowledgePoint: '指数函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '计算2³×2⁴=？',
+                    options: ['2⁷', '2¹²', '4⁷', '2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '同底数幂相乘，底数不变指数相加：2³×2⁴=2³⁺⁴=2⁷。',
+                    knowledgePoint: '指数函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '函数y=2ˣ的值域是？',
+                    options: ['(0,+∞)', '[0,+∞)', 'R', '(1,+∞)'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '指数函数y=2ˣ恒大于0且可以取任意正数值，值域为(0,+∞)。',
+                    knowledgePoint: '指数函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '若3ˣ=1/9，则x=？',
+                    options: ['-2', '2', '1/2', '-1/2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '1/9=3⁻²，所以3ˣ=3⁻²，x=-2。',
+                    knowledgePoint: '指数函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '函数y=aˣ（a>1）的图像过哪个定点？',
+                    options: ['(0,1)', '(1,0)', '(0,0)', '(1,1)'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '任何a>0且a≠1都有a⁰=1，所以指数函数过定点(0,1)。',
+                    knowledgePoint: '指数函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '化简8^(2/3)=？',
+                    options: ['8', '2', '4', '1/2'],
+                    answer: 2,
+                    difficulty: 'basic',
+                    explanation: '8^(2/3)=(2³)^(2/3)=2²=4。',
+                    knowledgePoint: '指数函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '不等式(1/2)ˣ>8的解集是？',
+                    options: ['x<-3', 'x>3', 'x>-3', 'x<3'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '(1/2)ˣ=2⁻ˣ>8=2³，所以-x>3，x<-3。',
                     knowledgePoint: '指数函数',
                     kpPage: 'functions.html'
                 }
@@ -1088,6 +1304,60 @@
                     explanation: '首先定义域：x²-2x>0 → x(x-2)>0 → x<0或x>2。令u=x²-2x，y=log_(1/2)u。因为0<1/2<1，外层函数递减，所以要找y的递增区间，即找u的递减区间（同增异减）。u=x²-2x对称轴x=1，在(-∞,1)上递减。与定义域x<0或x>2取交集，得(-∞,0)。',
                     knowledgePoint: '对数函数',
                     kpPage: 'functions.html'
+                },
+                {
+                    q: 'log₂8=？',
+                    options: ['3', '2', '4', '6'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '因为2³=8，所以log₂8=3。',
+                    knowledgePoint: '对数函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '计算lg2+lg5=？',
+                    options: ['1', 'lg7', '10', '0'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'lg2+lg5=lg(2×5)=lg10=1。',
+                    knowledgePoint: '对数函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '函数y=log₂(x-1)的定义域是？',
+                    options: ['(1,+∞)', '[1,+∞)', '(0,+∞)', 'R'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '对数的真数需大于0：x-1>0即x>1。',
+                    knowledgePoint: '对数函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '若log₃x=-2，则x=？',
+                    options: ['1/9', '9', '-9', '1/6'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'x=3⁻²=1/9。',
+                    knowledgePoint: '对数函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '函数y=logₐx（0<a<1）在(0,+∞)上是？',
+                    options: ['减函数', '增函数', '常数函数', '先增后减'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '当0<a<1时，对数函数在(0,+∞)上单调递减。',
+                    knowledgePoint: '对数函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '已知lnx+lny=2，则xy=？',
+                    options: ['e²', '2', '100', '2e'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'lnx+lny=ln(xy)=2，所以xy=e²。',
+                    knowledgePoint: '对数函数',
+                    kpPage: 'functions.html'
                 }
             ],
             6: [
@@ -1133,6 +1403,60 @@
                     answer: 0,
                     difficulty: 'advanced',
                     explanation: 'f(0)=c=1；f(1)=a+b+c=2→a+b=1；f(-1)=a-b+c=4→a-b=3。解方程组：a+b=1，a-b=3，相加得2a=4→a=2，b=1-a=-1。所以a=2,b=-1,c=1。',
+                    knowledgePoint: '二次函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '二次函数y=x²-4x+3的对称轴是？',
+                    options: ['x=2', 'x=-2', 'x=3', 'x=1'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'y=(x-2)²-1，对称轴为x=2，或用公式x=-b/(2a)=4/2=2。',
+                    knowledgePoint: '二次函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '函数y=x²-2x-3的零点是？',
+                    options: ['x=-1和x=3', 'x=1和x=-3', 'x=1和x=3', 'x=-1和x=-3'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'x²-2x-3=0，(x-3)(x+1)=0，解得x=3或x=-1。',
+                    knowledgePoint: '二次函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '幂函数y=x^(1/2)的定义域是？',
+                    options: ['[0,+∞)', 'R', '(0,+∞)', '[0,1]'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'y=√x，要求x≥0，定义域为[0,+∞)。',
+                    knowledgePoint: '二次函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '二次函数y=-x²+2x+3的最大值是？',
+                    options: ['4', '3', '2', '5'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'y=-(x-1)²+4，开口向下，顶点(1,4)处取最大值4。',
+                    knowledgePoint: '二次函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '不等式x²-5x+6<0的解集是？',
+                    options: ['(2,3)', '(-∞,2)∪(3,+∞)', '[2,3]', '(0,2)'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '(x-2)(x-3)<0，解得2<x<3。',
+                    knowledgePoint: '二次函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '若幂函数y=xᵅ的图像过点(4,2)，则α=？',
+                    options: ['1/2', '2', '-1/2', '1'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '4ᵅ=2，即2²ᵅ=2¹，所以2α=1，α=1/2。',
                     knowledgePoint: '二次函数',
                     kpPage: 'functions.html'
                 }
@@ -1182,6 +1506,60 @@
                     explanation: '奇函数f(-x)=-f(x)。当x>0时，-x<0，f(-x)=2^(-x)，所以f(x)=-f(-x)=-2^(-x)，即g(x)=-2^(-x)。g(2)=-2^(-2)=-1/4。',
                     knowledgePoint: '函数综合',
                     kpPage: 'functions.html'
+                },
+                {
+                    q: '若f(x)=x²+1，则f(f(1))=？',
+                    options: ['5', '4', '3', '2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'f(1)=1+1=2，f(f(1))=f(2)=4+1=5。',
+                    knowledgePoint: '函数综合',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '方程2ˣ=x+2的实数解个数是？',
+                    options: ['2', '1', '3', '0'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '画图可知y=2ˣ与y=x+2在x<0处有1个交点（x≈-1.69），在x>0处有1个交点（x=2），共2个解。',
+                    knowledgePoint: '函数综合',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '函数f(x)=ln(x²-1)的定义域为？',
+                    options: ['(-∞,-1)∪(1,+∞)', '(-1,1)', '[1,+∞)', 'R'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'x²-1>0即x²>1，解得|x|>1即x<-1或x>1。',
+                    knowledgePoint: '函数综合',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '若函数y=f(x)的定义域为[0,2]，则f(2x)的定义域为？',
+                    options: ['[0,1]', '[0,2]', '[0,4]', '[1,2]'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '需要0≤2x≤2即0≤x≤1，定义域为[0,1]。',
+                    knowledgePoint: '函数综合',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '设f(x)是R上的奇函数，当x>0时f(x)=x(1-x)，则f(-2)=？',
+                    options: ['2', '-2', '6', '-6'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'f(2)=2(1-2)=-2，由奇函数性质f(-2)=-f(2)=2。',
+                    knowledgePoint: '函数综合',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '若a=0.3²，b=2⁰·³，c=log₂0.3，则？',
+                    options: ['c<a<b', 'a<c<b', 'c<b<a', 'b<c<a'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '0.3²=0.09∈(0,1)，2⁰·³>2⁰=1，log₂0.3<0，所以c<a<b。',
+                    knowledgePoint: '函数综合',
+                    kpPage: 'functions.html'
                 }
             ],
             8: [
@@ -1227,6 +1605,60 @@
                     answer: 0,
                     difficulty: 'advanced',
                     explanation: 'sinαcosα = sinαcosα/(sin²α+cos²α) = tanα/(tan²α+1) = 2/(4+1) = 2/5。（分子分母同除以cos²α）',
+                    knowledgePoint: '三角函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: 'sin(π/6)=？',
+                    options: ['1/2', '√2/2', '√3/2', '1'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '特殊角：sin(π/6)=sin30°=1/2。',
+                    knowledgePoint: '三角函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: 'cos(π/4)=？',
+                    options: ['√2/2', '1/2', '√3/2', '0'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '特殊角：cos(π/4)=cos45°=√2/2。',
+                    knowledgePoint: '三角函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: 'tan(π/3)=？',
+                    options: ['√3', '1', '√3/3', '3'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'tan(π/3)=tan60°=√3。',
+                    knowledgePoint: '三角函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: 'sin²θ+cos²θ=？',
+                    options: ['1', '0', 'tanθ', '2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '基本恒等式：sin²θ+cos²θ=1。',
+                    knowledgePoint: '三角函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '将角度60°化为弧度为？',
+                    options: ['π/3', 'π/6', 'π/4', 'π/2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '60°=60×π/180=π/3弧度。',
+                    knowledgePoint: '三角函数',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '若sinα=3/5，且α为第二象限角，则cosα=？',
+                    options: ['-4/5', '4/5', '-3/5', '3/5'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'cosα=-√(1-sin²α)=-√(1-9/25)=-4/5（第二象限cos为负）。',
                     knowledgePoint: '三角函数',
                     kpPage: 'functions.html'
                 }
@@ -1276,6 +1708,60 @@
                     explanation: 'y=sin(2x+π/3)=sin[2(x+π/6)]，所以由y=sin2x向左平移π/6个单位得到。',
                     knowledgePoint: '三角恒等变换',
                     kpPage: 'functions.html'
+                },
+                {
+                    q: 'sin2α可以表示为？',
+                    options: ['2sinαcosα', 'sin²α-cos²α', '1-2sin²α', '2cos²α-1'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '二倍角公式：sin2α=2sinαcosα。',
+                    knowledgePoint: '三角恒等变换',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: 'cos²α-sin²α=？',
+                    options: ['cos2α', 'sin2α', '1', 'tan2α'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '二倍角公式：cos2α=cos²α-sin²α。',
+                    knowledgePoint: '三角恒等变换',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: 'sin(π/2-α)=？',
+                    options: ['cosα', 'sinα', '-cosα', '-sinα'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '诱导公式：sin(π/2-α)=cosα。',
+                    knowledgePoint: '三角恒等变换',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: 'sin(π+α)=？',
+                    options: ['-sinα', 'sinα', 'cosα', '-cosα'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '诱导公式：sin(π+α)=-sinα。',
+                    knowledgePoint: '三角恒等变换',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: 'tan(α+β)=？（tanα,tanβ存在）',
+                    options: ['(tanα+tanβ)/(1-tanαtanβ)', 'tanα+tanβ', 'tanαtanβ', '(tanα-tanβ)/(1+tanαtanβ)'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '正切和角公式：tan(α+β)=(tanα+tanβ)/(1-tanαtanβ)。',
+                    knowledgePoint: '三角恒等变换',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '若α+β=π/4，则(1+tanα)(1+tanβ)=？',
+                    options: ['2', '1', '√2', '0'],
+                    answer: 0,
+                    difficulty: 'challenge',
+                    explanation: '由tan(α+β)=1=(tanα+tanβ)/(1-tanαtanβ)，得tanα+tanβ=1-tanαtanβ，即tanα+tanβ+tanαtanβ=1，所以(1+tanα)(1+tanβ)=2。',
+                    knowledgePoint: '三角恒等变换',
+                    kpPage: 'functions.html'
                 }
             ],
             10: [
@@ -1321,6 +1807,60 @@
                     answer: 3,
                     difficulty: 'basic',
                     explanation: 'y=sin(2x-π/3)=sin[2(x-π/6)]，所以是向右平移π/6个单位。',
+                    knowledgePoint: '三角函数图像',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '函数y=sinx的最小正周期是？',
+                    options: ['2π', 'π', 'π/2', '4π'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '正弦函数y=sinx的最小正周期T=2π。',
+                    knowledgePoint: '三角函数图像',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '函数y=2sin(2x+π/6)的振幅是？',
+                    options: ['2', '1', '2π', 'π'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'y=Asin(ωx+φ)中A为振幅，此处A=2。',
+                    knowledgePoint: '三角函数图像',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '函数y=sin(2x)的最小正周期是？',
+                    options: ['π', '2π', 'π/2', '4π'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'T=2π/ω=2π/2=π。',
+                    knowledgePoint: '三角函数图像',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: 'y=sinx的图像向左平移π/2个单位得到？',
+                    options: ['y=cosx', 'y=-cosx', 'y=sin(x-π/2)', 'y=-sinx'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '左移π/2：sin(x+π/2)=cosx。',
+                    knowledgePoint: '三角函数图像',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '函数y=2sin(x-π/3)的初相是？',
+                    options: ['-π/3', '2', '1', 'π/3'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'y=Asin(ωx+φ)中φ为初相，此处φ=-π/3。',
+                    knowledgePoint: '三角函数图像',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: 'y=sinx在[0,π/2]上的最大值是？',
+                    options: ['1', '0', '-1', 'π/2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'sin(π/2)=1是[0,π/2]上的最大值。',
                     knowledgePoint: '三角函数图像',
                     kpPage: 'functions.html'
                 }
@@ -1370,6 +1910,60 @@
                     explanation: '由正弦定理，a:b:c=sinA:sinB:sinC=3:2:4，设a=3k,b=2k,c=4k。cosC=(a²+b²-c²)/(2ab)=(9k²+4k²-16k²)/(12k²)=(-3k²)/(12k²)=-1/4。',
                     knowledgePoint: '解三角形',
                     kpPage: 'geometry.html'
+                },
+                {
+                    q: '在△ABC中，a=2，b=3，C=60°，则c=？',
+                    options: ['√7', '√13', '5', '√19'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '余弦定理：c²=a²+b²-2ab·cosC=4+9-2×2×3×1/2=7，c=√7。',
+                    knowledgePoint: '解三角形',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '在△ABC中，a=√3，b=1，A=60°，则B=？',
+                    options: ['30°', '45°', '60°', '90°'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '正弦定理：sinB/b=sinA/a，sinB=b·sinA/a=1×(√3/2)/√3=1/2，因为a>b所以A>B，B=30°。',
+                    knowledgePoint: '解三角形',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '△ABC中，若a²+b²<c²，则△ABC是？',
+                    options: ['钝角三角形', '锐角三角形', '直角三角形', '等边三角形'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '由余弦定理，cosC=(a²+b²-c²)/(2ab)<0，C为钝角。',
+                    knowledgePoint: '解三角形',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '△ABC的面积公式S=1/2·ab·sinC中，C是？',
+                    options: ['a和b的夹角', 'a边的对角', 'b边的对角', '任意角'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'S=1/2absinC中C是边a和边b的夹角。',
+                    knowledgePoint: '解三角形',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '在△ABC中，若sinA:sinB:sinC=3:4:5，则△ABC是？',
+                    options: ['直角三角形', '等边三角形', '等腰三角形', '锐角三角形'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '由正弦定理a:b:c=3:4:5，满足3²+4²=5²，为直角三角形。',
+                    knowledgePoint: '解三角形',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '在△ABC中，A=30°，a=1，b=√3，则B=？',
+                    options: ['60°或120°', '60°', '120°', '45°'],
+                    answer: 0,
+                    difficulty: 'challenge',
+                    explanation: 'sinB=b·sinA/a=√3×1/2/1=√3/2，B=60°或120°（b>a有两解）。',
+                    knowledgePoint: '解三角形',
+                    kpPage: 'geometry.html'
                 }
             ],
             12: [
@@ -1415,6 +2009,60 @@
                     answer: 0,
                     difficulty: 'challenge',
                     explanation: 'Sₙ/n = a₁ + (n-1)d/2，这是关于n的一次函数，公差为d/2。由条件，(S₂₀₁₄/2014 - S₂₀₁₂/201₂)/(2014-2012) = d/2 = 2/2 = 1，所以d=2。S₂₀₁₄ = 2014×(-2012) + 2014×2013×2/2 = 2014×(-2012+2013) = 2014。',
+                    knowledgePoint: '等差数列',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '等差数列{aₙ}中，a₁=2，d=3，则a₅=？',
+                    options: ['14', '15', '17', '11'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'a₅=a₁+4d=2+12=14。',
+                    knowledgePoint: '等差数列',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '等差数列1,4,7,10,...的公差是？',
+                    options: ['3', '4', '1', '2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'd=4-1=3。',
+                    knowledgePoint: '等差数列',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '等差数列{aₙ}中，a₃+a₇=10，则a₅=？',
+                    options: ['5', '10', '2.5', '20'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '等差中项性质：a₃+a₇=2a₅=10，a₅=5。',
+                    knowledgePoint: '等差数列',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '等差数列前n项和Sₙ=n²，则a₁₀=？',
+                    options: ['19', '10', '100', '20'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'a₁₀=S₁₀-S₉=100-81=19。',
+                    knowledgePoint: '等差数列',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '等差数列{aₙ}中，S₁₀=100，则a₁+a₁₀=？',
+                    options: ['20', '10', '40', '25'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'S₁₀=10(a₁+a₁₀)/2=5(a₁+a₁₀)=100，所以a₁+a₁₀=20。',
+                    knowledgePoint: '等差数列',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '在-1和7之间插入3个数使成等差数列，则这3个数是？',
+                    options: ['1,3,5', '2,4,6', '0,3,6', '1,4,7'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '公差d=(7-(-1))/4=2，插入的数为-1+2=1, 3, 5。',
                     knowledgePoint: '等差数列',
                     kpPage: 'functions.html'
                 }
@@ -1464,6 +2112,60 @@
                     explanation: '等比数列中a₁a₅=a₂a₄=a₃²=4，又a₃>0，所以a₃=2。',
                     knowledgePoint: '等比数列',
                     kpPage: 'functions.html'
+                },
+                {
+                    q: '等比数列{aₙ}中，a₁=1，q=2，则a₄=？',
+                    options: ['8', '4', '16', '6'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'a₄=a₁q³=1×8=8。',
+                    knowledgePoint: '等比数列',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '等比数列2,6,18,...的公比是？',
+                    options: ['3', '2', '6', '4'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'q=6/2=3。',
+                    knowledgePoint: '等比数列',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '等比数列{aₙ}中，a₁a₉=16，则a₅=？',
+                    options: ['±4', '4', '-4', '16'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '等比中项：a₁a₉=a₅²=16，a₅=±4。',
+                    knowledgePoint: '等比数列',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '等比数列前n项和Sₙ=2ⁿ-1，则公比q=？',
+                    options: ['2', '1', '3', '1/2'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'a₁=S₁=1，a₂=S₂-S₁=3-1=2，q=2/1=2。',
+                    knowledgePoint: '等比数列',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '等比数列{aₙ}各项为正，a₂a₄+2a₃a₅+a₄a₆=25，则a₃+a₅=？',
+                    options: ['5', '25', '√5', '10'],
+                    answer: 0,
+                    difficulty: 'challenge',
+                    explanation: 'a₂a₄=a₃²，a₄a₆=a₅²，所以a₃²+2a₃a₅+a₅²=(a₃+a₅)²=25，a₃+a₅=5（各项为正）。',
+                    knowledgePoint: '等比数列',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '等比数列1,-2,4,-8,...的前5项和是？',
+                    options: ['11', '-11', '21', '-21'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'S₅=1-2+4-8+16=11，或用公式S₅=(1-(-2)⁵)/(1-(-2))=(1+32)/3=11。',
+                    knowledgePoint: '等比数列',
+                    kpPage: 'functions.html'
                 }
             ],
             14: [
@@ -1509,6 +2211,60 @@
                     answer: 2,
                     difficulty: 'challenge',
                     explanation: 'n≥2时aₙ=Sₙ-Sₙ₋₁=(n²-9n)-((n-1)²-9(n-1))=2n-10，n=1时a₁=S₁=-8也满足。令5<2k-10<8→15<2k<18→7.5<k<9，k=8。',
+                    knowledgePoint: '数列综合',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '等差数列{aₙ}中a₁=1，d=2，则S₁₀=？',
+                    options: ['100', '90', '110', '55'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'S₁₀=10×1+10×9/2×2=10+90=100。',
+                    knowledgePoint: '数列综合',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '数列1,1/2,1/4,1/8,...的前n项和Sₙ趋近于？',
+                    options: ['2', '1', 'n', '∞'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '等比数列q=1/2，无穷项和S=1/(1-1/2)=2。',
+                    knowledgePoint: '数列综合',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '若{aₙ}是等差数列，a₁+a₂+a₃=12，则a₂=？',
+                    options: ['4', '3', '6', '2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'a₁+a₃=2a₂，所以3a₂=12，a₂=4。',
+                    knowledgePoint: '数列综合',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '数列aₙ=n/(n+1)的第几项是0.9？',
+                    options: ['9', '10', '8', '11'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'n/(n+1)=0.9→n=0.9n+0.9→0.1n=0.9→n=9。',
+                    knowledgePoint: '数列综合',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '已知Sₙ=2n²+n，则{aₙ}是什么数列？',
+                    options: ['等差数列', '等比数列', '常数列', '摆动数列'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'aₙ=Sₙ-Sₙ₋₁=2n²+n-2(n-1)²-(n-1)=4n-1（n≥2），a₁=3也满足，公差为4，是等差数列。',
+                    knowledgePoint: '数列综合',
+                    kpPage: 'functions.html'
+                },
+                {
+                    q: '等比数列{aₙ}中a₁+a₂=3，a₃+a₄=12，则a₅+a₆=？',
+                    options: ['48', '24', '36', '16'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'a₃+a₄=q²(a₁+a₂)=12，q²=4，a₅+a₆=q²(a₃+a₄)=4×12=48。',
                     knowledgePoint: '数列综合',
                     kpPage: 'functions.html'
                 }
@@ -1558,6 +2314,60 @@
                     explanation: '底面正三角形面积=√3/4×4=√3。底面中心到底面顶点距离=2/3×√3=2√3/3。高h=√((√3)²-(2√3/3)²)=√(3-4/3)=√(5/3)？不对：(√3)²=3，(2√3/3)²=4×3/9=4/3，h=√(3-4/3)=√(5/3)？这给的选项不对。让我重新想：侧棱长√3，底面外接圆半径=2/3×√3=2√3/3。h²=3-4/3=5/3，h=√15/3。V=1/3×√3×√15/3=√45/9=3√5/9=√5/3。这也不在选项中。让我调整题目：底面边长√3，侧棱长√2... 不，让我改底面边长为√2，侧棱长2... 不，更简单：底面边长为√3，侧棱长为√5。底面外接圆半径=2/3×(√3/2×√3)=2/3×3/2=1。h=√(5-1)=2。底面积=√3/4×3=3√3/4。V=1/3×3√3/4×2=√3/2。还是不对。让我用简单数值：正四面体（所有棱相等）棱长为2，则高h=√(4-4/3)=√(8/3)=2√6/3，底面积√3，V=1/3×√3×2√6/3=2√18/9=6√2/9=2√2/3，选A。就当这是正四面体吧。',
                     knowledgePoint: '空间几何体',
                     kpPage: 'geometry.html'
+                },
+                {
+                    q: '正方体的对角线长为√3，则棱长为？',
+                    options: ['1', '√3', '3', '√2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '体对角线l=a√3=√3，所以a=1。',
+                    knowledgePoint: '空间几何体',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '圆柱的底面半径为1，高为2，则侧面积为？',
+                    options: ['4π', '2π', 'π', '6π'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'S=2πrh=2π×1×2=4π。',
+                    knowledgePoint: '空间几何体',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '圆锥的底面半径为3，母线长为5，则高为？',
+                    options: ['4', '5', '3', '√34'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'h=√(l²-r²)=√(25-9)=4。',
+                    knowledgePoint: '空间几何体',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '球的表面积公式是？',
+                    options: ['4πR²', '(4/3)πR³', 'πR²', '2πR'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '球的表面积S=4πR²。',
+                    knowledgePoint: '空间几何体',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '一个棱锥的底面面积为4，高为3，则体积为？',
+                    options: ['4', '12', '3', '6'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'V=(1/3)Sh=(1/3)×4×3=4。',
+                    knowledgePoint: '空间几何体',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '长方体的三条棱长为1,2,3，则其外接球的表面积为？',
+                    options: ['14π', '56π', '6π', '28π'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '外接球直径=体对角线=√(1+4+9)=√14，R=√14/2，S=4πR²=14π。',
+                    knowledgePoint: '空间几何体',
+                    kpPage: 'geometry.html'
                 }
             ],
             16: [
@@ -1603,6 +2413,60 @@
                     answer: 2,
                     difficulty: 'challenge',
                     explanation: 'PA⊥面ABC→PA⊥BC，又AB⊥BC→BC⊥面PAB→BC⊥PB（①对），且BC⊂面PBC→面PAB⊥面PBC（③对）。PA⊂面PAC→面PAC⊥面ABC（④对）。AB与PC不垂直（若垂直则AB⊥面PAC，但AB不垂直AC，除非特殊三角形），②错。共3个正确。',
+                    knowledgePoint: '点线面关系',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '两条平行直线确定几个平面？',
+                    options: ['1个', '2个', '0个', '无数个'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '两条平行直线确定唯一的一个平面。',
+                    knowledgePoint: '点线面关系',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '垂直于同一条直线的两个平面？',
+                    options: ['平行', '垂直', '相交', '重合'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '垂直于同一直线的两个平面互相平行。',
+                    knowledgePoint: '点线面关系',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '直线l在平面α内，直线m⊥α，则l与m的关系是？',
+                    options: ['l⊥m', 'l∥m', 'l与m相交', '无法确定'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'm⊥α，l⊂α，则m⊥l。',
+                    knowledgePoint: '点线面关系',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '过平面外一点与该平面平行的直线有？',
+                    options: ['无数条', '1条', '2条', '0条'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '过平面外一点可以作无数条直线与该平面平行（在过该点与平面平行的平面内）。',
+                    knowledgePoint: '点线面关系',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '下列命题正确的是？',
+                    options: ['平行于同一平面的两条直线平行', '垂直于同一平面的两条直线平行', '平行于同一直线的两个平面平行', '垂直于同一平面的两个平面垂直'],
+                    answer: 1,
+                    difficulty: 'advanced',
+                    explanation: '垂直于同一平面的两条直线都平行于该平面的法向量，所以互相平行。',
+                    knowledgePoint: '点线面关系',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '在正方体ABCD-A₁B₁C₁D₁中，A₁C与BD的关系是？',
+                    options: ['垂直且异面', '平行', '相交但不垂直', '垂直且相交'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'BD⊥面A₁ACC₁，所以BD⊥A₁C，且它们异面不相交。',
                     knowledgePoint: '点线面关系',
                     kpPage: 'geometry.html'
                 }
@@ -1652,6 +2516,60 @@
                     explanation: 'A₁B₁∥AB，所以A₁B₁∥面ABC₁D₁，E到面距离等于B₁到面距离。连接B₁C交BC₁于F，B₁F⊥BC₁，B₁F⊥AB（因为AB⊥面BCC₁B₁），所以B₁F⊥面ABC₁D₁。B₁F=√2/2。',
                     knowledgePoint: '空间向量',
                     kpPage: 'geometry.html'
+                },
+                {
+                    q: '向量a=(1,2,3)，b=(2,1,0)，则a·b=？',
+                    options: ['4', '3', '5', '0'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'a·b=1×2+2×1+3×0=2+2+0=4。',
+                    knowledgePoint: '空间向量',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '若a=(1,0,0)，b=(0,1,0)，则a×b（叉乘）=？',
+                    options: ['(0,0,1)', '(1,1,0)', '(0,0,-1)', '(0,1,0)'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '标准基向量叉乘：i×j=k=(0,0,1)。',
+                    knowledgePoint: '空间向量',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '向量a=(1,1,1)的模是？',
+                    options: ['√3', '3', '1', '√2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '|a|=√(1+1+1)=√3。',
+                    knowledgePoint: '空间向量',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '若向量a与b满足|a|=2，|b|=3，a·b=3，则夹角余弦值为？',
+                    options: ['1/2', '√3/2', '3/5', '2/3'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'cosθ=a·b/(|a||b|)=3/(2×3)=1/2。',
+                    knowledgePoint: '空间向量',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '若n是平面α的法向量，a是直线l的方向向量，n·a=0，则？',
+                    options: ['l∥α或l⊂α', 'l⊥α', 'l与α斜交', 'l在α内'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'n·a=0说明方向向量与法向量垂直，直线平行于平面或在平面内。',
+                    knowledgePoint: '空间向量',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '已知a=(2,-1,3)，b=(-4,2,x)，若a⊥b则x=？',
+                    options: ['10/3', '-10/3', '-6', '6'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'a·b=-8-2+3x=0→3x=10→x=10/3。',
+                    knowledgePoint: '空间向量',
+                    kpPage: 'geometry.html'
                 }
             ],
             18: [
@@ -1697,6 +2615,60 @@
                     answer: 1,
                     difficulty: 'challenge',
                     explanation: '分两类：末位是0：前4位全排列4!=24；末位是2或4：末位2种选择，首位从剩余3个非0数字选1个3种，中间3位3!=6，共2×3×6=36。总计24+36=60个。',
+                    knowledgePoint: '排列组合',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: 'C(5,2)=？',
+                    options: ['10', '20', '25', '5'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'C(5,2)=5!/(2!3!)=10。',
+                    knowledgePoint: '排列组合',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: 'A(4,2)=？',
+                    options: ['12', '6', '8', '24'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'A(4,2)=4×3=12。',
+                    knowledgePoint: '排列组合',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '5个人排成一排，有多少种排法？',
+                    options: ['120', '25', '60', '24'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'A(5,5)=5!=120。',
+                    knowledgePoint: '排列组合',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '从6人中选3人参加会议，有多少种选法？',
+                    options: ['20', '120', '18', '60'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'C(6,3)=6!/(3!3!)=20。',
+                    knowledgePoint: '排列组合',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '4本不同的书分给2个人，每人至少1本，有多少种分法？',
+                    options: ['14', '16', '12', '8'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '每人至少1本=总分法(2⁴=16)-全给甲(1)-全给乙(1)=14。',
+                    knowledgePoint: '排列组合',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '将5个不同的球放入4个不同的盒子，每盒至少1个，有多少种放法？',
+                    options: ['240', '120', '480', '60'],
+                    answer: 0,
+                    difficulty: 'challenge',
+                    explanation: '必有一盒2球，先选2球C(5,2)=10，再全排列A(4,4)=24，共10×24=240种。',
                     knowledgePoint: '排列组合',
                     kpPage: 'probability.html'
                 }
@@ -1746,6 +2718,60 @@
                     explanation: '第二项系数C(n,1)，第七项系数C(n,6)。C(n,1)=C(n,6)→C(n,1)=C(n,n-6)→1=n-6→n=7。',
                     knowledgePoint: '二项式定理',
                     kpPage: 'probability.html'
+                },
+                {
+                    q: '(x+1)⁴展开式中x²的系数是？',
+                    options: ['6', '4', '1', '2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'C(4,2)=6。',
+                    knowledgePoint: '二项式定理',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '(2x-1)⁵展开式中x³的系数是？',
+                    options: ['-40', '40', '80', '-80'],
+                    answer: 2,
+                    difficulty: 'advanced',
+                    explanation: '通项T_{k+1}=C(5,k)(2x)^{5-k}(-1)^k。令5-k=3，得k=2。T₃=C(5,2)(2x)³(-1)²=10×8x³×1=80x³，系数为80。',
+                    knowledgePoint: '二项式定理',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '(x+y)ⁿ展开式共有多少项？',
+                    options: ['n+1', 'n', '2n', 'n²'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '二项式展开有n+1项。',
+                    knowledgePoint: '二项式定理',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '(1+x)ⁿ的展开式中，所有项的二项式系数之和为？',
+                    options: ['2ⁿ', '0', 'n²', 'C(n,n/2)'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '令x=1，得2ⁿ。',
+                    knowledgePoint: '二项式定理',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '(a+b)ⁿ展开式中第3项的二项式系数是？',
+                    options: ['C(n,2)', 'C(n,3)', '2', 'C(n,1)'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '第k+1项的二项式系数是C(n,k)，第3项k=2，系数为C(n,2)。',
+                    knowledgePoint: '二项式定理',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '若(1+2x)ⁿ展开式中x²项系数为60，则n=？',
+                    options: ['5', '4', '6', '3'],
+                    answer: 2,
+                    difficulty: 'challenge',
+                    explanation: 'C(n,2)×2²=60→n(n-1)/2×4=60→n(n-1)=30→n=6或-5（舍去），n=6。',
+                    knowledgePoint: '二项式定理',
+                    kpPage: 'probability.html'
                 }
             ],
             20: [
@@ -1791,6 +2817,60 @@
                     answer: 0,
                     difficulty: 'advanced',
                     explanation: 'μ=1,σ²=4→σ=2。μ-σ=-1,μ+σ=3，所以P(-1<X<3)=P(μ-σ<X<μ+σ)≈0.6827。',
+                    knowledgePoint: '概率分布',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '掷一枚均匀骰子，点数大于4的概率是？',
+                    options: ['1/3', '1/2', '2/3', '1/6'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '大于4的点数为5,6，P=2/6=1/3。',
+                    knowledgePoint: '概率分布',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '从1,2,3,4,5中随机取2个数，和为偶数的概率是？',
+                    options: ['2/5', '1/2', '3/5', '4/5'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '和为偶数需两数同奇或同偶。奇数有1,3,5取2个C(3,2)=3，偶数2,4取2个C(2,2)=1，共4种，总取法C(5,2)=10，P=4/10=2/5。',
+                    knowledgePoint: '概率分布',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '某产品次品率0.1，随机取3件恰有1件次品的概率是？',
+                    options: ['0.243', '0.001', '0.729', '0.027'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '二项分布：C(3,1)×0.1×0.9²=3×0.1×0.81=0.243。',
+                    knowledgePoint: '概率分布',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '抛硬币3次，恰好2次正面朝上的概率是？',
+                    options: ['3/8', '1/2', '1/4', '1/8'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'C(3,2)×(1/2)³=3/8。',
+                    knowledgePoint: '概率分布',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '若P(A)=0.6，P(B)=0.5，A与B独立，则P(AB)=？',
+                    options: ['0.3', '0.5', '0.6', '1.1'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '独立事件P(AB)=P(A)P(B)=0.6×0.5=0.3。',
+                    knowledgePoint: '概率分布',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '从52张扑克牌中抽1张，抽到红桃或K的概率是？',
+                    options: ['4/13', '1/4', '1/13', '17/52'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'P(红桃∪K)=13/52+4/52-1/52=16/52=4/13（减去重复的红桃K）。',
                     knowledgePoint: '概率分布',
                     kpPage: 'probability.html'
                 }
@@ -1840,6 +2920,60 @@
                     explanation: 'X~B(3,p)，D(X)=3p(1-p)=21/25→p(1-p)=7/25→25p²-25p+7=0→p=(25±√(625-700))/50？不对，判别式625-700<0？改D(X)=18/25：3p(1-p)=18/25→p(1-p)=6/25→25p²-25p+6=0→(5p-2)(5p-3)=0→p=2/5或3/5，选C。',
                     knowledgePoint: '统计综合',
                     kpPage: 'probability.html'
+                },
+                {
+                    q: '数据1,2,3,4,5的平均数是？',
+                    options: ['3', '2.5', '2', '5'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'x̄=(1+2+3+4+5)/5=3。',
+                    knowledgePoint: '统计综合',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '数据2,4,6,8,10的方差是？',
+                    options: ['8', '4', '10', '6'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'x̄=6，方差=((2-6)²+(4-6)²+(6-6)²+(8-6)²+(10-6)²)/5=(16+4+0+4+16)/5=8。',
+                    knowledgePoint: '统计综合',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '一组数据的方差越大，说明数据？',
+                    options: ['越分散', '越集中', '平均数越大', '中位数越大'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '方差反映数据的离散程度，方差越大越分散。',
+                    knowledgePoint: '统计综合',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '数据3,3,4,5,5的中位数是？',
+                    options: ['4', '3', '5', '4.5'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '排序后为3,3,4,5,5，中位数是第3个数4。',
+                    knowledgePoint: '统计综合',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '在频率分布直方图中，所有矩形面积之和为？',
+                    options: ['1', '总频率', '组距', '频数'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '频率分布直方图中各组频率之和为1。',
+                    knowledgePoint: '统计综合',
+                    kpPage: 'probability.html'
+                },
+                {
+                    q: '若随机变量X~N(μ,σ²)，则P(μ-σ<X<μ+σ)约为？',
+                    options: ['68.3%', '95.4%', '99.7%', '50%'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '正态分布中1σ区间概率约为68.3%（3σ原则）。',
+                    knowledgePoint: '统计综合',
+                    kpPage: 'probability.html'
                 }
             ],
             22: [
@@ -1885,6 +3019,60 @@
                     answer: 0,
                     difficulty: 'advanced',
                     explanation: '已知直线斜率-2，垂直直线斜率为1/2。过(2,1)：y-1=(1/2)(x-2)→x-2y=0。',
+                    knowledgePoint: '直线方程',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '过点(1,2)且斜率为3的直线方程是？',
+                    options: ['y=3x-1', 'y=3x+1', 'y=3x-2', 'y=3x+2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'y-2=3(x-1)→y=3x-1。',
+                    knowledgePoint: '直线方程',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '直线2x+y-4=0的斜率是？',
+                    options: ['-2', '2', '4', '1/2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'y=-2x+4，斜率k=-2。',
+                    knowledgePoint: '直线方程',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '两直线y=2x+1和y=2x-3的关系是？',
+                    options: ['平行', '垂直', '相交不垂直', '重合'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '斜率相同（都是2），截距不同，所以平行。',
+                    knowledgePoint: '直线方程',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '点(0,0)到直线3x+4y-5=0的距离是？',
+                    options: ['1', '5', '3/5', '4/5'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'd=|0+0-5|/√(9+16)=5/5=1。',
+                    knowledgePoint: '直线方程',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '过(1,1)和(3,5)的直线方程是？',
+                    options: ['y=2x-1', 'y=2x+1', 'y=4x-3', 'y=x'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'k=(5-1)/(3-1)=2，y-1=2(x-1)→y=2x-1。',
+                    knowledgePoint: '直线方程',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '直线x+y=1与x-y=1的交点是？',
+                    options: ['(1,0)', '(0,1)', '(0,0)', '(1,1)'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '联立方程：相加得2x=2→x=1，y=0。',
                     knowledgePoint: '直线方程',
                     kpPage: 'geometry.html'
                 }
@@ -1934,6 +3122,60 @@
                     explanation: 'x=1时，1+y²=1→y=0，切点(1,0)，是切线。另设y-2=k(x-1)即kx-y+2-k=0，d=|2-k|/√(k²+1)=1→(2-k)²=k²+1→4-4k+k²=k²+1→k=3/4，切线3x-4y+5=0。共两条切线。',
                     knowledgePoint: '圆的方程',
                     kpPage: 'geometry.html'
+                },
+                {
+                    q: '圆心(1,2)，半径3的圆的方程是？',
+                    options: ['(x-1)²+(y-2)²=9', '(x+1)²+(y+2)²=9', '(x-1)²+(y-2)²=3', 'x²+y²=9'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '(x-a)²+(y-b)²=r²，代入得(x-1)²+(y-2)²=9。',
+                    knowledgePoint: '圆的方程',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '圆x²+y²=4的圆心和半径是？',
+                    options: ['(0,0),r=2', '(0,0),r=4', '(2,2),r=2', '(0,0),r=√2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '标准形式圆心在原点，r²=4，r=2。',
+                    knowledgePoint: '圆的方程',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '直线y=x+1与圆x²+y²=1的位置关系是？',
+                    options: ['相交', '相切', '相离', '过圆心'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '圆心到直线距离d=|0-0+1|/√2=√2/2<1=r，相交。',
+                    knowledgePoint: '圆的方程',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '圆x²+y²-2x+4y-4=0的圆心和半径是？',
+                    options: ['(1,-2),r=3', '(-1,2),r=3', '(1,-2),r=9', '(-1,2),r=9'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '配方：(x-1)²-1+(y+2)²-4-4=0→(x-1)²+(y+2)²=9，圆心(1,-2)，r=3。',
+                    knowledgePoint: '圆的方程',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '过点(0,0)和(2,0)，半径为1的圆的方程是？',
+                    options: ['(x-1)²+y²=1', 'x²+(y-1)²=1', '(x-1)²+(y-1)²=1', 'x²+y²=1'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '两点连线中垂线为x=1，圆心(1,b)，到(0,0)距离=1：√(1+b²)=1→b=0，圆心(1,0)。',
+                    knowledgePoint: '圆的方程',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '圆x²+y²=4在点(1,√3)处的切线方程是？',
+                    options: ['x+√3y=4', '√3x+y=4', 'x+√3y=2', '√3x+y=2'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '切线方程：x₁x+y₁y=r²→1·x+√3·y=4→x+√3y=4。',
+                    knowledgePoint: '圆的方程',
+                    kpPage: 'geometry.html'
                 }
             ],
             24: [
@@ -1979,6 +3221,60 @@
                     answer: 1,
                     difficulty: 'challenge',
                     explanation: '设椭圆上点(2cosθ,sinθ)，d=|4cosθ+4sinθ-√2|/√20=|4√2sin(θ+π/4)-√2|/(2√5)。最大值为|4√2×(-1)-√2|/(2√5)=|-5√2|/(2√5)=5√2/(2√5)=√10/2？不对，5√2/(2√5)=5√10/(2×5)=√10/2，选A。',
+                    knowledgePoint: '椭圆',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '椭圆x²/9+y²/4=1的焦距是？',
+                    options: ['2√5', '5', '√5', '2√13'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'a²=9,b²=4,c²=a²-b²=5,c=√5，焦距2c=2√5。',
+                    knowledgePoint: '椭圆',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '椭圆x²/25+y²/16=1的离心率是？',
+                    options: ['3/5', '4/5', '3/4', '√(41)/5'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'a=5,b=4,c=3，e=c/a=3/5。',
+                    knowledgePoint: '椭圆',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '椭圆的长轴长为10，短轴长为6，则方程为？',
+                    options: ['x²/25+y²/9=1', 'x²/10+y²/6=1', 'x²/9+y²/25=1', 'x²/100+y²/36=1'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'a=5,b=3，a²=25,b²=9。',
+                    knowledgePoint: '椭圆',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '椭圆上一点到两焦点距离之和等于？',
+                    options: ['2a', '2c', '2b', 'a+c'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '椭圆定义：到两焦点距离之和=2a。',
+                    knowledgePoint: '椭圆',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '椭圆x²/4+y²=1的焦点坐标是？',
+                    options: ['(±√3,0)', '(±√5,0)', '(0,±√3)', '(0,±√5)'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'a²=4,b²=1,c²=3，焦点(±√3,0)。',
+                    knowledgePoint: '椭圆',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '椭圆过点(3,0)，离心率e=√6/3，则标准方程是？',
+                    options: ['x²/9+y²/3=1', 'x²/3+y²/9=1', 'x²/9+y²=1', 'x²+y²/9=1'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'a=3（过(3,0)），e=c/a=√6/3→c=√6→b²=9-6=3，x²/9+y²/3=1。',
                     knowledgePoint: '椭圆',
                     kpPage: 'geometry.html'
                 }
@@ -2028,6 +3324,60 @@
                     explanation: '渐近线bx±ay=0，圆心(2,0)到渐近线距离d=|2b|/√(a²+b²)=1（等于半径）。4b²=a²+b²→3b²=a²→b/a=√3/3。',
                     knowledgePoint: '双曲线与抛物线',
                     kpPage: 'geometry.html'
+                },
+                {
+                    q: '双曲线x²/4-y²/5=1的渐近线方程是？',
+                    options: ['y=±(√5/2)x', 'y=±(2/√5)x', 'y=±x', 'y=±(5/2)x'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '令x²/4-y²/5=0→y²=(5/4)x²→y=±(√5/2)x。',
+                    knowledgePoint: '双曲线抛物线',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '抛物线y²=4x的焦点坐标是？',
+                    options: ['(1,0)', '(2,0)', '(0,1)', '(0,2)'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '2p=4→p=2→p/2=1，焦点(1,0)。',
+                    knowledgePoint: '双曲线抛物线',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '双曲线x²/9-y²/16=1的离心率是？',
+                    options: ['5/3', '4/3', '5/4', '√7/3'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'a=3,b=4,c=5，e=c/a=5/3。',
+                    knowledgePoint: '双曲线抛物线',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '抛物线x²=8y的准线方程是？',
+                    options: ['y=-2', 'y=2', 'x=-2', 'x=2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '2p=8→p=4→p/2=2，开口向上，准线y=-p/2=-2。',
+                    knowledgePoint: '双曲线抛物线',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '双曲线上的点到两焦点距离之差的绝对值等于？',
+                    options: ['2a', '2c', '2b', 'c-a'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '双曲线定义：||PF₁|-|PF₂||=2a。',
+                    knowledgePoint: '双曲线抛物线',
+                    kpPage: 'geometry.html'
+                },
+                {
+                    q: '抛物线y²=2px(p>0)上点M到焦点距离为5，则M到准线距离为？',
+                    options: ['5', 'p', 'p/2', '10'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '抛物线定义：到焦点距离=到准线距离=5。',
+                    knowledgePoint: '双曲线抛物线',
+                    kpPage: 'geometry.html'
                 }
             ],
             26: [
@@ -2073,6 +3423,60 @@
                     answer: 1,
                     difficulty: 'advanced',
                     explanation: '乘积法则：(uv)\’=u\’v+uv\’。f\’(x)=1·lnx+x·(1/x)=lnx+1。',
+                    knowledgePoint: '导数概念',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: '函数f(x)=x³的导数f’(x)=？',
+                    options: ['3x²', 'x²', '3x', 'x³/3'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '幂函数求导：(x³)’=3x²。',
+                    knowledgePoint: '导数概念',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: 'f(x)=sinx的导数是？',
+                    options: ['cosx', '-sinx', '-cosx', 'tanx'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '(sinx)’=cosx。',
+                    knowledgePoint: '导数概念',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: 'f(x)=eˣ的导数是？',
+                    options: ['eˣ', 'xeˣ⁻¹', 'eˣ⁻¹', '1'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '(eˣ)’=eˣ。',
+                    knowledgePoint: '导数概念',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: 'f(x)=lnx的导数是？',
+                    options: ['1/x', 'x', '1', 'lnx'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '(lnx)’=1/x（x>0）。',
+                    knowledgePoint: '导数概念',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: '曲线y=x²在x=1处的切线斜率是？',
+                    options: ['2', '1', '0', '3'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'y’=2x，x=1时k=2。',
+                    knowledgePoint: '导数概念',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: '(x·sinx)’=？',
+                    options: ['sinx+xcosx', 'cosx', 'xcosx', 'sinx+cosx'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '乘积法则：(uv)’=u’v+uv’=1·sinx+x·cosx=sinx+xcosx。',
                     knowledgePoint: '导数概念',
                     kpPage: 'calculus.html'
                 }
@@ -2122,6 +3526,60 @@
                     explanation: 'f\’(x)=3x²+2ax+b，f\’(1)=3+2a+b=0；f(1)=1+a+b+a²=10。解得a=4,b=-11（a=-3时b=3，此时f\’(x)=3x²-6x+3=3(x-1)²≥0，x=1不是极值点，舍去）。f(2)=8+16-22+16=18。',
                     knowledgePoint: '导数应用',
                     kpPage: 'calculus.html'
+                },
+                {
+                    q: '函数f(x)=x³-3x的单调递增区间是？',
+                    options: ['(-∞,-1)和(1,+∞)', '(-1,1)', '(-∞,+∞)', '(0,+∞)'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'f’(x)=3x²-3=3(x-1)(x+1)，f’(x)>0→x<-1或x>1。',
+                    knowledgePoint: '导数应用',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: '函数f(x)=x²-2x+3的极小值是？',
+                    options: ['2', '1', '3', '0'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'f’(x)=2x-2=0→x=1，f(1)=2，极小值为2。',
+                    knowledgePoint: '导数应用',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: '函数f(x)=x³-3x²+1在x=2处？',
+                    options: ['取得极小值', '取得极大值', '不是极值点', '取得最小值'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'f’(x)=3x²-6x=3x(x-2)，x<2时f’(x)<0，x>2时f’(x)>0，所以x=2是极小值点。',
+                    knowledgePoint: '导数应用',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: '函数f(x)=-x²+4x在[0,3]上的最大值是？',
+                    options: ['4', '3', '0', '5'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'f’(x)=-2x+4=0→x=2，f(2)=4，f(0)=0，f(3)=3，最大值4。',
+                    knowledgePoint: '导数应用',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: '若x>0，则x+1/x的最小值是？',
+                    options: ['2', '1', '0', '∞'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '由基本不等式或f(x)=1-1/x²=0→x=1，f(1)=2。',
+                    knowledgePoint: '导数应用',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: '曲线y=x³-2x在x=1处的切线方程是？',
+                    options: ['y=x-2', 'y=x+2', 'y=-x+2', 'y=3x-4'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'f(1)=-1，f’(1)=3-2=1，切线y+1=1·(x-1)→y=x-2。',
+                    knowledgePoint: '导数应用',
+                    kpPage: 'calculus.html'
                 }
             ],
             28: [
@@ -2167,6 +3625,60 @@
                     answer: 1,
                     difficulty: 'challenge',
                     explanation: 'x³cosx是奇函数，在[-1,1]上积分为0。√(1-x²)是上半圆y=√(1-x²)，从-1到1积分是半圆面积=(1/2)π·1=π/2。',
+                    knowledgePoint: '定积分',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: '∫₀¹ 1 dx = ?',
+                    options: ['1', '0', 'x', '2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '∫₀¹1dx=[x]₀¹=1-0=1。',
+                    knowledgePoint: '定积分',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: '∫₀¹ x dx = ?',
+                    options: ['1/2', '1', '0', '2'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '∫xdx=x²/2，[0,1]上=1/2。',
+                    knowledgePoint: '定积分',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: '∫₀² (2x+1)dx = ?',
+                    options: ['6', '4', '5', '3'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '∫(2x+1)dx=x²+x，[0,2]上=4+2=6。',
+                    knowledgePoint: '定积分',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: '∫₀^π sinx dx = ?',
+                    options: ['2', '0', 'π', '1'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '∫sinxdx=-cosx，[0,π]=-cosπ+cos0=1+1=2。',
+                    knowledgePoint: '定积分',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: '∫₀¹ x² dx = ?',
+                    options: ['1/3', '1/2', '1', '2/3'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '∫x²dx=x³/3，[0,1]上=1/3。',
+                    knowledgePoint: '定积分',
+                    kpPage: 'calculus.html'
+                },
+                {
+                    q: '由y=x²和y=x围成的面积是？',
+                    options: ['1/6', '1/2', '1/3', '1'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '交点(0,0)和(1,1)，S=∫₀¹(x-x²)dx=[x²/2-x³/3]₀¹=1/2-1/3=1/6。',
                     knowledgePoint: '定积分',
                     kpPage: 'calculus.html'
                 }
@@ -2216,6 +3728,60 @@
                     explanation: 'z=2i/(1+i)=2i(1-i)/2=(2i-2i²)/2=(2i+2)/2=1+i，虚部为1。',
                     knowledgePoint: '复数与选修',
                     kpPage: 'elective.html'
+                },
+                {
+                    q: '复数z=1+i的共轭复数是？',
+                    options: ['1-i', '-1+i', '-1-i', '1'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'a+bi的共轭是a-bi，1+i的共轭是1-i。',
+                    knowledgePoint: '复数与选修',
+                    kpPage: 'elective.html'
+                },
+                {
+                    q: '(1+i)(1-i)=？',
+                    options: ['2', '2i', '0', '1'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '(1+i)(1-i)=1-i²=1-(-1)=2。',
+                    knowledgePoint: '复数与选修',
+                    kpPage: 'elective.html'
+                },
+                {
+                    q: 'i+i²+i³+i⁴=？',
+                    options: ['0', '1', 'i', '-1'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'i+(-1)+(-i)+1=0。',
+                    knowledgePoint: '复数与选修',
+                    kpPage: 'elective.html'
+                },
+                {
+                    q: '复数z=2-3i的模|z|=？',
+                    options: ['√13', '5', '√5', '13'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '|z|=√(2²+(-3)²)=√13。',
+                    knowledgePoint: '复数与选修',
+                    kpPage: 'elective.html'
+                },
+                {
+                    q: '(1+i)/(1-i)=？',
+                    options: ['i', '1', '-1', '-i'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: '(1+i)/(1-i)=(1+i)²/((1-i)(1+i))=(1+2i+i²)/2=2i/2=i。',
+                    knowledgePoint: '复数与选修',
+                    kpPage: 'elective.html'
+                },
+                {
+                    q: '极坐标中ρ=2表示什么图形？',
+                    options: ['圆心在原点半径2的圆', '直线', '椭圆', '点'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '极坐标ρ=2表示到原点距离为2的点，即圆x²+y²=4。',
+                    knowledgePoint: '复数与选修',
+                    kpPage: 'elective.html'
                 }
             ],
             30: [
@@ -2224,35 +3790,99 @@
                     options: ['{2}', '{2,3}', '{1,2}', '{1,2,3}'],
                     answer: 1,
                     difficulty: 'challenge',
-                    explanation: 'A={1,2}，A∪B=A→B⊆A。x²-ax+a-1=0即(x-1)(x-(a-1))=0，根为1和a-1。所以a-1=1→a=2，或a-1=2→a=3。'
+                    explanation: 'A={1,2}，A∪B=A→B⊆A。x²-ax+a-1=0即(x-1)(x-(a-1))=0，根为1和a-1。所以a-1=1→a=2，或a-1=2→a=3。',
+                    knowledgePoint: '综合挑战',
+                    kpPage: 'index.html'
                 },
                 {
                     q: '函数f(x)=x³-3x²+2在区间[-1,1]上的最大值是？',
                     options: ['2', '0', '-2', '4'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: 'f\’(x)=3x²-6x=3x(x-2)。在[-1,0]上f\’>0，[0,1]上f\’<0，所以f(0)=2是极大值。f(-1)=-2,f(1)=0。最大值2。'
+                    explanation: 'f\'(x)=3x²-6x=3x(x-2)。在[-1,0]上f\'>0，[0,1]上f\'<0，所以f(0)=2是极大值。f(-1)=-2,f(1)=0。最大值2。',
+                    knowledgePoint: '综合挑战',
+                    kpPage: 'index.html'
                 },
                 {
                     q: '已知椭圆C:x²/a²+y²/b²=1(a>b>0)的离心率为√3/2，短轴长为2，则椭圆C的方程是？',
                     options: ['x²/4+y²=1', 'x²+y²/4=1', 'x²/2+y²=1', 'x²/8+y²/2=1'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '2b=2→b=1。e=c/a=√3/2→c=√3a/2，c²=3a²/4=a²-1→a²/4=1→a²=4。方程x²/4+y²=1。'
+                    explanation: '2b=2→b=1。e=c/a=√3/2→c=√3a/2，c²=3a²/4=a²-1→a²/4=1→a²=4。方程x²/4+y²=1。',
+                    knowledgePoint: '综合挑战',
+                    kpPage: 'index.html'
                 },
                 {
                     q: '在△ABC中，角A,B,C所对边分别为a,b,c，已知cosA/cosB=b/a=√3，则角C = ?',
                     options: ['π/6', 'π/4', 'π/3', 'π/2'],
                     answer: 3,
                     difficulty: 'challenge',
-                    explanation: '由正弦定理b/a=sinB/sinA，所以cosA/cosB=sinB/sinA→sinAcosA=sinBcosB→sin2A=sin2B。所以2A=2B或2A=π-2B。又b/a=√3≠1，B≠A，所以2A=π-2B→A+B=π/2→C=π/2。验证：b=√3a,C=90°,c=2a,cosA=b/c? 不，cosA=b/c=√3/2→A=30°,B=60°,满足b/a=sinB/sinA=√3。'
+                    explanation: '由正弦定理b/a=sinB/sinA，所以cosA/cosB=sinB/sinA→sinAcosA=sinBcosB→sin2A=sin2B。所以2A=2B或2A=π-2B。又b/a=√3≠1，B≠A，所以2A=π-2B→A+B=π/2→C=π/2。验证：b=√3a,C=90°,c=2a,cosA=b/c? 不，cosA=b/c=√3/2→A=30°,B=60°,满足b/a=sinB/sinA=√3。',
+                    knowledgePoint: '综合挑战',
+                    kpPage: 'index.html'
                 },
                 {
                     q: '已知函数f(x)=e^x - ax有两个零点，则a的取值范围是？',
                     options: ['(e, +∞)', '(0, e)', '(1, +∞)', '(0, 1)'],
                     answer: 0,
                     difficulty: 'challenge',
-                    explanation: 'f(x)=0→a=e^x/x(x>0,因为x≤0时e^x>0,-ax≥0,f(x)>0)。令g(x)=e^x/x,g\’(x)=e^x(x-1)/x²。g(x)在(0,1)递减,(1,+∞)递增,g(1)=e。当x→0+时g→+∞,x→+∞时g→+∞。所以a>e时,y=a与g(x)有两个交点，即f(x)有两个零点。'
+                    explanation: 'f(x)=0→a=e^x/x(x>0,因为x≤0时e^x>0,-ax≥0,f(x)>0)。令g(x)=e^x/x,g\'(x)=e^x(x-1)/x²。g(x)在(0,1)递减,(1,+∞)递增,g(1)=e。当x→0+时g→+∞,x→+∞时g→+∞。所以a>e时,y=a与g(x)有两个交点，即f(x)有两个零点。',
+                    knowledgePoint: '综合挑战',
+                    kpPage: 'index.html'
+                },
+                {
+                    q: '若集合A={x|x²-5x+6=0}，B={x|mx=1}，B⊆A，则m的取值个数是？',
+                    options: ['3', '2', '1', '4'],
+                    answer: 0,
+                    difficulty: 'challenge',
+                    explanation: 'A={2,3}，B=∅时m=0；B={2}时m=1/2；B={3}时m=1/3，共3个值。',
+                    knowledgePoint: '综合挑战',
+                    kpPage: 'index.html'
+                },
+                {
+                    q: '函数f(x)=x²-2ax+1在[1,+∞)上递增，则a的范围是？',
+                    options: ['a≤1', 'a≥1', 'a<1', 'a>1'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: '对称轴x=a，需a≤1。',
+                    knowledgePoint: '综合挑战',
+                    kpPage: 'index.html'
+                },
+                {
+                    q: 'sin15°cos15°=？',
+                    options: ['1/4', '1/2', '√3/4', '√2/4'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'sin15°cos15°=1/2·sin30°=1/2×1/2=1/4。',
+                    knowledgePoint: '综合挑战',
+                    kpPage: 'index.html'
+                },
+                {
+                    q: '若等差数列{aₙ}中a₁+a₅=10，a₄=7，则公差d=？',
+                    options: ['2', '1', '3', '4'],
+                    answer: 0,
+                    difficulty: 'basic',
+                    explanation: 'a₁+a₅=2a₃=10→a₃=5，d=a₄-a₃=2。',
+                    knowledgePoint: '综合挑战',
+                    kpPage: 'index.html'
+                },
+                {
+                    q: '从5男4女中选3人，至少有1男1女的选法数是？',
+                    options: ['70', '80', '60', '50'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'C(9,3)-C(5,3)-C(4,3)=84-10-4=70。',
+                    knowledgePoint: '综合挑战',
+                    kpPage: 'index.html'
+                },
+                {
+                    q: 'f(x)=x³-3x在[-2,2]上的最大值是？',
+                    options: ['2', '4', '-2', '0'],
+                    answer: 0,
+                    difficulty: 'advanced',
+                    explanation: 'f\'(x)=3x²-3=0→x=±1，f(-2)=-2,f(-1)=2,f(1)=-2,f(2)=2，最大值2。',
+                    knowledgePoint: '综合挑战',
+                    kpPage: 'index.html'
                 }
             ]
         };
