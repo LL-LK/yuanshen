@@ -449,6 +449,11 @@
             to { opacity: 1; transform: scale(1); }
         }
 
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translate(-50%, -20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+
         .shake { animation: shake 0.5s ease; }
         .correct-pulse { animation: correctPulse 0.6s ease; }
         .wrong-shake { animation: wrongShake 0.5s ease; }
@@ -596,9 +601,12 @@
                             </div>
                             <span class="text-sm font-bold" id="primogemCount">0</span>
                         </div>
-                        <button onclick="showAchievements()" class="p-2 rounded-lg hover:bg-white/10 transition relative">
+                        <button onclick="showAchievements()" class="p-2 rounded-lg hover:bg-white/10 transition relative" title="命之座成就">
                             <i data-lucide="star" class="w-5 h-5" style="color: var(--primary-gold);"></i>
                             <span id="achievementBadge" class="countdown-badge hidden">0</span>
+                        </button>
+                        <button onclick="showSaveMenu()" class="p-2 rounded-lg hover:bg-white/10 transition" title="存档管理">
+                            <i data-lucide="settings" class="w-5 h-5" style="color: var(--text-secondary);"></i>
                         </button>
                     </div>
                 </div>
@@ -767,6 +775,10 @@
     </div>
 
     <script>
+        // 防止lucide CDN加载失败导致整个脚本崩溃
+        if (typeof lucide === 'undefined') {
+            window.lucide = { createIcons: function(){} };
+        }
         const nations = [
             { id: 'mondstadt', name: '蒙德·风之国度', color: '#74C2A1', days: 7, icon: 'wind' },
             { id: 'liyue', name: '璃月·岩之国度', color: '#D4B863', days: 7, icon: 'mountain' },
@@ -2046,7 +2058,7 @@
             setTimeout(() => el.remove(), 1200);
         }
 
-        let gameState = {
+        const DEFAULT_GAME_STATE = {
             adventureRank: 1,
             currentExp: 0,
             mora: 1000,
@@ -2059,8 +2071,12 @@
             dailyQuests: [],
             lastDailyReset: null,
             bestCombo: 0,
-            soundEnabled: true
+            soundEnabled: true,
+            saveTimestamp: null,
+            totalPlayTime: 0
         };
+
+        let gameState = { ...DEFAULT_GAME_STATE };
 
         let currentQuiz = {
             day: null,
@@ -2073,16 +2089,166 @@
         };
 
         function loadGameState() {
-            const saved = localStorage.getItem('genshinMathGame');
-            if (saved) {
-                gameState = JSON.parse(saved);
+            try {
+                const saved = localStorage.getItem('genshinMathGame');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    // Merge with defaults to handle old saves missing new fields
+                    gameState = { ...DEFAULT_GAME_STATE, ...parsed };
+                    // Ensure arrays are arrays (corruption protection)
+                    ['completedDays','starRecords','unlockedConstellations','dailyQuests'].forEach(k => {
+                        if (!Array.isArray(gameState[k])) gameState[k] = [];
+                    });
+                    // 30-day expiry check (show warning but don't delete)
+                    if (gameState.saveTimestamp) {
+                        const daysSince = Math.floor((Date.now() - gameState.saveTimestamp) / 86400000);
+                        if (daysSince >= 30) {
+                            setTimeout(() => showSaveNotification('存档已超过30天，建议及时导出备份', 'warn'), 1500);
+                        }
+                    }
+                    // Welcome back notification
+                    if (gameState.completedDays.length > 0) {
+                        setTimeout(() => {
+                            showSaveNotification(`欢迎回来，旅行者！已完成 ${gameState.completedDays.length}/30 天挑战，最高${gameState.bestCombo}连击`, 'success');
+                        }, 800);
+                    }
+                }
+            } catch(e) {
+                console.error('存档加载失败，将使用新存档:', e);
+                gameState = { ...DEFAULT_GAME_STATE };
+                localStorage.removeItem('genshinMathGame');
             }
             checkDailyReset();
             updateUI();
         }
 
         function saveGameState() {
-            localStorage.setItem('genshinMathGame', JSON.stringify(gameState));
+            try {
+                gameState.saveTimestamp = Date.now();
+                localStorage.setItem('genshinMathGame', JSON.stringify(gameState));
+            } catch(e) {
+                console.error('存档保存失败:', e);
+                showSaveNotification('存档保存失败！可能是浏览器存储已满', 'error');
+            }
+        }
+
+        function showSaveNotification(msg, type = 'info') {
+            const colors = {
+                success: '#4CAF50',
+                warn: '#FF9800',
+                error: '#F44336',
+                info: 'var(--primary-gold)'
+            };
+            const n = document.createElement('div');
+            n.className = 'fixed top-20 left-1/2 -translate-x-1/2 px-5 py-3 rounded-lg z-50 shadow-lg';
+            n.style.cssText = 'background: rgba(20,20,40,0.95); border: 1px solid ' + colors[type] + '; color: ' + colors[type] + '; backdrop-filter: blur(8px); animation: fadeInDown .4s ease;';
+            n.innerHTML = `<div class="flex items-center gap-2 text-sm"><i data-lucide="${type==='success'?'check-circle':type==='error'?'alert-circle':'info'}" class="w-4 h-4"></i><span>${msg}</span></div>`;
+            document.body.appendChild(n);
+            lucide.createIcons();
+            setTimeout(() => { n.style.opacity = '0'; n.style.transition = 'opacity .4s'; setTimeout(() => n.remove(), 400); }, 3500);
+        }
+
+        function showSaveMenu() {
+            const completed = gameState.completedDays.length;
+            const totalStars = gameState.starRecords.reduce((s,r) => s + r.stars, 0);
+            const saveDate = gameState.saveTimestamp ? new Date(gameState.saveTimestamp).toLocaleString('zh-CN') : '无存档';
+            const daysSince = gameState.saveTimestamp ? Math.floor((Date.now() - gameState.saveTimestamp) / 86400000) : 0;
+
+            const overlay = document.createElement('div');
+            overlay.id = 'saveMenuOverlay';
+            overlay.className = 'fixed inset-0 z-50 flex items-center justify-center p-4';
+            overlay.style.cssText = 'background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);';
+            overlay.innerHTML = `
+                <div class="modal-content gold-border rounded-xl p-6 max-w-md w-full" style="background: linear-gradient(135deg, rgba(30,25,50,0.98), rgba(20,15,35,0.98));">
+                    <div class="flex items-center justify-between mb-5">
+                        <h3 class="text-xl font-bold flex items-center gap-2" style="color: var(--primary-gold);">
+                            <i data-lucide="settings" class="w-5 h-5"></i>存档管理
+                        </h3>
+                        <button onclick="document.getElementById('saveMenuOverlay').remove()" class="p-1 hover:bg-white/10 rounded">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-3 text-sm mb-6" style="color: var(--text-secondary);">
+                        <div class="flex justify-between"><span>冒险等阶</span><span style="color:var(--primary-gold-light)">${gameState.adventureRank} 级</span></div>
+                        <div class="flex justify-between"><span>完成关卡</span><span style="color:var(--primary-gold-light)">${completed} / 30 天</span></div>
+                        <div class="flex justify-between"><span>获得星星</span><span style="color:#FFD700">${totalStars} ⭐</span></div>
+                        <div class="flex justify-between"><span>最高连击</span><span style="color:#FF6B6B">${gameState.bestCombo} 连击</span></div>
+                        <div class="flex justify-between"><span>摩拉</span><span style="color:#D4B863">${gameState.mora.toLocaleString()}</span></div>
+                        <div class="flex justify-between"><span>原石</span><span style="color:#4CC2F0">${gameState.primogem}</span></div>
+                        <div class="border-t border-white/10 pt-3 flex justify-between"><span>最后保存</span><span>${saveDate}${daysSince>0?` (${daysSince}天前)`:''}</span></div>
+                    </div>
+                    <div class="text-xs mb-4 p-3 rounded-lg" style="background: rgba(200,169,91,0.08); color: var(--text-secondary); line-height: 1.6;">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5 inline mr-1" style="color:var(--primary-gold)"></i>
+                        进度自动保存在浏览器本地，关闭页面后不会丢失。建议定期导出存档备份。
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <button onclick="exportSave()" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-medium transition hover:brightness-110" style="background: linear-gradient(135deg, rgba(200,169,91,0.2), rgba(200,169,91,0.1)); border: 1px solid rgba(200,169,91,0.4); color: var(--primary-gold);">
+                            <i data-lucide="download" class="w-4 h-4"></i>导出存档备份
+                        </button>
+                        <button onclick="document.getElementById('importFile').click()" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-medium transition hover:bg-white/5" style="border: 1px solid var(--border-color); color: var(--text-secondary);">
+                            <i data-lucide="upload" class="w-4 h-4"></i>导入存档
+                        </button>
+                        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
+                        <button onclick="resetProgress()" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-medium transition hover:bg-red-500/20 mt-2" style="border: 1px solid rgba(244,67,54,0.3); color: #F44336;">
+                            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>重置全部进度
+                        </button>
+                    </div>
+                </div>
+            `;
+            overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+            document.body.appendChild(overlay);
+            lucide.createIcons();
+        }
+
+        function exportSave() {
+            const data = JSON.stringify(gameState, null, 2);
+            const blob = new Blob([data], {type: 'application/json'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `yuanshen-math-save-${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            URL.revokeObjectURL(a.href);
+            document.getElementById('saveMenuOverlay')?.remove();
+            showSaveNotification('存档已导出为JSON文件，请妥善保存', 'success');
+        }
+
+        function importSave(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (!data.completedDays || !Array.isArray(data.completedDays)) throw new Error('无效存档');
+                    if (!confirm('导入将覆盖当前进度，确定继续？')) return;
+                    gameState = { ...DEFAULT_GAME_STATE, ...data };
+                    ['completedDays','starRecords','unlockedConstellations','dailyQuests'].forEach(k => {
+                        if (!Array.isArray(gameState[k])) gameState[k] = [];
+                    });
+                    saveGameState();
+                    document.getElementById('saveMenuOverlay')?.remove();
+                    renderCalendar();
+                    updateUI();
+                    showSaveNotification('存档导入成功！', 'success');
+                } catch(err) {
+                    showSaveNotification('导入失败：存档文件格式错误', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function resetProgress() {
+            if (!confirm('⚠️ 确定要重置全部进度吗？\n\n这将清除：\n• 所有通关记录和星级\n• 冒险等阶和资源\n• 成就和每日委托\n\n此操作不可恢复！建议先导出备份。')) return;
+            if (!confirm('再次确认：真的要从头开始吗？')) return;
+            localStorage.removeItem('genshinMathGame');
+            gameState = { ...DEFAULT_GAME_STATE };
+            gameState.lastDailyReset = new Date().toDateString();
+            gameState.dailyQuests = dailyQuestTemplates.map(q => ({...q, progress:0, completed:false, claimed:false}));
+            saveGameState();
+            document.getElementById('saveMenuOverlay')?.remove();
+            renderCalendar();
+            updateUI();
+            showSaveNotification('进度已重置，开始新的冒险吧！', 'info');
         }
 
         function checkDailyReset() {
@@ -2443,6 +2609,8 @@
             document.getElementById('explanationBox').classList.remove('hidden');
             
             setTimeout(() => renderQuestion(), 100);
+            // 每答完一题自动保存，防止刷新/关闭页面丢失进度
+            saveGameState();
         }
 
         function prevQuestion() {
@@ -2630,6 +2798,12 @@
             });
             
             document.addEventListener('click', () => initAudio(), { once: true });
+
+            // 页面关闭/刷新/切换前自动保存
+            window.addEventListener('beforeunload', () => saveGameState());
+            window.addEventListener('pagehide', () => saveGameState());
+            // 定期自动保存（每30秒）
+            setInterval(saveGameState, 30000);
         });
     </script>
 </body>
