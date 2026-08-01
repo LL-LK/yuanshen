@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="zh" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提瓦特数学图鉴</title>
+    <style id="theme-vars">
+/* ============================================================
+   提瓦特数学图鉴 · 原神视觉风格配色与字体系统
+   Brand prefix: genshin
+   主色：原神金（命之座/品质金）· 背景：提瓦特夜空深蓝紫
+   ============================================================ */
+
+/* ---------- Light Mode（浅色·白日提瓦特） ---------- */
+:root {
+  --genshin-primary: #B8932E;
+  --genshin-primary-foreground: #FBF7EC;
+
+  --genshin-primary-50: #FBF6E7;
+  --genshin-primary-100: #F3E8C2;
+  --genshin-primary-200: #E7D08A;
+  --genshin-primary-300: #D9B85A;
+  --genshin-primary-400: #C8A14A;
+  --genshin-primary-500: #B8932E;
+  --genshin-primary-600: #9A7826;
+  --genshin-primary-700: #7C5F20;
+  --genshin-primary-800: #5E471A;
+  --genshin-primary-900: #423014;
+  --genshin-primary-950: #2A1E0C;
+
+  /* 中性色 —— 暖羊皮纸 / 石板 */
+  --genshin-background: #F6F1E4;
+  --genshin-foreground: #2A2418;
+  --genshin-card: #FBF7EC;
+  --genshin-card-foreground: #2A2418;
+  --genshin-popover: #FBF7EC;
+  --genshin-popover-foreground: #2A2418;
+  --genshin-muted: #E7DFC9;
+  --genshin-muted-foreground: #6B6048;
+  --genshin-border: #D8CDA8;
+  --genshin-input: #D8CDA8;
+  --genshin-ring: #B8932E;
+
+  /* 状态色 */
+  --genshin-state-success: #4F9E78;
+  --genshin-state-warning: #C8941E;
+  --genshin-state-error: #C25442;
+  --genshin-state-info: #4A93C2;
+
+  /* 圆角 —— 原神 UI 偏方正克制 */
+  --genshin-radius-small: 4px;
+  --genshin-radius-medium: 8px;
+  --genshin-radius-large: 12px;
+  --genshin-radius-full: 9999px;
+}
+
+/* ---------- Dark Mode（深色·提瓦特夜空） 默认 ---------- */
+.dark {
+  --genshin-primary: #C8A95B;
+  --genshin-primary-foreground: #1A1408;
+
+  --genshin-primary-50: #2A1E0C;
+  --genshin-primary-100: #423014;
+  --genshin-primary-200: #5E471A;
+  --genshin-primary-300: #7C5F20;
+  --genshin-primary-400: #9A7826;
+  --genshin-primary-500: #B8932E;
+  --genshin-primary-600: #C8A95B;
+  --genshin-primary-700: #D9B85A;
+  --genshin-primary-800: #E7D08A;
+  --genshin-primary-900: #F3E8C2;
+  --genshin-primary-950: #FBF6E7;
+
+  /* 中性色 —— 提瓦特夜空深蓝紫 */
+  --genshin-background: #0E1120;
+  --genshin-foreground: #ECE7D8;
+  --genshin-card: #181C2E;
+  --genshin-card-foreground: #ECE7D8;
+  --genshin-popover: #1F2438;
+  --genshin-popover-foreground: #ECE7D8;
+  --genshin-muted: #262B42;
+  --genshin-muted-foreground: #9A968A;
+  --genshin-border: rgba(200, 169, 91, 0.18);
+  --genshin-input: rgba(200, 169, 91, 0.28);
+  --genshin-ring: #C8A95B;
+
+  /* 状态色 */
+  --genshin-state-success: #74C2A1;
+  --genshin-state-warning: #E6B445;
+  --genshin-state-error: #D97766;
+  --genshin-state-info: #6FB7E0;
+}
+
+/* ---------- Tailwind @theme inline 映射 ---------- */
+@theme inline {
+  --color-background: var(--genshin-background);
+  --color-foreground: var(--genshin-foreground);
+  --color-card: var(--genshin-card);
+  --color-card-foreground: var(--genshin-card-foreground);
+  --color-popover: var(--genshin-popover);
+  --color-popover-foreground: var(--genshin-popover-foreground);
+  --color-primary: var(--genshin-primary);
+  --color-primary-foreground: var(--genshin-primary-foreground);
+  --color-muted: var(--genshin-muted);
+  --color-muted-foreground: var(--genshin-muted-foreground);
+  --color-border: var(--genshin-border);
+  --color-input: var(--genshin-input);
+  --color-ring: var(--genshin-ring);
+
+  --color-state-success: var(--genshin-state-success);
+  --color-state-warning: var(--genshin-state-warning);
+  --color-state-error: var(--genshin-state-error);
+  --color-state-info: var(--genshin-state-info);
+
+  --radius-sm: var(--genshin-radius-small);
+  --radius-md: var(--genshin-radius-medium);
+  --radius-lg: var(--genshin-radius-large);
+  --radius-full: var(--genshin-radius-full);
+}
+
+/* ---------- 字体系统 ---------- */
+/* 标题：衬线体（奇幻史诗感） · 正文：无衬线（现代易读） */
+.font-display {
+  font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.font-body {
+  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--genshin-background);
+    --color-foreground: var(--genshin-foreground);
+    --color-card: var(--genshin-card);
+    --color-card-foreground: var(--genshin-card-foreground);
+    --color-popover: var(--genshin-popover);
+    --color-popover-foreground: var(--genshin-popover-foreground);
+    --color-primary: var(--genshin-primary);
+    --color-primary-foreground: var(--genshin-primary-foreground);
+    --color-muted: var(--genshin-muted);
+    --color-muted-foreground: var(--genshin-muted-foreground);
+    --color-border: var(--genshin-border);
+    --color-input: var(--genshin-input);
+    --color-ring: var(--genshin-ring);
+    --radius-sm: var(--genshin-radius-small);
+    --radius-md: var(--genshin-radius-medium);
+    --radius-lg: var(--genshin-radius-large);
+  }
+  @layer base {
+    body { background: var(--genshin-background); color: var(--genshin-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--genshin-background); }
+      .text-background { color: var(--genshin-background); }
+      .border-background { border-color: var(--genshin-background); }
+      .ring-background { --tw-ring-color: var(--genshin-background); }
+      .bg-foreground { background-color: var(--genshin-foreground); }
+      .text-foreground { color: var(--genshin-foreground); }
+      .border-foreground { border-color: var(--genshin-foreground); }
+      .ring-foreground { --tw-ring-color: var(--genshin-foreground); }
+      .bg-card { background-color: var(--genshin-card); }
+      .text-card { color: var(--genshin-card); }
+      .border-card { border-color: var(--genshin-card); }
+      .ring-card { --tw-ring-color: var(--genshin-card); }
+      .bg-card-foreground { background-color: var(--genshin-card-foreground); }
+      .text-card-foreground { color: var(--genshin-card-foreground); }
+      .border-card-foreground { border-color: var(--genshin-card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--genshin-card-foreground); }
+      .bg-popover { background-color: var(--genshin-popover); }
+      .text-popover { color: var(--genshin-popover); }
+      .border-popover { border-color: var(--genshin-popover); }
+      .ring-popover { --tw-ring-color: var(--genshin-popover); }
+      .bg-popover-foreground { background-color: var(--genshin-popover-foreground); }
+      .text-popover-foreground { color: var(--genshin-popover-foreground); }
+      .border-popover-foreground { border-color: var(--genshin-popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--genshin-popover-foreground); }
+      .bg-primary { background-color: var(--genshin-primary); }
+      .text-primary { color: var(--genshin-primary); }
+      .border-primary { border-color: var(--genshin-primary); }
+      .ring-primary { --tw-ring-color: var(--genshin-primary); }
+      .bg-primary-foreground { background-color: var(--genshin-primary-foreground); }
+      .text-primary-foreground { color: var(--genshin-primary-foreground); }
+      .border-primary-foreground { border-color: var(--genshin-primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--genshin-primary-foreground); }
+      .bg-muted { background-color: var(--genshin-muted); }
+      .text-muted { color: var(--genshin-muted); }
+      .border-muted { border-color: var(--genshin-muted); }
+      .ring-muted { --tw-ring-color: var(--genshin-muted); }
+      .bg-muted-foreground { background-color: var(--genshin-muted-foreground); }
+      .text-muted-foreground { color: var(--genshin-muted-foreground); }
+      .border-muted-foreground { border-color: var(--genshin-muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--genshin-muted-foreground); }
+      .bg-border { background-color: var(--genshin-border); }
+      .text-border { color: var(--genshin-border); }
+      .border-border { border-color: var(--genshin-border); }
+      .ring-border { --tw-ring-color: var(--genshin-border); }
+      .bg-input { background-color: var(--genshin-input); }
+      .text-input { color: var(--genshin-input); }
+      .border-input { border-color: var(--genshin-input); }
+      .ring-input { --tw-ring-color: var(--genshin-input); }
+      .bg-ring { background-color: var(--genshin-ring); }
+      .text-ring { color: var(--genshin-ring); }
+      .border-ring { border-color: var(--genshin-ring); }
+      .ring-ring { --tw-ring-color: var(--genshin-ring); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style id="enhanced-design">
+/* === 提瓦特数学图鉴 · 排版与动画增强系统 === */
+/* 性能安全：仅使用 transform + opacity（合成器友好），IntersectionObserver 替代 scroll 监听 */
+
+/* 排版优化 */
+body { line-height: 1.75; }
+.section-title { position: relative; padding-bottom: 14px; }
+.section-title::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 48px; height: 3px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--genshin-primary), transparent);
+}
+
+/* 滚动入场动画 (GPU 友好) */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal.reveal-visible { opacity: 1; transform: translateY(0); }
+
+/* 卡片悬浮提升 */
+.genshin-card {
+  transition: transform .3s cubic-bezier(.22,1,.36,1), border-color .3s, box-shadow .3s;
+}
+.genshin-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(200,169,91,.4);
+  box-shadow: 0 8px 32px rgba(0,0,0,.3);
+}
+
+/* 导航栏动画下划线 */
+.nav-link { position: relative; }
+.nav-link::after {
+  content: ''; position: absolute; bottom: 4px; left: 0;
+  width: 0; height: 2px; border-radius: 1px;
+  background: var(--genshin-primary);
+  transition: width .3s cubic-bezier(.22,1,.36,1);
+}
+.nav-link:hover::after, .nav-link[data-active="true"]::after { width: 100%; }
+
+/* 公式框 / 提示框左侧装饰边 */
+.formula-box { border-left: 3px solid currentColor; }
+.tip-box { border-left: 3px solid var(--genshin-primary); }
+
+/* 下一章节 CTA 悬浮 */
+.next-cta {
+  transition: transform .3s cubic-bezier(.22,1,.36,1), border-color .3s;
+}
+.next-cta:hover { transform: translateY(-2px); border-color: rgba(200,169,91,.45); }
+
+/* Hero 入场动画 */
+.hero-reveal {
+  opacity: 0; transform: translateY(20px);
+  animation: heroFadeUp .8s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay: var(--hero-delay, 0ms);
+}
+@keyframes heroFadeUp { to { opacity: 1; transform: translateY(0); } }
+
+/* === 侧边章节目录 TOC（v3 新增） === */
+/* 锚点目标上边距，避免被固定导航栏遮挡 */
+article[id^="kp-"] { scroll-margin-top: 90px; }
+
+/* 桌面端固定侧边目录 */
+.toc-desktop {
+  position: fixed;
+  right: 24px;
+  top: 88px;
+  width: 220px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  background: rgba(14, 17, 32, 0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 169, 91, 0.18);
+  border-radius: 8px;
+  padding: 16px 14px;
+  z-index: 40;
+}
+.toc-desktop::-webkit-scrollbar { width: 4px; }
+.toc-desktop::-webkit-scrollbar-thumb { background: rgba(200, 169, 91, 0.25); border-radius: 2px; }
+
+/* TOC 条目（桌面端与移动端面板共用） */
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--genshin-muted-foreground);
+  cursor: pointer;
+  transition: color .2s ease, background .2s ease;
+  text-decoration: none;
+  line-height: 1.4;
+  position: relative;
+}
+.toc-item .toc-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.toc-item:hover {
+  background: rgba(200, 169, 91, 0.08);
+  color: var(--genshin-foreground);
+}
+.toc-item.toc-active {
+  color: var(--genshin-primary);
+  background: rgba(200, 169, 91, 0.10);
+}
+.toc-item.toc-active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: var(--genshin-primary);
+  border-radius: 2px;
+}
+
+/* 移动端浮动目录下拉面板 */
+.toc-mobile-panel {
+  position: absolute;
+  right: 0;
+  bottom: 56px;
+  width: 220px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  background: rgba(14, 17, 32, 0.92);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 169, 91, 0.18);
+  border-radius: 8px;
+  padding: 16px 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* 移动端：将“回到顶部”按钮移至左下，避免与目录浮动按钮重叠 */
+@media (max-width: 767px) {
+  #back-to-top { right: auto; left: 24px; }
+}
+
+/* reduced-motion 完全禁用动画 */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .hero-reveal { opacity: 1; transform: none; animation: none; }
+  .genshin-card, .next-cta { transition: none; }
+  .genshin-card:hover, .next-cta:hover { transform: none; }
+  .toc-item { transition: none; }
+  html { scroll-behavior: auto; }
+  * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <!-- ===== 顶部固定导航栏 ===== -->
+    <nav class="fixed top-0 inset-x-0 z-50" style="background: rgba(14,17,32,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(200,169,91,0.28);">
+      <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between font-body">
+        <a href="index.html" data-nav-key="home" class="brand-link flex items-center gap-2.5 cursor-pointer shrink-0">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="shrink-0" aria-hidden="true">
+            <path d="M12 2 L20.5 6.75 L20.5 16.25 L12 21 L3.5 16.25 L3.5 6.75 Z" stroke="#C8A95B" stroke-width="1.4" fill="rgba(200,169,91,0.10)"></path>
+            <circle cx="12" cy="11.5" r="2.2" fill="#C8A95B"></circle>
+          </svg>
+          <span class="font-display text-lg whitespace-nowrap" style="color: var(--genshin-primary);">提瓦特数学图鉴</span>
+        </a>
+        <div class="hidden sm:flex items-center gap-5">
+          <a href="functions.html" data-nav-key="functions" data-active="true" class="nav-link flex items-center gap-2 px-1 py-2 text-sm whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full shrink-0" style="background:#74C2A1;"></span>
+            <span>函数与代数</span>
+          </a>
+          <a href="geometry.html" data-nav-key="geometry" class="nav-link flex items-center gap-2 px-1 py-2 text-sm whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full shrink-0" style="background:#D4B863;"></span>
+            <span>几何与图形</span>
+          </a>
+          <a href="probability.html" data-nav-key="probability" class="nav-link flex items-center gap-2 px-1 py-2 text-sm whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full shrink-0" style="background:#A85AF5;"></span>
+            <span>概率与统计</span>
+          </a>
+          <a href="calculus.html" data-nav-key="calculus" class="nav-link flex items-center gap-2 px-1 py-2 text-sm whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full shrink-0" style="background:#4CC2F0;"></span>
+            <span>导数与应用</span>
+          </a>
+          <a href="elective.html" data-nav-key="elective" class="nav-link flex items-center gap-2 px-1 py-2 text-sm whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full shrink-0" style="background:#7BC94A;"></span>
+            <span>选修拓展</span>
+          </a>
+        </div>
+        <button id="mobile-menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" class="sm:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-primary); border: 1px solid var(--genshin-border);">
+          <svg class="menu-icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="menu-icon-close hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="mobile-menu" class="sm:hidden hidden border-t" style="background: rgba(14,17,32,0.97); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-color: var(--genshin-border);">
+        <div class="max-w-7xl mx-auto px-6 py-3 flex flex-col gap-1 font-body">
+          <a data-nav-key="functions" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#74C2A1;"></span>函数与代数</a>
+          <a data-nav-key="geometry" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#D4B863;"></span>几何与图形</a>
+          <a data-nav-key="probability" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#A85AF5;"></span>概率与统计</a>
+          <a data-nav-key="calculus" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#4CC2F0;"></span>导数与应用</a>
+          <a data-nav-key="elective" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#7BC94A;"></span>选修拓展</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ===== 侧边章节目录 TOC（桌面端，v3 新增） ===== -->
+    <aside class="toc-desktop hidden md:block" aria-label="本章节目录">
+      <div class="font-display text-sm mb-3" style="color: var(--genshin-primary);">本章节目录</div>
+      <div style="height:1px; background: rgba(200,169,91,0.18); margin-bottom: 10px;"></div>
+      <nav>
+        <a href="#kp-sets" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#74C2A1;flex-shrink:0;"></span><span class="toc-text">集合与常用逻辑用语</span></a>
+        <a href="#kp-inequality" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#74C2A1;flex-shrink:0;"></span><span class="toc-text">等式与不等式</span></a>
+        <a href="#kp-function-basics" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#74C2A1;flex-shrink:0;"></span><span class="toc-text">函数的概念与性质</span></a>
+        <a href="#kp-exp-log" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#74C2A1;flex-shrink:0;"></span><span class="toc-text">幂函数、指数函数与对数函数</span></a>
+        <a href="#kp-trig" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#74C2A1;flex-shrink:0;"></span><span class="toc-text">三角函数</span></a>
+        <a href="#kp-sequence" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#74C2A1;flex-shrink:0;"></span><span class="toc-text">数列</span></a>
+        <a href="#kp-modeling" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#74C2A1;flex-shrink:0;"></span><span class="toc-text">函数的应用与数学建模</span></a>
+      </nav>
+    </aside>
+
+    <!-- ===== 移动端浮动目录按钮（v3 新增） ===== -->
+    <div class="md:hidden" style="position: fixed; right: 20px; bottom: 24px; z-index: 50;">
+      <button id="toc-mobile-btn" type="button" aria-label="打开章节目录" aria-expanded="false" style="width:48px;height:48px;border-radius:50%;background:var(--genshin-primary);color:var(--genshin-primary-foreground);display:inline-flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,0.4);cursor:pointer;border:none;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      </button>
+      <div id="toc-mobile-panel" class="toc-mobile-panel" style="display:none;">
+        <div class="font-display text-sm mb-3" style="color: var(--genshin-primary);">本章节目录</div>
+        <div style="height:1px; background: rgba(200,169,91,0.18); margin-bottom: 10px;"></div>
+        <nav>
+          <a href="#kp-sets" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#74C2A1;flex-shrink:0;"></span><span class="toc-text">集合与常用逻辑用语</span></a>
+          <a href="#kp-inequality" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#74C2A1;flex-shrink:0;"></span><span class="toc-text">等式与不等式</span></a>
+          <a href="#kp-function-basics" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#74C2A1;flex-shrink:0;"></span><span class="toc-text">函数的概念与性质</span></a>
+          <a href="#kp-exp-log" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#74C2A1;flex-shrink:0;"></span><span class="toc-text">幂函数、指数函数与对数函数</span></a>
+          <a href="#kp-trig" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#74C2A1;flex-shrink:0;"></span><span class="toc-text">三角函数</span></a>
+          <a href="#kp-sequence" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#74C2A1;flex-shrink:0;"></span><span class="toc-text">数列</span></a>
+          <a href="#kp-modeling" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#74C2A1;flex-shrink:0;"></span><span class="toc-text">函数的应用与数学建模</span></a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ===== 主内容区（leaf 页面填充 SLOT） ===== -->
+    <main class="font-body max-w-7xl mx-auto px-6 lg:pr-[252px] pt-28 pb-12" style="min-height: calc(100vh - 200px);">
+
+    <!-- ===== 章节头部：风元素 · 蒙德 ===== -->
+    <section class="reveal relative overflow-hidden rounded-xl border border-[#74C2A1]/25 mb-10" style="background-image: radial-gradient(ellipse 85% 70% at 50% 0%, rgba(116,194,161,0.18) 0%, rgba(116,194,161,0.04) 45%, transparent 75%);">
+      <div class="relative p-6 sm:p-10 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10">
+        <!-- 左侧：徽章 + 标题 + 简介 -->
+        <div class="flex-1 min-w-0 flex flex-col sm:flex-row sm:items-start gap-5">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center shrink-0 bg-[#74C2A1]/15 border border-[#74C2A1]/40">
+            <span class="font-display text-3xl text-[#74C2A1]">风</span>
+          </div>
+          <div class="min-w-0">
+            <p class="text-sm text-[#74C2A1] mb-1.5">蒙德 · 风元素</p>
+            <h1 class="font-display text-4xl sm:text-5xl mb-4" style="color: var(--genshin-primary); text-wrap: balance; word-break: keep-all; overflow-wrap: break-word;">函数与代数</h1>
+            <p class="text-sm leading-relaxed max-w-2xl" style="color: var(--genshin-muted-foreground);">函数是描述变化的语言，代数是抽象思考的基石。如蒙德的自由之风，函数与代数赋予你描述世界规律的能力。本章覆盖集合与逻辑、等式与不等式、函数概念与性质、幂指对函数、三角函数、数列、函数应用七大知识单元。</p>
+          </div>
+        </div>
+        <!-- 右侧：知识统计 -->
+        <div class="shrink-0 flex flex-col gap-2 lg:items-end">
+          <div class="flex items-baseline gap-2 lg:justify-end">
+            <span class="font-display text-3xl whitespace-nowrap" style="color: var(--genshin-primary);">7</span>
+            <span class="text-sm whitespace-nowrap">个知识单元</span>
+          </div>
+          <div class="flex items-baseline gap-2 lg:justify-end">
+            <span class="font-display text-3xl whitespace-nowrap" style="color: var(--genshin-primary);">61</span>
+            <span class="text-sm whitespace-nowrap">个核心考点</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 知识单元卡牌列表 ===== -->
+    <div class="flex flex-col gap-8">
+
+      <!-- 单元一 · 集合与常用逻辑用语 -->
+      <article id="kp-sets" class="reveal genshin-card overflow-hidden" style="--reveal-delay: 0ms">
+        <div class="h-1 bg-[#74C2A1]"></div>
+        <div class="p-6 sm:p-8">
+          <div class="flex items-center gap-4 mb-5">
+            <span class="font-display text-4xl shrink-0" style="color: var(--genshin-primary);">壹</span>
+            <div class="min-w-0">
+              <h2 class="font-display text-xl sm:text-2xl truncate">集合与常用逻辑用语</h2>
+              <p class="text-xs text-[#74C2A1] mt-0.5">单元一</p>
+            </div>
+          </div>
+          <ul class="space-y-3 mb-5">
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">集合的概念与表示：列举法、描述法、Venn 图法，集合元素的三性（确定性、互异性、无序性）</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">集合间的关系：子集 ⊆、真子集 ⊊、相等、空集 ∅ 的规定</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">集合的运算：交集 A∩B、并集 A∪B、全集 U 下的补集 ∁ᵤA</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">运算性质与德摩根律：∁ᵤ(A∪B)=(∁ᵤA)∩(∁ᵤB)、∁ᵤ(A∩B)=(∁ᵤA)∪(∁ᵤB)</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">充分条件、必要条件、充要条件的判定及其与集合包含关系的转化</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">全称量词 ∀ 与存在量词 ∃，含量词命题的否定（量词互换、结论取反）</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">命题的四种形式与逆否命题的等价性：p→q ⇔ ¬q→¬p</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">有限集元素个数与容斥原理初步：card(A∪B)=card(A)+card(B)-card(A∩B)</span>
+            </li>
+          </ul>
+          <div class="formula-box rounded-lg bg-[#74C2A1]/10 border border-[#74C2A1]/25 p-4 mb-4">
+            <p class="text-xs tracking-wider mb-2 text-[#74C2A1]">核心公式</p>
+            <code class="font-mono text-sm block leading-relaxed" style="color: var(--genshin-foreground);">A∩B={x|x∈A 且 x∈B}；A∪B={x|x∈A 或 x∈B}；∁ᵤA={x|x∈U 且 x∉A}；∁ᵤ(A∪B)=(∁ᵤA)∩(∁ᵤB)；p→q ⇔ ¬q→¬p；card(A∪B)=card(A)+card(B)-card(A∩B)</code>
+          </div>
+          <div class="tip-box rounded-lg bg-[#C8A95B]/8 border border-[#C8A95B]/20 p-4">
+            <p class="text-xs tracking-wider mb-2" style="color: var(--genshin-primary);">方法要点与易错警示</p>
+            <p class="text-sm leading-relaxed" style="color: var(--genshin-muted-foreground);">① 判定充要条件时，可设 A={x|p}、B={x|q}，由 A 与 B 的包含关系判断 p 对 q 的条件类型；② 命题的否定要同时改换量词与否定结论，全称命题的否定是存在命题、反之亦然；③ 空集是任意集合的子集，遇含参集合关系务必分类讨论 ∅ 的情况。</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 单元二 · 等式与不等式 -->
+      <article id="kp-inequality" class="reveal genshin-card overflow-hidden" style="--reveal-delay: 80ms">
+        <div class="h-1 bg-[#74C2A1]"></div>
+        <div class="p-6 sm:p-8">
+          <div class="flex items-center gap-4 mb-5">
+            <span class="font-display text-4xl shrink-0" style="color: var(--genshin-primary);">贰</span>
+            <div class="min-w-0">
+              <h2 class="font-display text-xl sm:text-2xl truncate">等式与不等式</h2>
+              <p class="text-xs text-[#74C2A1] mt-0.5">单元二</p>
+            </div>
+          </div>
+          <ul class="space-y-3 mb-5">
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">一元二次不等式解法：结合二次函数图象，按 Δ=b²-4ac 分类讨论</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">二次不等式恒成立：开口方向与 Δ≤0 联合判定（注意取等条件）</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">含参二次不等式：参变分离法、根的分布问题</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">分式不等式转化为整式不等式（注意分母不为零的等价变形）</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">简单高次不等式的穿根法：数轴标根、奇穿偶回</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">基本不等式 a+b≥2√(ab)（a,b&gt;0）及变形 a²+b²≥2ab、√(ab)≤(a+b)/2</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">均值不等式求最值：“一正、二定、三相等”三步检查</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">二元一次不等式（组）表示的平面区域（边界虚实、代入定侧）</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">简单线性规划：图解法求目标函数 z=ax+by 的最值</span>
+            </li>
+          </ul>
+          <div class="formula-box rounded-lg bg-[#74C2A1]/10 border border-[#74C2A1]/25 p-4 mb-4">
+            <p class="text-xs tracking-wider mb-2 text-[#74C2A1]">核心公式</p>
+            <code class="font-mono text-sm block leading-relaxed" style="color: var(--genshin-foreground);">a+b≥2√(ab)（a,b&gt;0）；a²+b²≥2ab；√(ab)≤(a+b)/2；Δ=b²-4ac；穿根法：标根后奇穿偶回</code>
+          </div>
+          <div class="tip-box rounded-lg bg-[#C8A95B]/8 border border-[#C8A95B]/20 p-4">
+            <p class="text-xs tracking-wider mb-2" style="color: var(--genshin-primary);">方法要点与易错警示</p>
+            <p class="text-sm leading-relaxed" style="color: var(--genshin-muted-foreground);">① 解一元二次不等式务必先看二次项系数正负，必要时先化正再结合图象写解集；② 基本不等式求最值严格遵循“一正二定三相等”，三步缺一不可，等号取不到时改用函数单调性；③ 线性规划先画准可行域，目标函数转化为截距问题，最优解常在顶点处取得。</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 单元三 · 函数的概念与性质 -->
+      <article id="kp-function-basics" class="reveal genshin-card overflow-hidden" style="--reveal-delay: 160ms">
+        <div class="h-1 bg-[#74C2A1]"></div>
+        <div class="p-6 sm:p-8">
+          <div class="flex items-center gap-4 mb-5">
+            <span class="font-display text-4xl shrink-0" style="color: var(--genshin-primary);">叁</span>
+            <div class="min-w-0">
+              <h2 class="font-display text-xl sm:text-2xl truncate">函数的概念与性质</h2>
+              <p class="text-xs text-[#74C2A1] mt-0.5">单元三</p>
+            </div>
+          </div>
+          <ul class="space-y-3 mb-5">
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">函数定义三要素：定义域、值域、对应法则 f</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">映射的概念与函数的关系、同一函数的判定（定义域与对应法则均相同）</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">定义域求法：综合分式分母、偶次根式被开方数、对数真数、零次幂底数等限制</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">值域求法：配方法、判别式法、换元法、单调性法、基本不等式法</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">分段函数与函数的三种表示法（解析法、列表法、图象法）</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">单调性定义与作差法证明，函数的最大（小）值</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">奇偶性判定：定义域关于原点对称是前提，再考察 f(-x) 与 f(x) 的关系</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">奇偶性与单调性综合：奇函数在对称区间上单调性一致</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">周期性与对称性：f(a+x)=f(a-x) 型对称轴、f(a+x)=-f(a-x) 型对称中心</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">函数图象变换：平移、对称、伸缩、翻折（y=|f(x)| 与 y=f(|x|)）</span>
+            </li>
+          </ul>
+          <div class="formula-box rounded-lg bg-[#74C2A1]/10 border border-[#74C2A1]/25 p-4 mb-4">
+            <p class="text-xs tracking-wider mb-2 text-[#74C2A1]">核心公式</p>
+            <code class="font-mono text-sm block leading-relaxed" style="color: var(--genshin-foreground);">奇函数 f(-x)=-f(x)，偶函数 f(-x)=f(x)；单调递增 ⇔ x₁&lt;x₂ ⇒ f(x₁)&lt;f(x₂)；周期 T：f(x+T)=f(x)；y=f(x+h)+k 由 y=f(x) 左移 h、上移 k</code>
+          </div>
+          <div class="tip-box rounded-lg bg-[#C8A95B]/8 border border-[#C8A95B]/20 p-4">
+            <p class="text-xs tracking-wider mb-2" style="color: var(--genshin-primary);">方法要点与易错警示</p>
+            <p class="text-sm leading-relaxed" style="color: var(--genshin-muted-foreground);">① 判定奇偶性必须先看定义域是否关于原点对称，否则既非奇也非偶；② 作差法证单调性要变形到易于定号的因式乘积形式，再指出差值符号；③ 图象变换遵循“左加右减、上加下减”，先平移再伸缩与先伸缩再平移所得 φ 不同，须按顺序处理。</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 单元四 · 幂函数、指数函数与对数函数 -->
+      <article id="kp-exp-log" class="reveal genshin-card overflow-hidden" style="--reveal-delay: 240ms">
+        <div class="h-1 bg-[#74C2A1]"></div>
+        <div class="p-6 sm:p-8">
+          <div class="flex items-center gap-4 mb-5">
+            <span class="font-display text-4xl shrink-0" style="color: var(--genshin-primary);">肆</span>
+            <div class="min-w-0">
+              <h2 class="font-display text-xl sm:text-2xl truncate">幂函数、指数函数与对数函数</h2>
+              <p class="text-xs text-[#74C2A1] mt-0.5">单元四</p>
+            </div>
+          </div>
+          <ul class="space-y-3 mb-5">
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">幂函数 y=xᵃ：α=1,2,3,1/2,-1 的图象与性质，恒过点 (1,1)</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">分数指数幂与有理指数幂的运算性质</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">指数函数 y=aˣ（a&gt;0,a≠1）的图象与性质（底数 0&lt;a&lt;1 与 a&gt;1 分类）</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">对数的概念、换底公式 logₐb=logcb/logca</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">对数运算性质：logₐ(MN)=logₐM+logₐN、logₐ(M/N)=logₐM-logₐN、logₐMⁿ=nlogₐM</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">对数函数 y=logₐx 的图象与性质（恒过点 (1,0)）</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">指数函数与对数函数互为反函数：图象关于直线 y=x 对称</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">指数方程与不等式基础解法：同底法、换元法</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">对数方程与不等式基础解法：注意定义域 x&gt;0、真数大于 0</span>
+            </li>
+          </ul>
+          <div class="formula-box rounded-lg bg-[#74C2A1]/10 border border-[#74C2A1]/25 p-4 mb-4">
+            <p class="text-xs tracking-wider mb-2 text-[#74C2A1]">核心公式</p>
+            <code class="font-mono text-sm block leading-relaxed" style="color: var(--genshin-foreground);">aˣ·aʸ=aˣ⁺ʸ；(aˣ)ʸ=aˣʸ；(ab)ˣ=aˣbˣ；logₐ(MN)=logₐM+logₐN；logₐ(M/N)=logₐM-logₐN；logₐMⁿ=nlogₐM；换底 logₐb=logcb/logca；y=aˣ 与 y=logₐx 互为反函数</code>
+          </div>
+          <div class="tip-box rounded-lg bg-[#C8A95B]/8 border border-[#C8A95B]/20 p-4">
+            <p class="text-xs tracking-wider mb-2" style="color: var(--genshin-primary);">方法要点与易错警示</p>
+            <p class="text-sm leading-relaxed" style="color: var(--genshin-muted-foreground);">① 指数、对数运算要分清底数范围，底数 a&gt;0 且 a≠1 是性质讨论的前提；② 比较两数大小常用单调性法或中介值法（如与 0、1 比较）；③ 解对数方程不等式必须优先考虑定义域，变形前后保持同解，最后检验真数大于 0。</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 单元五 · 三角函数 -->
+      <article id="kp-trig" class="reveal genshin-card overflow-hidden" style="--reveal-delay: 320ms">
+        <div class="h-1 bg-[#74C2A1]"></div>
+        <div class="p-6 sm:p-8">
+          <div class="flex items-center gap-4 mb-5">
+            <span class="font-display text-4xl shrink-0" style="color: var(--genshin-primary);">伍</span>
+            <div class="min-w-0">
+              <h2 class="font-display text-xl sm:text-2xl truncate">三角函数</h2>
+              <p class="text-xs text-[#74C2A1] mt-0.5">单元五</p>
+            </div>
+          </div>
+          <ul class="space-y-3 mb-5">
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">弧度制与角度制互换（π=180°），弧长公式 l=|α|r、扇形面积 S=½|α|r²</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">任意角、终边相同角 α+2kπ（k∈Z）、象限角的判定</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">任意角三角函数定义：单位圆坐标比与终边上点坐标比</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">同角基本关系式：sin²α+cos²α=1、tanα=sinα/cosα</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">诱导公式：“奇变偶不变，符号看象限”</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">正弦、余弦、正切函数的图象与性质（周期、最值、单调区间、对称轴与对称中心）</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">图象变换 y=Asin(ωx+φ)：振幅 A、周期 T=2π/|ω|、相位 ωx+φ、初相 φ</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">两角和差公式与二倍角公式（sin2α=2sinαcosα 等）</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">辅助角公式：asinx+bcosx=√(a²+b²)sin(x+φ)，其中 tanφ=b/a</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">解三角形：正弦定理 a/sinA=2R、余弦定理 a²=b²+c²-2bc·cosA、面积 S=½ab·sinC</span>
+            </li>
+          </ul>
+          <div class="formula-box rounded-lg bg-[#74C2A1]/10 border border-[#74C2A1]/25 p-4 mb-4">
+            <p class="text-xs tracking-wider mb-2 text-[#74C2A1]">核心公式</p>
+            <code class="font-mono text-sm block leading-relaxed" style="color: var(--genshin-foreground);">sin²α+cos²α=1；tanα=sinα/cosα；sin2α=2sinαcosα；cos2α=cos²α-sin²α；asinx+bcosx=√(a²+b²)sin(x+φ)，tanφ=b/a；a/sinA=2R；a²=b²+c²-2bc·cosA；S=½ab·sinC</code>
+          </div>
+          <div class="tip-box rounded-lg bg-[#C8A95B]/8 border border-[#C8A95B]/20 p-4">
+            <p class="text-xs tracking-wider mb-2" style="color: var(--genshin-primary);">方法要点与易错警示</p>
+            <p class="text-sm leading-relaxed" style="color: var(--genshin-muted-foreground);">① 诱导公式使用口诀“奇变偶不变，符号看象限”，先定函数名再定符号；② 求 y=Asin(ωx+φ) 性质时把 ωx+φ 视为整体，用整体代换求单调区间与对称轴；③ 解三角形先据条件选定理：已知两角一边或两边对角用正弦定理，已知三边或两边夹角用余弦定理，注意多解讨论。</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 单元六 · 数列 -->
+      <article id="kp-sequence" class="reveal genshin-card overflow-hidden" style="--reveal-delay: 400ms">
+        <div class="h-1 bg-[#74C2A1]"></div>
+        <div class="p-6 sm:p-8">
+          <div class="flex items-center gap-4 mb-5">
+            <span class="font-display text-4xl shrink-0" style="color: var(--genshin-primary);">陆</span>
+            <div class="min-w-0">
+              <h2 class="font-display text-xl sm:text-2xl truncate">数列</h2>
+              <p class="text-xs text-[#74C2A1] mt-0.5">单元六</p>
+            </div>
+          </div>
+          <ul class="space-y-3 mb-5">
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">数列的概念、通项公式与递推公式</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">an 与 Sn 的关系：aₙ=Sₙ-Sₙ₋₁（n≥2），需单独验证 n=1</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">等差数列通项 aₙ=a₁+(n-1)d、前 n 项和 Sₙ=na₁+n(n-1)d/2</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">等差数列性质：下标和相等则对应项之和相等（m+n=p+q ⇒ aₘ+aₙ=aₚ+a_q）</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">等比数列通项 aₙ=a₁qⁿ⁻¹、前 n 项和 Sₙ=a₁(1-qⁿ)/(1-q)（q≠1）</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">等比数列性质：下标和相等则对应项之积相等（m+n=p+q ⇒ aₘ·aₙ=aₚ·a_q）</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">递推求通项：累加法、累乘法、构造法（待定系数构造新等比数列）</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">求和方法：错位相减法（等差×等比型）、裂项相消法、分组求和法</span>
+            </li>
+          </ul>
+          <div class="formula-box rounded-lg bg-[#74C2A1]/10 border border-[#74C2A1]/25 p-4 mb-4">
+            <p class="text-xs tracking-wider mb-2 text-[#74C2A1]">核心公式</p>
+            <code class="font-mono text-sm block leading-relaxed" style="color: var(--genshin-foreground);">aₙ=a₁+(n-1)d；Sₙ=na₁+n(n-1)d/2；aₙ=a₁qⁿ⁻¹；Sₙ=a₁(1-qⁿ)/(1-q)（q≠1）；aₙ=Sₙ-Sₙ₋₁（n≥2）；错位相减、裂项相消</code>
+          </div>
+          <div class="tip-box rounded-lg bg-[#C8A95B]/8 border border-[#C8A95B]/20 p-4">
+            <p class="text-xs tracking-wider mb-2" style="color: var(--genshin-primary);">方法要点与易错警示</p>
+            <p class="text-sm leading-relaxed" style="color: var(--genshin-muted-foreground);">① 用 aₙ=Sₙ-Sₙ₋₁ 求通项务必验证 n=1 是否满足，不满足则写成分段形式；② 等比数列求和公式分 q=1 与 q≠1 两种情形，公比为参数时要分类讨论；③ 错位相减法适用于“等差×等比”型数列，相减后剩余项构成新等比数列，须注意项数与首项的确定。</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 单元七 · 函数的应用与数学建模 -->
+      <article id="kp-modeling" class="reveal genshin-card overflow-hidden" style="--reveal-delay: 400ms">
+        <div class="h-1 bg-[#74C2A1]"></div>
+        <div class="p-6 sm:p-8">
+          <div class="flex items-center gap-4 mb-5">
+            <span class="font-display text-4xl shrink-0" style="color: var(--genshin-primary);">柒</span>
+            <div class="min-w-0">
+              <h2 class="font-display text-xl sm:text-2xl truncate">函数的应用与数学建模</h2>
+              <p class="text-xs text-[#74C2A1] mt-0.5">单元七</p>
+            </div>
+          </div>
+          <ul class="space-y-3 mb-5">
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">函数零点与方程根的关系：f(x)=0 的实根即函数 y=f(x) 的零点</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">零点存在性定理：f(a)·f(b)&lt;0 且图象连续 ⇒ (a,b) 内存在零点</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">二分法求方程近似解：逐步折半缩小区间至精度要求</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">指数增长模型 y=a·bˣ 与对数增长模型 y=c·logₐx 的增长差异比较</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">幂函数模型 y=k·xᵃ 与三类函数增长速度的综合比较</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">分段函数建模：计费、出租、阶梯定价等实际问题</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[#74C2A1]"></span>
+              <span class="text-sm leading-relaxed">用函数思想解不等式与最值实际问题：构造函数、求最值、回归实际意义</span>
+            </li>
+          </ul>
+          <div class="formula-box rounded-lg bg-[#74C2A1]/10 border border-[#74C2A1]/25 p-4 mb-4">
+            <p class="text-xs tracking-wider mb-2 text-[#74C2A1]">核心公式</p>
+            <code class="font-mono text-sm block leading-relaxed" style="color: var(--genshin-foreground);">f(x)=0 的实根 ⇔ y=f(x) 的零点；f(a)·f(b)&lt;0 且连续 ⇒ (a,b) 内有零点；二分法：取中点 c=(a+b)/2 缩小区间；指数 y=a·bˣ、对数 y=c·logₐx、幂 y=k·xᵃ</code>
+          </div>
+          <div class="tip-box rounded-lg bg-[#C8A95B]/8 border border-[#C8A95B]/20 p-4">
+            <p class="text-xs tracking-wider mb-2" style="color: var(--genshin-primary);">方法要点与易错警示</p>
+            <p class="text-sm leading-relaxed" style="color: var(--genshin-muted-foreground);">① 零点存在性定理仅判定存在性，零点个数需结合单调性或图象确定；② 二分法每次取区间中点，依 f(中点) 符号缩小区间，直到区间长度小于精度要求；③ 实际建模要先把文字条件翻译为函数关系，注意实际变量的取值范围（定义域）与最值的实际意义。</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- ===== 章节导航 ===== -->
+    <div class="genshin-card mt-8 p-5 sm:p-6 flex items-center justify-between gap-4">
+      <span class="text-sm whitespace-nowrap" style="color: var(--genshin-muted-foreground);">本章完</span>
+      <a href="geometry.html" class="reveal next-cta group inline-flex items-center gap-3 px-5 py-3 rounded-lg cursor-pointer transition-colors hover:bg-[#C8A95B]/10" style="border: 1px solid var(--genshin-primary); color: var(--genshin-primary);">
+        <span class="text-xs tracking-wider opacity-70 whitespace-nowrap">下一章节</span>
+        <span class="font-display text-base whitespace-nowrap">几何与图形 · 璃月</span>
+        <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+      </a>
+    </div>
+
+    </main>
+
+    <!-- ===== 页脚 ===== -->
+    <footer class="reveal font-body" style="color: var(--genshin-muted-foreground);">
+      <div class="genshin-divider"></div>
+      <div style="background-color: var(--genshin-card);">
+        <div class="max-w-7xl mx-auto px-6 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          <div>
+            <div class="flex items-center gap-2.5 mb-3">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 2 L20.5 6.75 L20.5 16.25 L12 21 L3.5 16.25 L3.5 6.75 Z" stroke="#C8A95B" stroke-width="1.4" fill="rgba(200,169,91,0.10)"></path>
+                <circle cx="12" cy="11.5" r="2.2" fill="#C8A95B"></circle>
+              </svg>
+              <span class="font-display text-lg" style="color: var(--genshin-primary);">提瓦特数学图鉴</span>
+            </div>
+            <p class="text-sm leading-relaxed">以原神视觉重构高中三年数学知识体系，将五大数学模块映射提瓦特五国元素，让数学学习化作一场旅行者的探索之旅。</p>
+          </div>
+          <div>
+            <h3 class="section-title text-sm mb-4">五大知识模块</h3>
+            <ul class="space-y-2.5 text-sm">
+              <li class="flex items-center gap-2.5"><span class="w-2 h-2 rounded-full shrink-0" style="background:#74C2A1;"></span><span>函数与代数 · 风元素（蒙德）</span></li>
+              <li class="flex items-center gap-2.5"><span class="w-2 h-2 rounded-full shrink-0" style="background:#D4B863;"></span><span>几何与图形 · 岩元素（璃月）</span></li>
+              <li class="flex items-center gap-2.5"><span class="w-2 h-2 rounded-full shrink-0" style="background:#A85AF5;"></span><span>概率与统计 · 雷元素（稻妻）</span></li>
+              <li class="flex items-center gap-2.5"><span class="w-2 h-2 rounded-full shrink-0" style="background:#4CC2F0;"></span><span>导数与应用 · 水元素（枫丹）</span></li>
+              <li class="flex items-center gap-2.5"><span class="w-2 h-2 rounded-full shrink-0" style="background:#7BC94A;"></span><span>选修拓展 · 草元素（须弥）</span></li>
+            </ul>
+          </div>
+          <div class="sm:col-span-2 lg:col-span-1">
+            <h3 class="section-title text-sm mb-4">知识统计</h3>
+            <div class="space-y-3">
+              <div class="flex items-baseline gap-2">
+                <span class="font-display text-2xl whitespace-nowrap" style="color: var(--genshin-primary);">5</span>
+                <span class="text-sm">大知识模块</span>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span class="font-display text-2xl whitespace-nowrap" style="color: var(--genshin-primary);">21</span>
+                <span class="text-sm">个知识单元</span>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span class="font-display text-2xl whitespace-nowrap" style="color: var(--genshin-primary);">120+</span>
+                <span class="text-sm">核心考点</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 py-5 text-center text-xs" style="border-top: 1px solid var(--genshin-border);">
+          © 2026 提瓦特数学图鉴 · 旅行者，愿风指引你的数学之路
+        </div>
+      </div>
+    </footer>
+
+    <!-- ===== 共享装饰 CSS（位于 semantic-token-fallback 之后，body 内） ===== -->
+    <style>
+    /* ===== 提瓦特数学图鉴 · project-shell 共享装饰样式 ===== */
+
+    /* 1. 提瓦特夜空：深蓝紫渐变 + 星点纹理 */
+    body {
+      background-color: var(--genshin-background);
+      background-image:
+        radial-gradient(1.5px 1.5px at 5% 12%, rgba(255,255,255,0.65), transparent 60%),
+        radial-gradient(1px 1px at 18% 25%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1.5px 1.5px at 22% 8%, rgba(255,255,255,0.55), transparent 60%),
+        radial-gradient(1px 1px at 30% 67%, rgba(255,255,255,0.45), transparent 60%),
+        radial-gradient(2px 2px at 38% 23%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 44% 88%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1.5px 1.5px at 52% 15%, rgba(255,255,255,0.60), transparent 60%),
+        radial-gradient(1px 1px at 60% 52%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 68% 30%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 75% 72%, rgba(255,255,255,0.45), transparent 60%),
+        radial-gradient(2px 2px at 82% 18%, rgba(255,255,255,0.55), transparent 60%),
+        radial-gradient(1px 1px at 90% 58%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1.5px 1.5px at 95% 35%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 12% 78%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1.5px 1.5px at 28% 92%, rgba(255,255,255,0.55), transparent 60%),
+        radial-gradient(1px 1px at 48% 38%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 58% 82%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 72% 5%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(2px 2px at 85% 90%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 8% 60%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1px 1px at 34% 15%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 42% 72%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 50% 42%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1px 1px at 56% 28%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 64% 85%, rgba(255,255,255,0.55), transparent 60%),
+        radial-gradient(1px 1px at 70% 12%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1px 1px at 78% 48%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 86% 65%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 92% 22%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1px 1px at 6% 38%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 20% 88%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 36% 50%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1px 1px at 46% 62%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 54% 95%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 62% 40%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1px 1px at 74% 25%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 80% 80%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 88% 45%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1px 1px at 14% 52%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 66% 60%, rgba(255,255,255,0.50), transparent 60%),
+        linear-gradient(180deg, var(--genshin-background) 0%, #14182B 100%);
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+
+    /* 2. 金色命之座分隔线：渐变线 + 中央菱形 */
+    .genshin-divider {
+      position: relative;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(200,169,91,0.45) 50%, transparent 100%);
+    }
+    .genshin-divider::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 8px;
+      height: 8px;
+      background: var(--genshin-primary);
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    /* 3. 元素徽章：小圆形，背景色由内联样式设定 */
+    .element-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(200,169,91,0.35);
+      flex-shrink: 0;
+    }
+
+    /* 4. 卡牌容器：金色微透明边框 + hover 变亮 */
+    .genshin-card {
+      background-color: var(--genshin-card);
+      border: 1px solid rgba(200,169,91,0.18);
+      border-radius: 12px;
+      transition: border-color 0.2s ease;
+    }
+    .genshin-card:hover {
+      border-color: rgba(200,169,91,0.40);
+    }
+
+    /* 5. 章节标题：衬线字体 + 左侧金色竖线 */
+    .section-title {
+      font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      position: relative;
+      padding-left: 0.75rem;
+      color: var(--genshin-foreground);
+    }
+    .section-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 3px;
+      height: 1.1em;
+      background: var(--genshin-primary);
+      border-radius: 2px;
+      transform: translateY(-50%);
+    }
+
+    /* 6. 导航链接：默认 muted，hover/active 金色 */
+    .brand-link {
+      text-decoration: none;
+    }
+    .nav-link {
+      text-decoration: none;
+      position: relative;
+      color: var(--genshin-muted-foreground);
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover {
+      color: var(--genshin-primary);
+    }
+    .nav-link[data-active="true"] {
+      color: var(--genshin-primary);
+      font-weight: 600;
+    }
+    .nav-link[data-active="true"]::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 70%;
+      height: 2px;
+      background: var(--genshin-primary);
+      transform: translateX(-50%);
+    }
+    </style>
+    <script>lucide.createIcons();</script>
+<style>
+  html { scroll-behavior: smooth; }
+  .reveal-init { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal-in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal-init { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+  #back-to-top { background-color: var(--genshin-primary); color: var(--genshin-primary-foreground); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+  #back-to-top:hover { filter: brightness(1.1); }
+</style>
+<button id="back-to-top" type="button" aria-label="回到顶部" class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-lg opacity-0 pointer-events-none transition-all duration-300">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto; display:block;"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+<script>
+(function(){
+  // ---- mobile menu toggle ----
+  var btn=document.getElementById('mobile-menu-toggle');
+  var panel=document.getElementById('mobile-menu');
+  var openIc=btn?btn.querySelector('.menu-icon-open'):null;
+  var closeIc=btn?btn.querySelector('.menu-icon-close'):null;
+  function setMenu(open){
+    if(!panel)return;
+    if(open){panel.classList.remove('hidden');}
+    else{panel.classList.add('hidden');}
+    if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+    if(openIc&&closeIc){openIc.classList.toggle('hidden',open);closeIc.classList.toggle('hidden',!open);}
+  }
+  if(btn&&panel){
+    btn.addEventListener('click',function(){setMenu(panel.classList.contains('hidden'));});
+    panel.querySelectorAll('[data-nav-key]').forEach(function(a){a.addEventListener('click',function(){setMenu(false);});});
+  }
+  // ---- mobile active state by current filename ----
+  var file=(location.pathname.split('/').pop()||'index.html');
+  var keyMap={'index.html':'home','functions.html':'functions','geometry.html':'geometry','probability.html':'probability','calculus.html':'calculus','elective.html':'elective'};
+  var curKey=keyMap[file];
+  if(panel&&curKey){
+    panel.querySelectorAll('[data-nav-key]').forEach(function(a){
+      if(a.getAttribute('data-nav-key')===curKey){a.style.color='var(--genshin-primary)';a.style.fontWeight='600';}
+    });
+  }
+  // ---- back to top ----
+  var btt=document.getElementById('back-to-top');
+  if(btt){
+    window.addEventListener('scroll',function(){
+      if(window.scrollY>500){btt.classList.remove('opacity-0','pointer-events-none');}
+      else{btt.classList.add('opacity-0','pointer-events-none');}
+    },{passive:true});
+    btt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  }
+  // ---- safe scroll reveal (no-JS = visible) ----
+  var els=document.querySelectorAll('.genshin-card');
+  if(els.length&&'IntersectionObserver' in window){
+    els.forEach(function(el){el.classList.add('reveal-init');});
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('reveal-in');io.unobserve(e.target);}});
+    },{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(el){io.observe(el);});
+  }
+})();
+</script>
+<script>
+// 滚动入场动画 — IntersectionObserver（轻量，无 scroll 监听，触发后自动断开）
+(function(){
+  if(!('IntersectionObserver'in window)){
+    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('reveal-visible');});
+    return;
+  }
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('reveal-visible');obs.unobserve(e.target);}
+    });
+  },{rootMargin:'0px 0px -60px 0px',threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+})();
+</script>
+<script>
+// ===== 侧边目录 Scrollspy + 移动端面板控制（v3 新增） =====
+// 性能：仅使用 IntersectionObserver，不监听 scroll 事件
+(function(){
+  // ---- Scrollspy：监听带 id 的 article，同步高亮对应 TOC 项 ----
+  var articles = document.querySelectorAll('article[id^="kp-"]');
+  var tocLinks = document.querySelectorAll('.toc-item');
+  if('IntersectionObserver' in window && articles.length && tocLinks.length){
+    // 建立 id -> [链接] 映射（桌面端与移动端各一份）
+    var map = {};
+    tocLinks.forEach(function(a){
+      var href = a.getAttribute('href') || '';
+      if(href.charAt(0) === '#'){
+        var id = href.slice(1);
+        if(!map[id]){ map[id] = []; }
+        map[id].push(a);
+      }
+    });
+    function setActive(id){
+      tocLinks.forEach(function(a){ a.classList.remove('toc-active'); });
+      if(map[id]){ map[id].forEach(function(a){ a.classList.add('toc-active'); }); }
+    }
+    // 顶部减去导航栏高度，底部只在上 40% 区域内触发
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ setActive(e.target.id); }
+      });
+    }, { rootMargin: '-88px 0px -60% 0px', threshold: 0 });
+    articles.forEach(function(a){ io.observe(a); });
+  }
+
+  // ---- 移动端浮动目录面板：开关 / 选项后关闭 / 外部点击关闭 / Esc 关闭 ----
+  var btn = document.getElementById('toc-mobile-btn');
+  var panel = document.getElementById('toc-mobile-panel');
+  if(btn && panel){
+    function isOpen(){ return panel.style.display === 'block'; }
+    function open(){ panel.style.display = 'block'; btn.setAttribute('aria-expanded','true'); }
+    function close(){ panel.style.display = 'none'; btn.setAttribute('aria-expanded','false'); }
+    btn.addEventListener('click', function(e){ e.stopPropagation(); isOpen() ? close() : open(); });
+    panel.addEventListener('click', function(e){ e.stopPropagation(); });
+    // 点击某项后：原生锚点平滑滚动 + 自动关闭面板
+    panel.querySelectorAll('.toc-item').forEach(function(a){
+      a.addEventListener('click', function(){ close(); });
+    });
+    document.addEventListener('click', function(e){
+      if(isOpen() && !panel.contains(e.target) && e.target !== btn){ close(); }
+    });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && isOpen()){ close(); } });
+  }
+})();
+</script>
+</body>
+</html>
