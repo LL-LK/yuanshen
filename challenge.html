@@ -2,7 +2,10 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0D0B1A">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
     <title>原神数学冒险 - 30天闯关计划</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -882,6 +885,146 @@
         .progress-fill { will-change: width; }
         .stars { will-change: opacity; }
         .btn-gold { will-change: transform; }
+
+        /* ===== 手机端关键修复（内联确保优先级） ===== */
+        @media (max-width: 640px) {
+            .modal-overlay {
+                padding: 8px !important;
+                padding-bottom: max(8px, env(safe-area-inset-bottom)) !important;
+                align-items: flex-end !important;
+            }
+            .modal-content {
+                max-height: 92vh !important;
+                max-height: calc(var(--vh, 1vh) * 92 - 16px) !important;
+                overflow-y: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                overscroll-behavior: contain;
+                padding: 14px !important;
+                border-radius: 16px 16px 12px 12px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+            }
+            #quizModalBg, #resultModalBg {
+                display: none !important;
+            }
+            #quizModal .quiz-char-portrait {
+                width: 44px !important;
+                height: 44px !important;
+                border-width: 2px !important;
+                flex-shrink: 0;
+            }
+            #quizModal .quiz-char-info {
+                flex: 1 1 0% !important;
+                min-width: 0 !important;
+            }
+            #quizTitle {
+                font-size: 15px !important;
+                line-height: 1.3 !important;
+                white-space: normal !important;
+                word-break: break-word;
+            }
+            #quizCharQuote {
+                font-size: 11px !important;
+                display: none !important;
+            }
+            .char-name-tag {
+                font-size: 10px !important;
+                padding: 1px 5px !important;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            #quizModal .flex.items-start.gap-3 {
+                flex-wrap: nowrap !important;
+                gap: 8px !important;
+                margin-bottom: 10px !important;
+            }
+            #quizModal .flex.items-start.gap-3 > div:last-child {
+                flex-shrink: 0;
+                gap: 2px !important;
+            }
+            #soundToggle, #quizModal button[onclick="closeQuiz()"] {
+                padding: 6px !important;
+                min-width: 32px;
+                min-height: 32px;
+            }
+            #difficultyBadge, .combo-display {
+                font-size: 10px !important;
+                padding: 1px 5px !important;
+            }
+            .knowledge-tip {
+                font-size: 11px !important;
+                padding: 6px 8px !important;
+                margin-bottom: 8px !important;
+            }
+            .progress-bar {
+                height: 5px !important;
+                margin-bottom: 10px !important;
+            }
+            #questionText {
+                font-size: 14px !important;
+                line-height: 1.6 !important;
+                margin-bottom: 14px !important;
+            }
+            #optionsContainer {
+                gap: 8px !important;
+            }
+            .option-btn {
+                padding: 12px !important;
+                font-size: 14px !important;
+                min-height: 48px !important;
+                line-height: 1.4 !important;
+                text-align: left !important;
+                word-break: break-word;
+            }
+            .explain-box {
+                font-size: 12px !important;
+                padding: 8px !important;
+                margin-top: 10px !important;
+            }
+            #quizModal .flex.justify-between.mt-6 {
+                position: sticky;
+                bottom: -14px;
+                background: var(--bg-card);
+                padding: 10px 0 4px 0;
+                margin-top: 12px !important;
+                gap: 8px;
+                z-index: 10;
+            }
+            #prevQuestion, #nextQuestion {
+                padding: 10px 12px !important;
+                font-size: 14px !important;
+                min-height: 44px;
+                flex: 1;
+            }
+            #resultModal .modal-content {
+                padding: 20px 14px !important;
+            }
+            #resultModal .grid.grid-cols-3 {
+                gap: 6px !important;
+            }
+            #resultModal .flex.gap-3 {
+                flex-direction: column !important;
+                gap: 8px !important;
+            }
+            #resultModal .flex.gap-3 button {
+                min-height: 48px;
+                font-size: 14px;
+            }
+        }
+        @media (max-width: 380px) {
+            .modal-content { padding: 12px !important; }
+            #quizTitle { font-size: 14px !important; }
+            .option-btn { padding: 10px !important; font-size: 13px !important; min-height: 44px !important; }
+        }
+        @media (max-height: 500px) and (orientation: landscape) {
+            .modal-content { max-height: 95vh !important; padding: 12px !important; }
+            #quizModal .flex.items-start.gap-3 { margin-bottom: 8px !important; }
+            #questionText { font-size: 14px !important; margin-bottom: 10px !important; }
+            #optionsContainer { gap: 6px !important; }
+            .option-btn { padding: 8px 10px !important; min-height: 36px; font-size: 13px !important; }
+            .progress-bar { margin-bottom: 8px !important; }
+        }
     </style>
     <link rel="stylesheet" href="assets/genshin-enhancements.css">
 </head>

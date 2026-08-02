@@ -373,12 +373,103 @@ body {
   opacity: 0.4;
 }
 
-/* ===== 响应式角色背景 ===== */
-@media (max-width: 768px) {
-  .char-portrait-bg {
-    opacity: 0.06;
-    right: -20%;
+
+/* ============================================================
+   📱 手机端专属响应式优化 (Mobile First Fixes)
+   ============================================================ */
+@media (max-width: 640px) {
+  html, body {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
   }
+
+  .modal-content {
+    max-height: calc(var(--vh, 1vh) * 92 - 16px) !important;
+  }
+
+  .modal-overlay {
+    padding: 8px !important;
+    align-items: flex-end !important;
+    padding-bottom: max(8px, env(safe-area-inset-bottom)) !important;
+  }
+
+  .modal-content {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain;
+    padding: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-radius: 16px 16px 12px 12px !important;
+  }
+
+  /* 隐藏大型背景立绘避免遮挡 */
+  #quizModalBg, #resultModalBg {
+    display: none !important;
+  }
+
+  /* 首页七国使者网格适配 */
+  #app > main > section.mb-20 > .grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  .showcase-char { padding: 6px !important; }
+  .showcase-char h4 { font-size: 11px !important; }
+  .showcase-char p { font-size: 9px !important; }
+
+  /* 导航栏适配 */
+  header .flex.items-center.justify-between { flex-wrap: wrap; gap: 4px; }
+  header .flex.items-center.gap-4 { gap: 6px !important; flex-wrap: wrap; }
+  header .flex.items-center.gap-2.bg-black\/30 { padding: 4px 8px !important; }
+  header .flex.items-center.gap-2.bg-black\/30 span { font-size: 12px !important; }
+
+  /* Tab按钮横向滚动 */
+  .flex.gap-2.mb-6 {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .flex.gap-2.mb-6::-webkit-scrollbar { display: none; }
+  .tab-btn { white-space: nowrap; font-size: 12px !important; padding: 6px 10px !important; flex-shrink: 0; }
+
+  /* 知识点页面角色立绘减淡 */
+  .char-portrait-bg, .knowledge-char-bg {
+    opacity: 0.05 !important;
+    right: -30% !important;
+    width: 80% !important;
+  }
+
+  .genshin-card { padding: 12px !important; }
+
+  .section-title, h1, h2, h3 {
+    white-space: normal !important;
+    word-break: break-word;
+  }
+
+  img { max-width: 100%; height: auto; }
+
+  button, a, [role="button"] {
+    -webkit-tap-highlight-color: rgba(255,215,0,0.2);
+    cursor: pointer;
+  }
+
+  #achievementModal .modal-content { padding: 16px !important; }
+  #achievementModal h3 { font-size: 16px !important; }
+
+  #wrongBookList > div { padding: 10px !important; font-size: 13px; }
+}
+
+@media (max-width: 380px) {
+  .modal-content { padding: 12px !important; border-radius: 12px !important; }
+  #app > main > section.mb-20 > .grid { grid-template-columns: repeat(3, 1fr) !important; }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .modal-content { max-height: 95vh !important; padding: 12px 16px !important; }
 }
 
 /* ===== 减少动画（辅助功能） ===== */
