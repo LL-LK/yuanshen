@@ -450,14 +450,50 @@ body {
   right: -5%;
   bottom: 0;
   height: 120%;
-  opacity: 0.12;
+  opacity: 0.15;
   pointer-events: none;
   z-index: 0;
-  mask-image: linear-gradient(to left, black 40%, transparent 90%);
-  -webkit-mask-image: linear-gradient(to left, black 40%, transparent 90%);
+  mask-image: linear-gradient(to left, black 30%, transparent 85%);
+  -webkit-mask-image: linear-gradient(to left, black 30%, transparent 85%);
   animation: charFloat 6s ease-in-out infinite;
   transform-origin: bottom center;
   will-change: transform;
+}
+
+/* 章节头部的大立绘：更高透明度 */
+section.relative.overflow-hidden.rounded-xl .char-portrait-bg,
+section[class*="hero"] .char-portrait-bg {
+  opacity: 0.22;
+  height: 115%;
+  right: -3%;
+  mask-image: linear-gradient(to left, black 35%, transparent 90%);
+  -webkit-mask-image: linear-gradient(to left, black 35%, transparent 90%);
+}
+
+/* 知识单元卡片里的小立绘：小尺寸、更低透明度，放在右下角 */
+article.genshin-card .char-portrait-bg {
+  opacity: 0.07;
+  height: 105%;
+  right: -8%;
+  mask-image: linear-gradient(to left, black 20%, transparent 80%);
+  -webkit-mask-image: linear-gradient(to left, black 20%, transparent 80%);
+  animation-duration: 8s;
+}
+
+/* 章节hero区左侧次要角色立绘 */
+.char-portrait-secondary {
+  right: auto !important;
+  left: -8% !important;
+  height: 100% !important;
+  opacity: 0.1 !important;
+  mask-image: linear-gradient(to right, black 25%, transparent 80%) !important;
+  -webkit-mask-image: linear-gradient(to right, black 25%, transparent 80%) !important;
+  animation-delay: -3s !important;
+  animation-duration: 9s !important;
+}
+
+.char-portrait-secondary img {
+  object-position: left bottom !important;
 }
 
 @keyframes charFloat {
@@ -812,11 +848,24 @@ body {
   .flex.gap-2.mb-6::-webkit-scrollbar { display: none; }
   .tab-btn { white-space: nowrap; font-size: 12px !important; padding: 6px 10px !important; flex-shrink: 0; }
 
-  /* 知识点页面角色立绘减淡 */
-  .char-portrait-bg, .knowledge-char-bg {
-    opacity: 0.05 !important;
-    right: -30% !important;
-    width: 80% !important;
+  /* 知识点页面角色立绘减淡，避免遮挡文字 */
+  .char-portrait-bg {
+    opacity: 0.08 !important;
+    right: -20% !important;
+    height: 110% !important;
+    mask-image: linear-gradient(to left, black 20%, transparent 75%) !important;
+    -webkit-mask-image: linear-gradient(to left, black 20%, transparent 75%) !important;
+  }
+  .char-portrait-secondary {
+    left: -25% !important;
+    opacity: 0.06 !important;
+    mask-image: linear-gradient(to right, black 15%, transparent 70%) !important;
+    -webkit-mask-image: linear-gradient(to right, black 15%, transparent 70%) !important;
+  }
+  /* 知识卡片里的小立绘进一步减淡 */
+  article.genshin-card .char-portrait-bg {
+    opacity: 0.04 !important;
+    right: -25% !important;
   }
 
   .genshin-card { padding: 12px !important; }

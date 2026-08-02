@@ -112,11 +112,11 @@
   // 页面与角色/元素的对应关系
   const PAGE_CONFIG = {
     'index.html': { element: null, chars: ['venti', 'zhongli', 'raiden', 'nahida', 'furina', 'hutao', 'ganyu'] },
-    'functions.html': { element: 'anemo', chars: ['venti', 'jean', 'kazuha', 'xiao'], nation: '蒙德' },
-    'geometry.html': { element: 'geo', chars: ['zhongli', 'ningguang', 'albedo', 'navia'], nation: '璃月' },
-    'probability.html': { element: 'electro', chars: ['raiden', 'yaemiko', 'cyno', 'clorinde'], nation: '稻妻' },
-    'calculus.html': { element: 'hydro', chars: ['furina', 'neuvillette', 'yelan', 'tartaglia'], nation: '枫丹' },
-    'elective.html': { element: 'dendro', chars: ['nahida', 'alhaitham', 'tighnari', 'baizhu'], nation: '须弥' },
+    'functions.html': { element: 'anemo', chars: ['venti', 'jean', 'kazuha', 'xiao', 'wanderer', 'xianyun', 'chasca', 'heizou', 'sucrose', 'faruzan', 'ifa'], nation: '蒙德' },
+    'geometry.html': { element: 'geo', chars: ['zhongli', 'ningguang', 'albedo', 'navia', 'chiori', 'noelle', 'gorou', 'aratakiitto', 'yunjin', 'xilonen'], nation: '璃月' },
+    'probability.html': { element: 'electro', chars: ['raiden', 'yaemiko', 'cyno', 'clorinde', 'fischl', 'beidou', 'kujousara', 'kuki', 'keqing', 'sethos', 'iansan', 'ororon', 'varesa'], nation: '稻妻' },
+    'calculus.html': { element: 'hydro', chars: ['furina', 'neuvillette', 'yelan', 'tartaglia', 'mona', 'barbara', 'xingqiu', 'ayato', 'nilou', 'candace', 'sigewinne', 'mualani'], nation: '枫丹' },
+    'elective.html': { element: 'dendro', chars: ['nahida', 'alhaitham', 'tighnari', 'baizhu', 'collei', 'kaveh', 'yaoyao', 'kirara', 'emilie', 'kinich'], nation: '须弥' },
     'challenge.html': { element: null, chars: [] }
   };
 
@@ -418,11 +418,63 @@
       }, 18000);
     }, 5000);
 
-    // 获取Hero区或第一个section添加角色立绘
-    const heroSection = document.querySelector('section[class*="hero"], section:first-of-type, main > section:first-child');
+    // ===== 1. 章节Hero区：大尺寸角色立绘 =====
+    const heroSection = document.querySelector('section.relative.overflow-hidden.rounded-xl, section[class*="hero"], main > section:first-child');
     if (heroSection && config.chars.length > 0) {
-      const randomChar = config.chars[Math.floor(Math.random() * config.chars.length)];
-      addCharPortraitBg(heroSection, randomChar);
+      // 选择章节主打角色（第一个）
+      const mainChar = config.chars[0];
+      addCharPortraitBg(heroSection, mainChar);
+      
+      // 再添加一个次要角色淡入，营造层次感（左侧）
+      setTimeout(() => {
+        const secondChar = config.chars[1];
+        if (secondChar && secondChar !== mainChar) {
+          const bg2 = document.createElement('div');
+          bg2.className = 'char-portrait-bg char-portrait-secondary';
+          
+          const elementGlowColors = {
+            anemo: 'rgba(116,194,168,0.15)', geo: 'rgba(240,182,50,0.15)',
+            electro: 'rgba(176,143,232,0.18)', dendro: 'rgba(138,184,80,0.15)',
+            hydro: 'rgba(75,171,227,0.15)', pyro: 'rgba(239,102,75,0.17)',
+            cryo: 'rgba(184,226,245,0.17)'
+          };
+          const cData = CHAR_DATA[secondChar];
+          if (cData && elementGlowColors[cData.element]) {
+            bg2.style.setProperty('--char-glow', elementGlowColors[cData.element]);
+          }
+          
+          const img2 = document.createElement('img');
+          img2.src = getCharUrl(secondChar, 'gacha-splash');
+          img2.alt = cData?.name || '';
+          img2.loading = 'lazy';
+          img2.onerror = function() {
+            this.src = getCharUrl(secondChar, 'portrait');
+            this.onerror = function() { bg2.remove(); };
+          };
+          bg2.appendChild(img2);
+          
+          const pos = window.getComputedStyle(heroSection).position;
+          if (pos === 'static') heroSection.style.position = 'relative';
+          heroSection.insertBefore(bg2, heroSection.firstChild);
+        }
+      }, 1200);
+    }
+
+    // ===== 2. 知识单元卡片：每个卡片一个小角色立绘 =====
+    const cardArticles = document.querySelectorAll('article.genshin-card[id^="kp-"]');
+    if (cardArticles.length > 0 && config.chars.length > 1) {
+      cardArticles.forEach((card, idx) => {
+        // 轮流分配角色，跳过hero已用的前2个
+        const availableChars = config.chars.slice(2);
+        if (availableChars.length === 0) return;
+        const charSlug = availableChars[idx % availableChars.length];
+        if (charSlug && CHAR_DATA[charSlug]) {
+          // 延迟加载，避免一次性请求过多
+          setTimeout(() => {
+            addCharPortraitBg(card, charSlug);
+          }, 500 + idx * 200);
+        }
+      });
     }
 
     // 为模块卡片添加元素发光效果
