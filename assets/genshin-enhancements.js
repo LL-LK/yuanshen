@@ -20,6 +20,7 @@
     faruzan: { name: '珐露珊', element: 'anemo', title: '机逐封秘' },
     xianyun: { name: '闲云', element: 'anemo', title: '銮韵风姿' },
     chasca: { name: '恰斯卡', element: 'anemo', title: '翦玉编春' },
+    ifa: { name: '伊法', element: 'anemo', title: '风理之医' },
 
     // 岩元素 - 璃月
     zhongli: { name: '钟离', element: 'geo', title: '尘世闲游' },
@@ -44,6 +45,9 @@
     cyno: { name: '赛诺', element: 'electro', title: '缄秘的裁遣' },
     clorinde: { name: '克洛琳德', element: 'electro', title: '秉烛的狙伏' },
     sethos: { name: '赛索斯', element: 'electro', title: '缄秘的贤医' },
+    iansan: { name: '伊安珊', element: 'electro', title: '明曜的靇雷' },
+    ororon: { name: '欧洛伦', element: 'electro', title: '幽梦诡丝' },
+    varesa: { name: '瓦雷莎', element: 'electro', title: '鲜烈之游' },
 
     // 草元素 - 须弥
     nahida: { name: '纳西妲', element: 'dendro', title: '小吉祥草王' },
@@ -69,6 +73,7 @@
     candace: { name: '坎蒂丝', element: 'hydro', title: '浮金的誓愿' },
     neuvillette: { name: '那维莱特', element: 'hydro', title: '浪沫之抔' },
     sigewinne: { name: '希格雯', element: 'hydro', title: '龙铃的颂章' },
+    mualani: { name: '玛拉妮', element: 'hydro', title: '漩跃潮心' },
 
     // 火元素 - 纳塔
     hutao: { name: '胡桃', element: 'pyro', title: '雪霁梅香' },
@@ -83,6 +88,8 @@
     arlecchino: { name: '阿蕾奇诺', element: 'pyro', title: '「仆人」' },
     chevreuse: { name: '夏沃蕾', element: 'pyro', title: '明律的决罚' },
     gaming: { name: '嘉明', element: 'pyro', title: '骏春猊迹' },
+    mavuika: { name: '玛薇卡', element: 'pyro', title: '灼燃的夜梦' },
+    durin: { name: '杜林', element: 'pyro', title: '不熄灭的火' },
 
     // 冰元素 - 至冬/蒙德
     ganyu: { name: '甘雨', element: 'cryo', title: '循循守月' },
@@ -97,7 +104,9 @@
     mika: { name: '米卡', element: 'cryo', title: '晴霜的标绘' },
     freminet: { name: '菲米尼', element: 'cryo', title: '潜怀遐梦' },
     wriothesley: { name: '莱欧斯利', element: 'cryo', title: '寂罪的密使' },
-    charlotte: { name: '夏洛蒂', element: 'cryo', title: '朗镜索真' }
+    charlotte: { name: '夏洛蒂', element: 'cryo', title: '朗镜索真' },
+    citlali: { name: '茜特菈莉', element: 'cryo', title: '星之子的祝愿' },
+    escoffier: { name: '爱可菲', element: 'cryo', title: '千缕之锋' }
   };
 
   // 页面与角色/元素的对应关系
@@ -342,9 +351,25 @@
     if (!container) return;
     const bg = document.createElement('div');
     bg.className = 'char-portrait-bg';
+    
+    // 根据元素设置光晕颜色
+    const elementGlowColors = {
+      anemo: 'rgba(116,194,168,0.2)',
+      geo: 'rgba(240,182,50,0.2)',
+      electro: 'rgba(176,143,232,0.25)',
+      dendro: 'rgba(138,184,80,0.2)',
+      hydro: 'rgba(75,171,227,0.2)',
+      pyro: 'rgba(239,102,75,0.22)',
+      cryo: 'rgba(184,226,245,0.22)'
+    };
+    const charData = CHAR_DATA[charSlug];
+    if (charData && elementGlowColors[charData.element]) {
+      bg.style.setProperty('--char-glow', elementGlowColors[charData.element]);
+    }
+    
     const img = document.createElement('img');
     img.src = getCharUrl(charSlug, 'gacha-splash');
-    img.alt = CHAR_DATA[charSlug]?.name || '';
+    img.alt = charData?.name || '';
     img.loading = 'lazy';
     img.onerror = function() {
       // 如果gacha-splash失败，尝试portrait

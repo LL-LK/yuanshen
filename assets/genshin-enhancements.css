@@ -444,7 +444,7 @@ body {
   animation-duration: 8s;
 }
 
-/* ===== 角色立绘背景装饰 ===== */
+/* ===== 角色立绘背景装饰（增强动画版） ===== */
 .char-portrait-bg {
   position: absolute;
   right: -5%;
@@ -456,11 +456,15 @@ body {
   mask-image: linear-gradient(to left, black 40%, transparent 90%);
   -webkit-mask-image: linear-gradient(to left, black 40%, transparent 90%);
   animation: charFloat 6s ease-in-out infinite;
+  transform-origin: bottom center;
+  will-change: transform;
 }
 
 @keyframes charFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%, 100% { transform: translateY(0) rotate(-0.5deg); }
+  25% { transform: translateY(-6px) rotate(0.3deg); }
+  50% { transform: translateY(-12px) rotate(-0.2deg); }
+  75% { transform: translateY(-5px) rotate(0.5deg); }
 }
 
 .char-portrait-bg img {
@@ -468,6 +472,129 @@ body {
   width: auto;
   object-fit: contain;
   object-position: right bottom;
+  animation: charBreath 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* 角色呼吸感：细微缩放模拟呼吸 */
+@keyframes charBreath {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.008); }
+}
+
+/* 角色立绘光晕效果 */
+.char-portrait-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, var(--char-glow, rgba(200,169,91,0.15)) 0%, transparent 50%);
+  animation: auraPulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes auraPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* ===== 首页角色展示卡片动画 ===== */
+.showcase-char {
+  position: relative;
+  transition: all 0.5s cubic-bezier(.22,1,.36,1);
+  animation: showcaseIdle 5s ease-in-out infinite;
+}
+
+.showcase-char:nth-child(2n) { animation-delay: -1.5s; }
+.showcase-char:nth-child(3n) { animation-delay: -3s; }
+.showcase-char:nth-child(4n) { animation-delay: -4s; }
+
+@keyframes showcaseIdle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.showcase-char:hover {
+  transform: scale(1.05) translateY(-8px) !important;
+  animation: none;
+}
+
+.showcase-char .char-aura {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  filter: blur(30px);
+  animation: auraRotate 10s linear infinite;
+  z-index: 0;
+}
+
+@keyframes auraRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.showcase-char:hover .char-aura {
+  opacity: 0.4;
+}
+
+/* 元素图标微浮动 */
+.showcase-char .element-icon {
+  animation: elementIconFloat 3s ease-in-out infinite;
+}
+
+@keyframes elementIconFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-2px) scale(1.05); }
+}
+
+/* 第二行角色入场延迟 */
+#extra-chars-row .showcase-char {
+  animation-delay: calc(var(--i, 0) * 0.1s - 2s);
+}
+
+#extra-chars-row .showcase-char:nth-child(1) { --i: 1; }
+#extra-chars-row .showcase-char:nth-child(2) { --i: 2; }
+#extra-chars-row .showcase-char:nth-child(3) { --i: 3; }
+#extra-chars-row .showcase-char:nth-child(4) { --i: 4; }
+#extra-chars-row .showcase-char:nth-child(5) { --i: 5; }
+#extra-chars-row .showcase-char:nth-child(6) { --i: 6; }
+#extra-chars-row .showcase-char:nth-child(7) { --i: 7; }
+
+/* 首页角色卡片内图片浮动 */
+.showcase-char img {
+  animation: cardImgFloat 6s ease-in-out infinite;
+  transition: transform 0.4s ease;
+}
+
+.showcase-char:nth-child(2n) img { animation-delay: -2s; }
+.showcase-char:nth-child(3n) img { animation-delay: -4s; }
+
+@keyframes cardImgFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.02); }
+}
+
+.showcase-char:hover img {
+  animation: none;
+  transform: scale(1.08) !important;
+}
+
+/* ===== 角色卡片头像旋转发光 ===== */
+.showcase-char .char-icon,
+.genshin-card .char-icon,
+.module-char-icon {
+  transition: all 0.4s ease;
+}
+
+.showcase-char:hover .char-icon {
+  animation: iconSpin 0.8s ease;
+}
+
+@keyframes iconSpin {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(1); }
 }
 
 /* ===== 元素边框发光效果 ===== */

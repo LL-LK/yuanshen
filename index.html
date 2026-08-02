@@ -541,7 +541,7 @@ body { line-height: 1.75; }
         <h2 class="section-title font-display text-2xl md:text-3xl">提瓦特使者</h2>
         <p class="mt-2 text-sm" style="color: var(--genshin-muted-foreground);">七国角色将伴你走过数学之旅</p>
       </div>
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
+      <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-4">
         <!-- 风 · 温迪 -->
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="anemo" onclick="location.href='functions.html'">
           <div class="char-aura" style="background: radial-gradient(circle, var(--el-anemo-glow), transparent);"></div>
@@ -592,15 +592,15 @@ body { line-height: 1.75; }
           <h4 class="font-display text-sm truncate">芙宁娜</h4>
           <p class="text-xs" style="color: var(--el-hydro);">枫丹 · 水</p>
         </div>
-        <!-- 火 · 胡桃 -->
+        <!-- 火 · 玛薇卡 -->
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="pyro" onclick="location.href='challenge.html'">
           <div class="char-aura" style="background: radial-gradient(circle, var(--el-pyro-glow), transparent);"></div>
           <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-pyro); box-shadow: 0 0 15px rgba(239,122,53,0.3);">
-            <img src="https://genshin.jmp.blue/characters/hutao/gacha-splash" alt="胡桃" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/hutao/icon';this.onerror=null;">
+            <img src="https://genshin.jmp.blue/characters/mavuika/gacha-splash" alt="玛薇卡" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/mavuika/icon';this.onerror=null;">
             <div class="absolute top-2 left-2 element-icon" style="background: var(--el-pyro); color: #fff;">🔥</div>
           </div>
-          <h4 class="font-display text-sm truncate">胡桃</h4>
-          <p class="text-xs" style="color: var(--el-pyro);">秘境 · 火</p>
+          <h4 class="font-display text-sm truncate">玛薇卡</h4>
+          <p class="text-xs" style="color: var(--el-pyro);">纳塔 · 火</p>
         </div>
         <!-- 冰 · 甘雨 -->
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="cryo" onclick="location.href='challenge.html'">
@@ -611,6 +611,79 @@ body { line-height: 1.75; }
           </div>
           <h4 class="font-display text-sm truncate">甘雨</h4>
           <p class="text-xs" style="color: var(--el-cryo);">月海 · 冰</p>
+        </div>
+      </div>
+      <!-- 第二行：纳塔新角色 + 其他高人气角色 -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-4 mt-4" id="extra-chars-row">
+        <!-- 火 · 胡桃 -->
+        <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="pyro" onclick="location.href='challenge.html'">
+          <div class="char-aura" style="background: radial-gradient(circle, var(--el-pyro-glow), transparent);"></div>
+          <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-pyro); box-shadow: 0 0 15px rgba(239,122,53,0.3);">
+            <img src="https://genshin.jmp.blue/characters/hutao/gacha-splash" alt="胡桃" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/hutao/icon';this.onerror=null;">
+            <div class="absolute top-2 left-2 element-icon" style="background: var(--el-pyro); color: #fff;">🔥</div>
+          </div>
+          <h4 class="font-display text-sm truncate">胡桃</h4>
+          <p class="text-xs" style="color: var(--el-pyro);">璃月 · 火</p>
+        </div>
+        <!-- 火 · 杜林 -->
+        <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="pyro" onclick="location.href='challenge.html'">
+          <div class="char-aura" style="background: radial-gradient(circle, var(--el-pyro-glow), transparent);"></div>
+          <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-pyro); box-shadow: 0 0 15px rgba(239,122,53,0.3);">
+            <img src="https://genshin.jmp.blue/characters/durin/gacha-splash" alt="杜林" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/durin/icon';this.onerror=null;">
+            <div class="absolute top-2 left-2 element-icon" style="background: var(--el-pyro); color: #fff;">🔥</div>
+          </div>
+          <h4 class="font-display text-sm truncate">杜林</h4>
+          <p class="text-xs" style="color: var(--el-pyro);">烬火 · 火</p>
+        </div>
+        <!-- 水 · 玛拉妮 -->
+        <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="hydro" onclick="location.href='calculus.html'">
+          <div class="char-aura" style="background: radial-gradient(circle, var(--el-hydro-glow), transparent);"></div>
+          <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-hydro); box-shadow: 0 0 15px rgba(76,194,240,0.3);">
+            <img src="https://genshin.jmp.blue/characters/mualani/gacha-splash" alt="玛拉妮" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/mualani/icon';this.onerror=null;">
+            <div class="absolute top-2 left-2 element-icon" style="background: var(--el-hydro); color: #fff;">💧</div>
+          </div>
+          <h4 class="font-display text-sm truncate">玛拉妮</h4>
+          <p class="text-xs" style="color: var(--el-hydro);">纳塔 · 水</p>
+        </div>
+        <!-- 雷 · 欧洛伦 -->
+        <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="electro" onclick="location.href='probability.html'">
+          <div class="char-aura" style="background: radial-gradient(circle, var(--el-electro-glow), transparent);"></div>
+          <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-electro); box-shadow: 0 0 15px rgba(176,136,232,0.3);">
+            <img src="https://genshin.jmp.blue/characters/ororon/gacha-splash" alt="欧洛伦" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/ororon/icon';this.onerror=null;">
+            <div class="absolute top-2 left-2 element-icon" style="background: var(--el-electro); color: #fff;">⚡</div>
+          </div>
+          <h4 class="font-display text-sm truncate">欧洛伦</h4>
+          <p class="text-xs" style="color: var(--el-electro);">纳塔 · 雷</p>
+        </div>
+        <!-- 冰 · 茜特菈莉 -->
+        <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="cryo" onclick="location.href='challenge.html'">
+          <div class="char-aura" style="background: radial-gradient(circle, var(--el-cryo-glow), transparent);"></div>
+          <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-cryo); box-shadow: 0 0 15px rgba(160,215,239,0.3);">
+            <img src="https://genshin.jmp.blue/characters/citlali/gacha-splash" alt="茜特菈莉" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/citlali/icon';this.onerror=null;">
+            <div class="absolute top-2 left-2 element-icon" style="background: var(--el-cryo); color: #fff;">❄️</div>
+          </div>
+          <h4 class="font-display text-sm truncate">茜特菈莉</h4>
+          <p class="text-xs" style="color: var(--el-cryo);">纳塔 · 冰</p>
+        </div>
+        <!-- 风 · 恰斯卡 -->
+        <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="anemo" onclick="location.href='functions.html'">
+          <div class="char-aura" style="background: radial-gradient(circle, var(--el-anemo-glow), transparent);"></div>
+          <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-anemo); box-shadow: 0 0 15px rgba(116,194,168,0.3);">
+            <img src="https://genshin.jmp.blue/characters/chasca/gacha-splash" alt="恰斯卡" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/chasca/icon';this.onerror=null;">
+            <div class="absolute top-2 left-2 element-icon" style="background: var(--el-anemo); color: #fff;">🌪️</div>
+          </div>
+          <h4 class="font-display text-sm truncate">恰斯卡</h4>
+          <p class="text-xs" style="color: var(--el-anemo);">纳塔 · 风</p>
+        </div>
+        <!-- 岩 · 希诺宁 -->
+        <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="geo" onclick="location.href='geometry.html'">
+          <div class="char-aura" style="background: radial-gradient(circle, var(--el-geo-glow), transparent);"></div>
+          <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-geo); box-shadow: 0 0 15px rgba(240,182,50,0.3);">
+            <img src="https://genshin.jmp.blue/characters/xilonen/gacha-splash" alt="希诺宁" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/xilonen/icon';this.onerror=null;">
+            <div class="absolute top-2 left-2 element-icon" style="background: var(--el-geo); color: #fff;">🪨</div>
+          </div>
+          <h4 class="font-display text-sm truncate">希诺宁</h4>
+          <p class="text-xs" style="color: var(--el-geo);">纳塔 · 岩</p>
         </div>
       </div>
     </section>
