@@ -883,6 +883,7 @@
         .stars { will-change: opacity; }
         .btn-gold { will-change: transform; }
     </style>
+    <link rel="stylesheet" href="assets/genshin-enhancements.css">
 </head>
 <body>
     <div id="loadingOverlay" class="loading-overlay">
@@ -1010,7 +1011,11 @@
     </div>
 
     <div id="quizModal" class="modal-overlay hidden">
-        <div class="modal-content gold-border p-6">
+        <div class="modal-content gold-border p-6" style="position:relative;overflow:hidden;">
+            <div id="quizModalBg" style="position:absolute;right:-60px;bottom:-40px;width:55%;height:120%;opacity:0.12;pointer-events:none;z-index:0;mask-image:linear-gradient(to left,black 30%,transparent 80%);-webkit-mask-image:linear-gradient(to left,black 30%,transparent 80%);">
+                <img id="quizCharSplash" src="" alt="" style="width:100%;height:100%;object-fit:contain;object-position:right bottom;display:none;" onerror="this.style.display='none';">
+            </div>
+            <div style="position:relative;z-index:1;">
             <div class="flex items-start gap-3 mb-4">
                 <img id="quizCharPortrait" class="quiz-char-portrait" src="" alt="" style="display:none;"
                      onerror="this.style.display='none';">
@@ -1065,11 +1070,16 @@
                     下一题<i data-lucide="chevron-right" class="w-4 h-4 inline ml-1"></i>
                 </button>
             </div>
+            </div>
         </div>
     </div>
 
     <div id="resultModal" class="modal-overlay hidden">
-        <div class="modal-content gold-border p-8 text-center">
+        <div class="modal-content gold-border p-8 text-center" style="position:relative;overflow:hidden;">
+            <div id="resultModalBg" style="position:absolute;left:-40px;bottom:-30px;width:45%;height:110%;opacity:0.15;pointer-events:none;z-index:0;mask-image:linear-gradient(to right,black 20%,transparent 80%);-webkit-mask-image:linear-gradient(to right,black 20%,transparent 80%);">
+                <img id="resultCharSplash" src="" alt="" style="width:100%;height:100%;object-fit:contain;object-position:left bottom;display:none;" onerror="this.style.display='none';">
+            </div>
+            <div style="position:relative;z-index:1;">
             <div class="animate-float mb-4">
                 <i data-lucide="trophy" class="w-20 h-20 mx-auto" style="color: var(--primary-gold);"></i>
             </div>
@@ -1124,6 +1134,7 @@
                 <button class="btn-gold flex-1" onclick="closeResult()">
                     返回冒险地图
                 </button>
+            </div>
             </div>
         </div>
     </div>
@@ -1200,7 +1211,7 @@
                 quote: '角的推广如同契约的延展，从0到360度乃至无穷。',
                 tip: '任意角终边定义：sinα=y/r，cosα=x/r，tanα=y/x，r=√(x²+y²)。' } },
             { day: 9, title: '三角恒等变换', nation: 'liyue', difficulty: 'advanced',
-              char: { name: '胡桃', slug: 'hu-tao', title: '雪晴梅香', element: 'pyro',
+              char: { name: '胡桃', slug: 'hutao', title: '雪霁梅香', element: 'pyro',
                 quote: '三角恒等变换？就像往生堂的仪式，公式搭配要恰到好处~',
                 tip: 'sin(α±β)=sinαcosβ±cosαsinβ，cos(α±β)=cosαcosβ∓sinαsinβ。' } },
             { day: 10, title: '三角函数图像', nation: 'liyue', difficulty: 'basic',
@@ -1228,7 +1239,7 @@
                 quote: '空间几何体，是心中净土的投影，三维万象皆在其中。',
                 tip: '柱体V=Sh，锥体V=Sh/3，球V=4πr³/3、S=4πr²。' } },
             { day: 16, title: '点线面关系', nation: 'inazuma', difficulty: 'advanced',
-              char: { name: '八重神子', slug: 'yae-miko', title: '浮世笑百姿', element: 'electro',
+              char: { name: '八重神子', slug: 'yaemiko', title: '浮世笑百姿', element: 'electro',
                 quote: '点线面的关系如鸣神大社的势力网，错综复杂却有迹可循~',
                 tip: '线面平行：面外线平行面内线；面面平行：两组相交线分别平行。' } },
             { day: 17, title: '空间向量', nation: 'inazuma', difficulty: 'advanced',
@@ -1248,7 +1259,7 @@
                 quote: '概率分布是兵法的精髓，知己知彼方能百战不殆。',
                 tip: '二项分布X~B(n,p)期望E(X)=np，正态分布N(μ,σ²)关于x=μ对称。' } },
             { day: 21, title: '统计周测', nation: 'inazuma', difficulty: 'challenge',
-              char: { name: '荒泷一斗', slug: 'arataki-itto', title: '花坂豪快', element: 'geo',
+              char: { name: '荒泷一斗', slug: 'aratakiitto', title: '花坂豪快', element: 'geo',
                 quote: '哈哈！本大爷就是统计里最耀眼的异常值！',
                 tip: '方差s²=Σ(xi-x̄)²/n衡量数据波动，回归方程y=bx+a必过(x̄,ȳ)。' } },
             { day: 22, title: '直线方程', nation: 'fontaine', difficulty: 'basic',
@@ -4793,8 +4804,8 @@
             
             const charGlow = isUnlocked ? `<div class="char-bg-glow" style="background:${el.color};"></div>` : '';
             const charPortraitBg = (isUnlocked && character.slug) ? 
-                `<img class="char-portrait-bg" src="${CHAR_CDN}${character.slug}/portrait" alt="" loading="lazy"
-                      onerror="this.style.display='none';">` : '';
+                `<img class="char-portrait-bg" src="${CHAR_CDN}${character.slug}/gacha-splash" alt="" loading="lazy"
+                      onerror="this.src='${CHAR_CDN}${character.slug}/portrait';this.onerror=function(){this.style.display='none'};">` : '';
             
             // Generate element-specific particles
             let particles = '';
@@ -5032,8 +5043,23 @@
                     void portrait.offsetWidth;
                     portrait.classList.add('char-enter');
                     setTimeout(() => portrait.classList.remove('char-enter'), 600);
+                    // Set gacha-splash background
+                    const splash = document.getElementById('quizCharSplash');
+                    if (splash) {
+                        splash.src = `${CHAR_CDN}${character.slug}/gacha-splash`;
+                        splash.style.display = 'block';
+                        splash.onerror = function() {
+                            this.src = `${CHAR_CDN}${character.slug}/portrait`;
+                            this.onerror = function() { this.style.display = 'none'; };
+                        };
+                        // Update bg color glow
+                        const bg = document.getElementById('quizModalBg');
+                        if (bg) bg.style.background = `radial-gradient(ellipse at 80% 80%, ${el.color}15, transparent 60%)`;
+                    }
                 } else {
                     document.getElementById('quizCharPortrait').style.display = 'none';
+                    const splash = document.getElementById('quizCharSplash');
+                    if (splash) splash.style.display = 'none';
                 }
                 const nameTag = document.getElementById('quizCharName');
                 nameTag.textContent = character.name + (character.title ? ` · ${character.title}` : '');
@@ -5326,6 +5352,33 @@
             
             document.getElementById('quizModal').classList.add('hidden');
             document.getElementById('resultModal').classList.remove('hidden');
+            
+            // Set result character splash
+            const resultSplash = document.getElementById('resultCharSplash');
+            const resultBg = document.getElementById('resultModalBg');
+            if (resultSplash && resultBg) {
+                if (isRevenge) {
+                    // Revenge mode - use a fire/national character
+                    resultSplash.src = `${CHAR_CDN}hutao/gacha-splash`;
+                    resultSplash.style.display = 'block';
+                    resultSplash.onerror = function() { this.style.display='none'; };
+                    resultBg.style.background = 'radial-gradient(ellipse at 20% 80%, rgba(239,122,53,0.15), transparent 60%)';
+                } else {
+                    const topic = dayTopics.find(t => t.day === currentQuiz.day);
+                    if (topic && topic.char && topic.char.slug) {
+                        const el = ELEMENTS[topic.char.element] || ELEMENTS.anemo;
+                        resultSplash.src = `${CHAR_CDN}${topic.char.slug}/gacha-splash`;
+                        resultSplash.style.display = 'block';
+                        resultSplash.onerror = function() {
+                            this.src = `${CHAR_CDN}${topic.char.slug}/portrait`;
+                            this.onerror = function() { this.style.display='none'; };
+                        };
+                        resultBg.style.background = `radial-gradient(ellipse at 20% 80%, ${el.color}15, transparent 60%)`;
+                    } else {
+                        resultSplash.style.display = 'none';
+                    }
+                }
+            }
             
             let dayTitle;
             if (isRevenge) {
@@ -5620,5 +5673,6 @@
             setInterval(saveGameState, 30000);
         });
     </script>
+    <script src="assets/genshin-enhancements.js"></script>
 </body>
 </html>

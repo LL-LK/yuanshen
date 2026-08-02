@@ -232,6 +232,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/genshin-enhancements.css">
     <style id="enhanced-design">
 /* === 提瓦特数学图鉴 · 排版与动画增强系统 === */
 /* 性能安全：仅使用 transform + opacity（合成器友好），IntersectionObserver 替代 scroll 监听 */
@@ -528,6 +529,86 @@ body { line-height: 1.75; }
           </div>
         </div>
         <p class="mt-8 text-sm text-center leading-relaxed" style="color: var(--genshin-muted-foreground);">建议按此顺序修习，由基础到进阶，如旅行者周游七国般遍历数学世界</p>
+      </div>
+    </section>
+
+    <!-- ===== 提瓦特七国使者展示区 ===== -->
+    <section class="mb-20 reveal">
+      <div class="mb-8">
+        <h2 class="section-title font-display text-2xl md:text-3xl">提瓦特使者</h2>
+        <p class="mt-2 text-sm" style="color: var(--genshin-muted-foreground);">七国角色将伴你走过数学之旅</p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
+        <!-- 风 · 温迪 -->
+        <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="anemo" onclick="location.href='functions.html'">
+          <div class="char-aura" style="background: radial-gradient(circle, var(--el-anemo-glow), transparent);"></div>
+          <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-anemo); box-shadow: 0 0 15px rgba(116,194,168,0.3);">
+            <img src="https://genshin.jmp.blue/characters/venti/gacha-splash" alt="温迪" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/venti/icon';this.onerror=null;">
+            <div class="absolute top-2 left-2 element-icon" style="background: var(--el-anemo); color: #fff;">🌪️</div>
+          </div>
+          <h4 class="font-display text-sm truncate">温迪</h4>
+          <p class="text-xs" style="color: var(--el-anemo);">蒙德 · 风</p>
+        </div>
+        <!-- 岩 · 钟离 -->
+        <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="geo" onclick="location.href='geometry.html'">
+          <div class="char-aura" style="background: radial-gradient(circle, var(--el-geo-glow), transparent);"></div>
+          <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-geo); box-shadow: 0 0 15px rgba(240,182,50,0.3);">
+            <img src="https://genshin.jmp.blue/characters/zhongli/gacha-splash" alt="钟离" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/zhongli/icon';this.onerror=null;">
+            <div class="absolute top-2 left-2 element-icon" style="background: var(--el-geo); color: #fff;">🪨</div>
+          </div>
+          <h4 class="font-display text-sm truncate">钟离</h4>
+          <p class="text-xs" style="color: var(--el-geo);">璃月 · 岩</p>
+        </div>
+        <!-- 雷 · 雷电将军 -->
+        <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="electro" onclick="location.href='probability.html'">
+          <div class="char-aura" style="background: radial-gradient(circle, var(--el-electro-glow), transparent);"></div>
+          <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-electro); box-shadow: 0 0 15px rgba(176,136,232,0.3);">
+            <img src="https://genshin.jmp.blue/characters/raiden/gacha-splash" alt="雷电将军" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/raiden/icon';this.onerror=null;">
+            <div class="absolute top-2 left-2 element-icon" style="background: var(--el-electro); color: #fff;">⚡</div>
+          </div>
+          <h4 class="font-display text-sm truncate">雷电将军</h4>
+          <p class="text-xs" style="color: var(--el-electro);">稻妻 · 雷</p>
+        </div>
+        <!-- 草 · 纳西妲 -->
+        <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="dendro" onclick="location.href='elective.html'">
+          <div class="char-aura" style="background: radial-gradient(circle, var(--el-dendro-glow), transparent);"></div>
+          <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-dendro); box-shadow: 0 0 15px rgba(123,201,74,0.3);">
+            <img src="https://genshin.jmp.blue/characters/nahida/gacha-splash" alt="纳西妲" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/nahida/icon';this.onerror=null;">
+            <div class="absolute top-2 left-2 element-icon" style="background: var(--el-dendro); color: #fff;">🍃</div>
+          </div>
+          <h4 class="font-display text-sm truncate">纳西妲</h4>
+          <p class="text-xs" style="color: var(--el-dendro);">须弥 · 草</p>
+        </div>
+        <!-- 水 · 芙宁娜 -->
+        <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="hydro" onclick="location.href='calculus.html'">
+          <div class="char-aura" style="background: radial-gradient(circle, var(--el-hydro-glow), transparent);"></div>
+          <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-hydro); box-shadow: 0 0 15px rgba(76,194,240,0.3);">
+            <img src="https://genshin.jmp.blue/characters/furina/gacha-splash" alt="芙宁娜" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/furina/icon';this.onerror=null;">
+            <div class="absolute top-2 left-2 element-icon" style="background: var(--el-hydro); color: #fff;">💧</div>
+          </div>
+          <h4 class="font-display text-sm truncate">芙宁娜</h4>
+          <p class="text-xs" style="color: var(--el-hydro);">枫丹 · 水</p>
+        </div>
+        <!-- 火 · 胡桃 -->
+        <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="pyro" onclick="location.href='challenge.html'">
+          <div class="char-aura" style="background: radial-gradient(circle, var(--el-pyro-glow), transparent);"></div>
+          <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-pyro); box-shadow: 0 0 15px rgba(239,122,53,0.3);">
+            <img src="https://genshin.jmp.blue/characters/hutao/gacha-splash" alt="胡桃" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/hutao/icon';this.onerror=null;">
+            <div class="absolute top-2 left-2 element-icon" style="background: var(--el-pyro); color: #fff;">🔥</div>
+          </div>
+          <h4 class="font-display text-sm truncate">胡桃</h4>
+          <p class="text-xs" style="color: var(--el-pyro);">秘境 · 火</p>
+        </div>
+        <!-- 冰 · 甘雨 -->
+        <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="cryo" onclick="location.href='challenge.html'">
+          <div class="char-aura" style="background: radial-gradient(circle, var(--el-cryo-glow), transparent);"></div>
+          <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-cryo); box-shadow: 0 0 15px rgba(160,215,239,0.3);">
+            <img src="https://genshin.jmp.blue/characters/ganyu/gacha-splash" alt="甘雨" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/ganyu/icon';this.onerror=null;">
+            <div class="absolute top-2 left-2 element-icon" style="background: var(--el-cryo); color: #fff;">❄️</div>
+          </div>
+          <h4 class="font-display text-sm truncate">甘雨</h4>
+          <p class="text-xs" style="color: var(--el-cryo);">月海 · 冰</p>
+        </div>
       </div>
     </section>
 
@@ -883,5 +964,6 @@ body { line-height: 1.75; }
   }
 })();
 </script>
+<script src="assets/genshin-enhancements.js"></script>
 </body>
 </html>

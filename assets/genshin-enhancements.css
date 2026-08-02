@@ -1,0 +1,394 @@
+/* ============================================================
+   提瓦特数学图鉴 · 原神全局增强样式
+   包含：角色立绘背景、元素粒子、七国主题、装饰动画
+   ============================================================ */
+
+/* ===== 七元素颜色系统 ===== */
+:root {
+  --el-anemo: #74C2A8;
+  --el-anemo-glow: #A8E6CF;
+  --el-geo: #F0B632;
+  --el-geo-glow: #FFD866;
+  --el-electro: #B088E8;
+  --el-electro-glow: #D4B3FF;
+  --el-dendro: #7BC94A;
+  --el-dendro-glow: #A8E27D;
+  --el-hydro: #4CC2F0;
+  --el-hydro-glow: #7DDAFF;
+  --el-pyro: #EF7A35;
+  --el-pyro-glow: #FFB088;
+  --el-cryo: #A0D7EF;
+  --el-cryo-glow: #D4EEF9;
+}
+
+/* ===== 星空背景增强 ===== */
+body {
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* 流星动画 */
+@keyframes shootingStar {
+  0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0; }
+  5% { opacity: 1; }
+  20% { opacity: 1; }
+  25% { transform: translateX(300px) translateY(300px) rotate(-45deg); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.shooting-star {
+  position: fixed;
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.8), transparent);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 1;
+  animation: shootingStar 3s ease-out forwards;
+}
+
+/* ===== 元素粒子容器 ===== */
+#element-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.el-particle {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* ===== 风元素粒子 ===== */
+.el-anemo .el-particle,
+[data-element="anemo"] .el-particle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(116,194,168,0.6) 0%, transparent 70%);
+  animation: anemoDrift 8s linear infinite;
+}
+
+@keyframes anemoDrift {
+  0% { opacity: 0; transform: translate(0, 0) rotate(0deg) scale(0); }
+  10% { opacity: 0.5; transform: translate(10px, -10px) rotate(45deg) scale(1); }
+  50% { opacity: 0.3; transform: translate(-20px, -50px) rotate(180deg) scale(0.6); }
+  90% { opacity: 0.2; transform: translate(30px, -100px) rotate(270deg) scale(0.3); }
+  100% { opacity: 0; transform: translate(-10px, -150px) rotate(360deg) scale(0); }
+}
+
+/* ===== 岩元素粒子（六边形晶体） ===== */
+.el-geo .el-particle,
+[data-element="geo"] .el-particle {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 9px solid rgba(240,182,50,0.5);
+  filter: drop-shadow(0 0 4px rgba(240,182,50,0.4));
+  animation: geoFloat 10s ease-in-out infinite;
+}
+
+@keyframes geoFloat {
+  0% { opacity: 0; transform: translateY(0) rotate(0deg) scale(0.5); }
+  15% { opacity: 0.6; transform: translateY(-10px) rotate(30deg) scale(1); }
+  50% { opacity: 0.4; transform: translateY(-40px) rotate(180deg) scale(0.8); }
+  85% { opacity: 0.2; transform: translateY(-70px) rotate(300deg) scale(0.5); }
+  100% { opacity: 0; transform: translateY(-100px) rotate(360deg) scale(0.2); }
+}
+
+/* ===== 雷元素粒子（电弧） ===== */
+.el-electro .el-particle,
+[data-element="electro"] .el-particle {
+  width: 2px;
+  height: 15px;
+  background: linear-gradient(to top, rgba(176,136,232,0.8), transparent);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(176,136,232,0.8), 0 0 16px rgba(176,136,232,0.4);
+  animation: electroSpark 3s ease-in-out infinite;
+}
+
+@keyframes electroSpark {
+  0%, 100% { opacity: 0; transform: translateY(0) scaleY(0.5); }
+  10%, 30% { opacity: 0.8; transform: translateY(-5px) scaleY(1.2); }
+  20% { opacity: 0.3; transform: translateY(-3px) scaleY(0.8); }
+  40% { opacity: 0.6; transform: translateY(-20px) scaleY(1); }
+  60% { opacity: 0; transform: translateY(-50px) scaleY(0.3); }
+}
+
+/* ===== 草元素粒子（叶子） ===== */
+.el-dendro .el-particle,
+[data-element="dendro"] .el-particle {
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(ellipse at center, rgba(123,201,74,0.6) 0%, rgba(123,201,74,0.2) 50%, transparent 70%);
+  border-radius: 0 70% 0 70%;
+  animation: dendroFall 12s linear infinite;
+}
+
+@keyframes dendroFall {
+  0% { opacity: 0; transform: translate(0, 0) rotate(0deg); }
+  10% { opacity: 0.6; }
+  25% { transform: translate(15px, 30px) rotate(90deg); }
+  50% { transform: translate(-10px, 80px) rotate(180deg); opacity: 0.4; }
+  75% { transform: translate(20px, 150px) rotate(270deg); opacity: 0.2; }
+  100% { opacity: 0; transform: translate(-5px, 250px) rotate(360deg); }
+}
+
+/* ===== 水元素粒子（水滴） ===== */
+.el-hydro .el-particle,
+[data-element="hydro"] .el-particle {
+  width: 6px;
+  height: 8px;
+  background: radial-gradient(ellipse at 30% 30%, rgba(125,218,255,0.8), rgba(76,194,240,0.4));
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  box-shadow: 0 0 6px rgba(76,194,240,0.5);
+  animation: hydroBubble 6s ease-in-out infinite;
+}
+
+@keyframes hydroBubble {
+  0% { opacity: 0; transform: translateY(0) scale(0.5); }
+  20% { opacity: 0.7; transform: translateY(-20px) scale(1); }
+  50% { opacity: 0.5; transform: translateY(-60px) translateX(10px) scale(0.9); }
+  80% { opacity: 0.3; transform: translateY(-100px) translateX(-5px) scale(0.6); }
+  100% { opacity: 0; transform: translateY(-130px) scale(0.3); }
+}
+
+/* ===== 火元素粒子（火花） ===== */
+.el-pyro .el-particle,
+[data-element="pyro"] .el-particle {
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, rgba(255,176,136,0.9) 0%, rgba(239,122,53,0.5) 50%, transparent 70%);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(239,122,53,0.6);
+  animation: pyroEmber 4s ease-in infinite;
+}
+
+@keyframes pyroEmber {
+  0% { opacity: 0; transform: translateY(0) scale(0.3); }
+  15% { opacity: 0.9; transform: translateY(-5px) scale(1); }
+  50% { opacity: 0.6; transform: translateY(-40px) translateX(5px) scale(0.8); }
+  85% { opacity: 0.3; transform: translateY(-80px) translateX(-3px) scale(0.5); }
+  100% { opacity: 0; transform: translateY(-110px) scale(0.2); }
+}
+
+/* ===== 冰元素粒子（雪花） ===== */
+.el-cryo .el-particle,
+[data-element="cryo"] .el-particle {
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, rgba(212,238,249,0.8) 0%, rgba(160,215,239,0.3) 60%, transparent 70%);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  box-shadow: 0 0 6px rgba(160,215,239,0.6);
+  animation: cryoSnow 10s linear infinite;
+}
+
+@keyframes cryoSnow {
+  0% { opacity: 0; transform: translateY(0) rotate(0deg) scale(0.5); }
+  10% { opacity: 0.7; }
+  100% { opacity: 0; transform: translateY(300px) rotate(360deg) scale(0.3); }
+}
+
+/* ===== 角色立绘背景装饰 ===== */
+.char-portrait-bg {
+  position: absolute;
+  right: -5%;
+  bottom: 0;
+  height: 120%;
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: linear-gradient(to left, black 40%, transparent 90%);
+  -webkit-mask-image: linear-gradient(to left, black 40%, transparent 90%);
+  animation: charFloat 6s ease-in-out infinite;
+}
+
+@keyframes charFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.char-portrait-bg img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  object-position: right bottom;
+}
+
+/* ===== 元素边框发光效果 ===== */
+.element-glow-anemo { box-shadow: 0 0 20px rgba(116,194,168,0.3), inset 0 0 20px rgba(116,194,168,0.1); border-color: rgba(116,194,168,0.4) !important; }
+.element-glow-geo { box-shadow: 0 0 20px rgba(240,182,50,0.3), inset 0 0 20px rgba(240,182,50,0.1); border-color: rgba(240,182,50,0.4) !important; }
+.element-glow-electro { box-shadow: 0 0 20px rgba(176,136,232,0.3), inset 0 0 20px rgba(176,136,232,0.1); border-color: rgba(176,136,232,0.4) !important; }
+.element-glow-dendro { box-shadow: 0 0 20px rgba(123,201,74,0.3), inset 0 0 20px rgba(123,201,74,0.1); border-color: rgba(123,201,74,0.4) !important; }
+.element-glow-hydro { box-shadow: 0 0 20px rgba(76,194,240,0.3), inset 0 0 20px rgba(76,194,240,0.1); border-color: rgba(76,194,240,0.4) !important; }
+.element-glow-pyro { box-shadow: 0 0 20px rgba(239,122,53,0.3), inset 0 0 20px rgba(239,122,53,0.1); border-color: rgba(239,122,53,0.4) !important; }
+.element-glow-cryo { box-shadow: 0 0 20px rgba(160,215,239,0.3), inset 0 0 20px rgba(160,215,239,0.1); border-color: rgba(160,215,239,0.4) !important; }
+
+/* ===== 角色卡片悬浮效果 ===== */
+.char-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(.22,1,.36,1);
+}
+
+.char-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.char-card:hover::before {
+  left: 100%;
+}
+
+.char-card:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* ===== 命之座图案装饰 ===== */
+.constellation-bg {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  opacity: 0.05;
+  pointer-events: none;
+  background-image: radial-gradient(circle, var(--genshin-primary) 1px, transparent 1px);
+  background-size: 20px 20px;
+  border-radius: 50%;
+}
+
+/* ===== 金色光效流动边框 ===== */
+.gold-border-flow {
+  position: relative;
+  overflow: hidden;
+}
+
+.gold-border-flow::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent, rgba(200,169,91,0.3), transparent 30%);
+  animation: goldSpin 4s linear infinite;
+  z-index: -1;
+}
+
+@keyframes goldSpin {
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== 元素图标徽章 ===== */
+.element-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 14px;
+  position: relative;
+}
+
+.element-icon::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  opacity: 0.4;
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.2); opacity: 0.1; }
+}
+
+/* ===== 加载动画增强 ===== */
+.loading-ring {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(200,169,91,0.2);
+  border-top-color: var(--genshin-primary);
+  border-radius: 50%;
+  animation: loadingSpin 1s linear infinite;
+}
+
+@keyframes loadingSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== 标题光晕效果 ===== */
+.title-glow {
+  text-shadow: 
+    0 0 10px rgba(200,169,91,0.5),
+    0 0 20px rgba(200,169,91,0.3),
+    0 0 40px rgba(200,169,91,0.1);
+}
+
+/* ===== 摩拉/原石图标动画 ===== */
+.currency-icon {
+  display: inline-block;
+  animation: currencyBounce 2s ease-in-out infinite;
+}
+
+@keyframes currencyBounce {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-3px) rotate(5deg); }
+}
+
+/* ===== 角色立绘展示区 ===== */
+.showcase-char {
+  position: relative;
+  transition: all 0.5s cubic-bezier(.22,1,.36,1);
+}
+
+.showcase-char:hover {
+  transform: scale(1.05);
+}
+
+.showcase-char .char-aura {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  filter: blur(30px);
+}
+
+.showcase-char:hover .char-aura {
+  opacity: 0.4;
+}
+
+/* ===== 响应式角色背景 ===== */
+@media (max-width: 768px) {
+  .char-portrait-bg {
+    opacity: 0.06;
+    right: -20%;
+  }
+}
+
+/* ===== 减少动画（辅助功能） ===== */
+@media (prefers-reduced-motion: reduce) {
+  .el-particle,
+  .shooting-star,
+  .char-portrait-bg,
+  .gold-border-flow::after,
+  .element-icon::after,
+  .currency-icon {
+    animation: none !important;
+  }
+}
