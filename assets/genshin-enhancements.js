@@ -129,6 +129,17 @@
     return types[type] || types.icon;
   }
 
+  // ===== 元素颜色映射 =====
+  const ELEMENT_COLORS = {
+    anemo: { main: 'rgba(116,194,168,', glow: 'rgba(168,230,207,' },
+    geo: { main: 'rgba(240,182,50,', glow: 'rgba(255,216,102,' },
+    electro: { main: 'rgba(176,136,232,', glow: 'rgba(212,179,255,' },
+    dendro: { main: 'rgba(123,201,74,', glow: 'rgba(168,226,125,' },
+    hydro: { main: 'rgba(76,194,240,', glow: 'rgba(125,218,255,' },
+    pyro: { main: 'rgba(239,122,53,', glow: 'rgba(255,176,136,' },
+    cryo: { main: 'rgba(160,215,239,', glow: 'rgba(212,238,249,' }
+  };
+
   // ===== 创建粒子容器 =====
   function initParticleContainer() {
     if (document.getElementById('element-particles')) return;
@@ -138,45 +149,192 @@
     return container;
   }
 
-  // ===== 创建元素粒子 =====
-  function spawnParticles(element, count = 15) {
+  // ===== 创建元素粒子（增强版） =====
+  function spawnParticles(element, count = 18) {
     const container = document.getElementById('element-particles') || initParticleContainer();
     container.className = `el-${element}`;
     
-    for (let i = 0; i < count; i++) {
+    const isMobile = window.innerWidth <= 640;
+    const actualCount = isMobile ? Math.floor(count * 0.6) : count;
+    
+    for (let i = 0; i < actualCount; i++) {
       const p = document.createElement('div');
       p.className = 'el-particle';
       p.style.left = Math.random() * 100 + '%';
-      p.style.top = (100 + Math.random() * 20) + '%';
-      p.style.animationDelay = (Math.random() * 8) + 's';
-      p.style.animationDuration = (6 + Math.random() * 6) + 's';
+      
+      // 根据元素类型设置初始位置方向
+      if (element === 'dendro' || element === 'cryo') {
+        // 草和冰从上往下飘落
+        p.style.top = (-10 - Math.random() * 15) + '%';
+      } else {
+        // 其他元素从下往上升起
+        p.style.top = (100 + Math.random() * 20) + '%';
+      }
+      
+      p.style.animationDelay = (Math.random() * 10) + 's';
+      
+      // 随机化动画时长，创造自然感
+      const baseDurations = {
+        anemo: [7, 11], geo: [8, 14], electro: [2, 4],
+        dendro: [10, 16], hydro: [5, 9], pyro: [3, 6], cryo: [8, 14]
+      };
+      const [minD, maxD] = baseDurations[element] || [6, 10];
+      p.style.animationDuration = (minD + Math.random() * (maxD - minD)) + 's';
+      
+      // 随机透明度变化
+      p.style.opacity = 0.4 + Math.random() * 0.4;
+      
       container.appendChild(p);
       
       // 自动移除粒子（防止过多）
-      setTimeout(() => p.remove(), 15000);
+      const lifeTime = parseFloat(p.style.animationDuration) * 1000 + 2000;
+      setTimeout(() => p.remove(), lifeTime);
     }
   }
 
-  // ===== 创建流星 =====
+  // ===== 创建闪烁星星背景 =====
+  let twinkleStarsInitialized = false;
+  function initTwinkleStars() {
+    if (twinkleStarsInitialized) return;
+    twinkleStarsInitialized = true;
+    
+    const isMobile = window.innerWidth <= 640;
+    const starCount = isMobile ? 40 : 80;
+    
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.className = 'twinkle-star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 70 + '%';
+      star.style.animationDelay = (Math.random() * 5) + 's';
+      star.style.animationDuration = (2 + Math.random() * 4) + 's';
+      
+      // 星星大小随机
+      const size = 1 + Math.random() * 2;
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      
+      // 亮度随机
+      star.style.opacity = 0.2 + Math.random() * 0.5;
+      
+      document.body.appendChild(star);
+    }
+  }
+
+  // ===== 创建元素能量脉冲波 =====
+  function spawnEnergyPulse(element) {
+    const colors = ELEMENT_COLORS[element];
+    if (!colors) return;
+    
+    const pulse = document.createElement('div');
+    pulse.className = 'energy-pulse';
+    pulse.style.left = (10 + Math.random() * 80) + '%';
+    pulse.style.top = (20 + Math.random() * 60) + '%';
+    pulse.style.width = '40px';
+    pulse.style.height = '40px';
+    pulse.style.background = `radial-gradient(circle, ${colors.glow}0.3) 0%, ${colors.main}0.1) 40%, transparent 70%)`;
+    pulse.style.boxShadow = `0 0 20px ${colors.main}0.2)`;
+    pulse.style.animationDuration = (3 + Math.random() * 3) + 's';
+    
+    document.body.appendChild(pulse);
+    setTimeout(() => pulse.remove(), 6000);
+  }
+
+  // ===== 创建元素共鸣光环 =====
+  function spawnResonanceRing(element) {
+    const colors = ELEMENT_COLORS[element];
+    if (!colors) return;
+    
+    const ring = document.createElement('div');
+    ring.className = 'resonance-ring';
+    ring.style.left = (Math.random() * 90) + '%';
+    ring.style.top = (Math.random() * 80) + '%';
+    ring.style.borderColor = colors.main + '0.4)';
+    ring.style.boxShadow = `0 0 15px ${colors.main}0.2), inset 0 0 10px ${colors.glow}0.15)`;
+    ring.style.animationDuration = (5 + Math.random() * 4) + 's';
+    
+    document.body.appendChild(ring);
+    setTimeout(() => ring.remove(), 9000);
+  }
+
+  // ===== 创建流星（增强版） =====
   function spawnShootingStar() {
     const star = document.createElement('div');
     star.className = 'shooting-star';
-    star.style.left = (Math.random() * 70) + '%';
-    star.style.top = (Math.random() * 30) + '%';
-    star.style.transform = `rotate(${-30 - Math.random() * 30}deg)`;
+    star.style.left = (Math.random() * 60) + '%';
+    star.style.top = (Math.random() * 25) + '%';
+    const angle = -35 - Math.random() * 25;
+    star.style.transform = `rotate(${angle}deg)`;
+    star.style.animationDuration = (2 + Math.random() * 1.5) + 's';
     document.body.appendChild(star);
-    setTimeout(() => star.remove(), 3000);
+    setTimeout(() => star.remove(), 4000);
   }
 
-  // ===== 定期创建流星 =====
+  // ===== 定期创建流星（增强版） =====
+  let shootingStarsInitialized = false;
   function initShootingStars() {
+    if (shootingStarsInitialized) return;
+    shootingStarsInitialized = true;
+    
     // 初始延迟后开始
     setTimeout(() => {
       spawnShootingStar();
       setInterval(() => {
-        if (Math.random() > 0.5) spawnShootingStar();
-      }, 8000 + Math.random() * 7000);
-    }, 3000);
+        if (Math.random() > 0.3) spawnShootingStar();
+      }, 6000 + Math.random() * 6000);
+    }, 2000);
+  }
+
+  // ===== 护眼模式控制 =====
+  function initEyeCare() {
+    // 读取本地存储的护眼设置
+    const eyeCareEnabled = localStorage.getItem('genshin_eyecare') === 'true';
+    if (eyeCareEnabled) {
+      document.body.classList.add('eye-care');
+    }
+    
+    // 创建护眼模式切换按钮
+    function createEyeCareButton() {
+      // 避免重复创建
+      if (document.querySelector('.eye-care-toggle')) return true;
+      
+      // 查找导航栏内部容器 (所有页面通用: nav.fixed.top-0 > div.flex.items-center.justify-between)
+      const navContainer = document.querySelector('nav.fixed.top-0 > div.flex.items-center.justify-between');
+      if (!navContainer) return false;
+      
+      const btn = document.createElement('button');
+      btn.className = 'eye-care-toggle' + (eyeCareEnabled ? ' active' : '');
+      btn.title = eyeCareEnabled ? '关闭护眼模式' : '开启护眼模式';
+      btn.innerHTML = '👁';
+      btn.setAttribute('aria-label', '护眼模式');
+      btn.type = 'button';
+      
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const isActive = document.body.classList.toggle('eye-care');
+        btn.classList.toggle('active', isActive);
+        btn.title = isActive ? '关闭护眼模式' : '开启护眼模式';
+        localStorage.setItem('genshin_eyecare', isActive ? 'true' : 'false');
+      });
+      
+      // 插入到mobile-menu-toggle按钮之前（这样在桌面和移动端都能看到）
+      const mobileMenuBtn = navContainer.querySelector('#mobile-menu-toggle');
+      if (mobileMenuBtn) {
+        navContainer.insertBefore(btn, mobileMenuBtn);
+      } else {
+        // 如果没有mobile-menu-toggle，添加到末尾
+        navContainer.appendChild(btn);
+      }
+      return true;
+    }
+    
+    // 尝试创建按钮，可能需要等待DOM加载
+    if (!createEyeCareButton()) {
+      setTimeout(createEyeCareButton, 300);
+      setTimeout(createEyeCareButton, 1000);
+      setTimeout(createEyeCareButton, 2000);
+    }
   }
 
   // ===== 添加角色立绘背景 =====
@@ -210,16 +368,30 @@
     // 添加页面元素属性
     document.body.setAttribute('data-element', config.element);
     
-    // 初始化粒子
-    setTimeout(() => spawnParticles(config.element, 12), 1000);
+    // 初始化粒子（增加数量）
+    setTimeout(() => spawnParticles(config.element, 16), 800);
     
     // 持续补充粒子
     setInterval(() => {
       const container = document.getElementById('element-particles');
-      if (container && container.children.length < 20) {
-        spawnParticles(config.element, 5);
+      const maxParticles = window.innerWidth <= 640 ? 18 : 28;
+      if (container && container.children.length < maxParticles) {
+        spawnParticles(config.element, 4);
       }
-    }, 10000);
+    }, 8000);
+
+    // 定期生成能量脉冲波
+    setInterval(() => {
+      if (Math.random() > 0.4) spawnEnergyPulse(config.element);
+    }, 12000);
+    
+    // 定期生成共鸣光环
+    setTimeout(() => {
+      spawnResonanceRing(config.element);
+      setInterval(() => {
+        if (Math.random() > 0.5) spawnResonanceRing(config.element);
+      }, 18000);
+    }, 5000);
 
     // 获取Hero区或第一个section添加角色立绘
     const heroSection = document.querySelector('section[class*="hero"], section:first-of-type, main > section:first-child');
@@ -284,8 +456,69 @@
       card.appendChild(charIcon);
     });
 
-    // 添加一些随机流星
-    initShootingStars();
+    // 首页金色浮动光点
+    initHomeGoldParticles();
+  }
+
+  // ===== 首页金色光点粒子 =====
+  function initHomeGoldParticles() {
+    const container = document.getElementById('element-particles') || initParticleContainer();
+    container.className = ''; // 清除元素类
+    
+    const isMobile = window.innerWidth <= 640;
+    const count = isMobile ? 12 : 25;
+    
+    for (let i = 0; i < count; i++) {
+      const glow = document.createElement('div');
+      glow.className = 'float-glow';
+      glow.style.left = Math.random() * 100 + '%';
+      glow.style.top = (100 + Math.random() * 20) + '%';
+      glow.style.animationDelay = (Math.random() * 12) + 's';
+      glow.style.animationDuration = (8 + Math.random() * 8) + 's';
+      
+      // 金色主题
+      const goldColors = [
+        'rgba(200,169,91,',
+        'rgba(255,216,102,',
+        'rgba(232,213,163,',
+        'rgba(255,255,255,'
+      ];
+      const color = goldColors[Math.floor(Math.random() * goldColors.length)];
+      const size = 2 + Math.random() * 4;
+      glow.style.width = size + 'px';
+      glow.style.height = size + 'px';
+      glow.style.background = `radial-gradient(circle, ${color}0.8) 0%, ${color}0.2) 50%, transparent 70%)`;
+      glow.style.boxShadow = `0 0 ${size * 2}px ${color}0.4)`;
+      
+      container.appendChild(glow);
+      
+      const lifeTime = parseFloat(glow.style.animationDuration) * 1000 + 3000;
+      setTimeout(() => glow.remove(), lifeTime);
+    }
+    
+    // 持续补充金色光点
+    setInterval(() => {
+      if (!document.body.classList.contains('eye-care') && container.children.length < (isMobile ? 20 : 40)) {
+        const glow = document.createElement('div');
+        glow.className = 'float-glow';
+        glow.style.left = Math.random() * 100 + '%';
+        glow.style.top = (100 + Math.random() * 10) + '%';
+        glow.style.animationDelay = '0s';
+        glow.style.animationDuration = (8 + Math.random() * 8) + 's';
+        
+        const goldColors = ['rgba(200,169,91,','rgba(255,216,102,','rgba(232,213,163,','rgba(255,255,255,'];
+        const color = goldColors[Math.floor(Math.random() * goldColors.length)];
+        const size = 2 + Math.random() * 4;
+        glow.style.width = size + 'px';
+        glow.style.height = size + 'px';
+        glow.style.background = `radial-gradient(circle, ${color}0.8) 0%, ${color}0.2) 50%, transparent 70%)`;
+        glow.style.boxShadow = `0 0 ${size * 2}px ${color}0.4)`;
+        
+        container.appendChild(glow);
+        const lifeTime = parseFloat(glow.style.animationDuration) * 1000 + 3000;
+        setTimeout(() => glow.remove(), lifeTime);
+      }
+    }, 6000);
   }
 
   // ===== 点击粒子效果增强 =====
@@ -450,6 +683,14 @@
     }
 
     const page = getCurrentPage();
+    
+    // 初始化护眼模式（全局）
+    initEyeCare();
+    
+    // 初始化闪烁星星背景（全局，非试炼页面）
+    if (page !== 'challenge.html') {
+      setTimeout(initTwinkleStars, 500);
+    }
     
     // 增强导航栏
     enhanceNavbar();

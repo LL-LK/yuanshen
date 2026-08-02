@@ -21,30 +21,175 @@
   --el-cryo-glow: #D4EEF9;
 }
 
+/* 护眼模式 */
+body.eye-care #element-particles {
+  opacity: 0.5;
+}
+
+body.eye-care .shooting-star {
+  opacity: 0.5;
+}
+
+body.eye-care .twinkle-star {
+  opacity: 0.25 !important;
+}
+
+body.eye-care .energy-pulse,
+body.eye-care .resonance-ring {
+  opacity: 0.5 !important;
+}
+
+/* 护眼暖色调覆盖层 - 暖黄滤镜减少蓝光，柔和降低亮度 */
+body.eye-care::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 230, 180, 0.08);
+  pointer-events: none;
+  z-index: 9998;
+}
+
+body.eye-care::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.04);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* 护眼切换按钮 */
+.eye-care-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(200,169,91,0.3);
+  color: #C8A95B;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.eye-care-toggle:hover {
+  background: rgba(200,169,91,0.2);
+  border-color: rgba(200,169,91,0.6);
+  transform: scale(1.05);
+}
+
+.eye-care-toggle.active {
+  background: rgba(255, 200, 100, 0.25);
+  border-color: rgba(255, 200, 100, 0.7);
+  color: #FFD880;
+  box-shadow: 0 0 12px rgba(255, 200, 100, 0.3);
+}
+
+@media (max-width: 640px) {
+  .eye-care-toggle {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+}
+
 /* ===== 星空背景增强 ===== */
 body {
   position: relative;
   overflow-x: hidden;
 }
 
-/* 流星动画 */
+/* 流星动画 - 增强版 */
 @keyframes shootingStar {
-  0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0; }
-  5% { opacity: 1; }
-  20% { opacity: 1; }
-  25% { transform: translateX(300px) translateY(300px) rotate(-45deg); opacity: 0; }
+  0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0; width: 0; }
+  5% { opacity: 1; width: 120px; }
+  15% { opacity: 1; width: 180px; }
+  25% { transform: translateX(400px) translateY(400px) rotate(-45deg); opacity: 0; width: 60px; }
   100% { opacity: 0; }
 }
 
 .shooting-star {
   position: fixed;
-  width: 100px;
+  width: 120px;
   height: 2px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.8), transparent);
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 20%, rgba(200,169,91,0.8) 50%, rgba(255,255,255,0.9) 80%, transparent 100%);
   border-radius: 2px;
   pointer-events: none;
   z-index: 1;
-  animation: shootingStar 3s ease-out forwards;
+  animation: shootingStar 2.5s ease-out forwards;
+  box-shadow: 0 0 6px rgba(255,220,150,0.6), 0 0 12px rgba(200,169,91,0.3);
+}
+
+/* 星星闪烁 */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.twinkle-star {
+  position: fixed;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  animation: twinkle 3s ease-in-out infinite;
+  box-shadow: 0 0 4px rgba(255,255,255,0.8);
+}
+
+/* 元素能量脉冲波 */
+@keyframes energyPulse {
+  0% { transform: scale(0.5); opacity: 0.6; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+.energy-pulse {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  animation: energyPulse 4s ease-out forwards;
+}
+
+/* 浮动光点（通用背景装饰） */
+@keyframes floatGlow {
+  0% { opacity: 0; transform: translateY(0) scale(0); }
+  15% { opacity: 0.6; transform: translateY(-20px) scale(1); }
+  50% { opacity: 0.4; transform: translateY(-60px) translateX(15px) scale(0.7); }
+  85% { opacity: 0.2; transform: translateY(-120px) translateX(-10px) scale(0.4); }
+  100% { opacity: 0; transform: translateY(-160px) scale(0); }
+}
+
+.float-glow {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floatGlow 10s ease-in-out infinite;
+}
+
+/* 元素共鸣光环（大粒子） */
+@keyframes resonanceRing {
+  0% { transform: scale(0); opacity: 0; }
+  30% { opacity: 0.3; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+.resonance-ring {
+  position: fixed;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid;
+  pointer-events: none;
+  z-index: 0;
+  animation: resonanceRing 6s ease-out forwards;
 }
 
 /* ===== 元素粒子容器 ===== */
@@ -64,135 +209,239 @@ body {
   pointer-events: none;
 }
 
-/* ===== 风元素粒子 ===== */
+/* ===== 风元素粒子 - 增强版（螺旋上升风） ===== */
 .el-anemo .el-particle,
 [data-element="anemo"] .el-particle {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(116,194,168,0.6) 0%, transparent 70%);
-  animation: anemoDrift 8s linear infinite;
+  background: radial-gradient(circle, rgba(116,194,168,0.7) 0%, rgba(168,230,207,0.3) 50%, transparent 70%);
+  box-shadow: 0 0 6px rgba(116,194,168,0.5), 0 0 12px rgba(116,194,168,0.2);
+  animation: anemoDrift 8s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
 
 @keyframes anemoDrift {
   0% { opacity: 0; transform: translate(0, 0) rotate(0deg) scale(0); }
-  10% { opacity: 0.5; transform: translate(10px, -10px) rotate(45deg) scale(1); }
-  50% { opacity: 0.3; transform: translate(-20px, -50px) rotate(180deg) scale(0.6); }
-  90% { opacity: 0.2; transform: translate(30px, -100px) rotate(270deg) scale(0.3); }
-  100% { opacity: 0; transform: translate(-10px, -150px) rotate(360deg) scale(0); }
+  8% { opacity: 0.6; transform: translate(8px, -8px) rotate(60deg) scale(1.1); }
+  25% { opacity: 0.5; transform: translate(-15px, -40px) rotate(150deg) scale(0.9); }
+  50% { opacity: 0.4; transform: translate(20px, -90px) rotate(200deg) scale(0.7); }
+  75% { opacity: 0.2; transform: translate(-10px, -140px) rotate(300deg) scale(0.5); }
+  92% { opacity: 0.1; transform: translate(5px, -180px) rotate(340deg) scale(0.3); }
+  100% { opacity: 0; transform: translate(0, -200px) rotate(360deg) scale(0); }
 }
 
-/* ===== 岩元素粒子（六边形晶体） ===== */
+/* 风元素大粒子（风眼效果） */
+.el-anemo .el-particle:nth-child(3n),
+[data-element="anemo"] .el-particle:nth-child(3n) {
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle, rgba(168,230,207,0.5) 0%, transparent 60%);
+  animation-duration: 10s;
+}
+
+/* ===== 岩元素粒子 - 增强版（晶体闪烁上升） ===== */
 .el-geo .el-particle,
 [data-element="geo"] .el-particle {
   width: 0;
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-bottom: 9px solid rgba(240,182,50,0.5);
-  filter: drop-shadow(0 0 4px rgba(240,182,50,0.4));
-  animation: geoFloat 10s ease-in-out infinite;
+  border-bottom: 9px solid rgba(240,182,50,0.6);
+  filter: drop-shadow(0 0 5px rgba(240,182,50,0.5)) drop-shadow(0 0 10px rgba(255,216,102,0.3));
+  animation: geoFloat 10s cubic-bezier(0.34, 0.56, 0.64, 1) infinite;
 }
 
 @keyframes geoFloat {
-  0% { opacity: 0; transform: translateY(0) rotate(0deg) scale(0.5); }
-  15% { opacity: 0.6; transform: translateY(-10px) rotate(30deg) scale(1); }
-  50% { opacity: 0.4; transform: translateY(-40px) rotate(180deg) scale(0.8); }
-  85% { opacity: 0.2; transform: translateY(-70px) rotate(300deg) scale(0.5); }
-  100% { opacity: 0; transform: translateY(-100px) rotate(360deg) scale(0.2); }
+  0% { opacity: 0; transform: translateY(0) rotate(0deg) scale(0.4); }
+  12% { opacity: 0.7; transform: translateY(-12px) rotate(45deg) scale(1.1); }
+  25% { opacity: 0.5; transform: translateY(-30px) rotate(90deg) scale(0.9); }
+  50% { opacity: 0.4; transform: translateY(-60px) rotate(180deg) scale(0.8); }
+  75% { opacity: 0.2; transform: translateY(-100px) rotate(270deg) scale(0.6); }
+  88% { opacity: 0.1; transform: translateY(-130px) rotate(330deg) scale(0.4); }
+  100% { opacity: 0; transform: translateY(-150px) rotate(360deg) scale(0.2); }
 }
 
-/* ===== 雷元素粒子（电弧） ===== */
+.el-geo .el-particle:nth-child(4n),
+[data-element="geo"] .el-particle:nth-child(4n) {
+  border-left-width: 7px;
+  border-right-width: 7px;
+  border-bottom-width: 12px;
+  animation-duration: 12s;
+}
+
+/* ===== 雷元素粒子 - 增强版（闪电电弧跳跃） ===== */
 .el-electro .el-particle,
 [data-element="electro"] .el-particle {
   width: 2px;
-  height: 15px;
-  background: linear-gradient(to top, rgba(176,136,232,0.8), transparent);
+  height: 18px;
+  background: linear-gradient(to top, rgba(176,136,232,0.9), rgba(212,179,255,0.4), transparent);
   border-radius: 2px;
-  box-shadow: 0 0 8px rgba(176,136,232,0.8), 0 0 16px rgba(176,136,232,0.4);
-  animation: electroSpark 3s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(176,136,232,0.9), 0 0 20px rgba(176,136,232,0.5), 0 0 40px rgba(212,179,255,0.2);
+  animation: electroSpark 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes electroSpark {
-  0%, 100% { opacity: 0; transform: translateY(0) scaleY(0.5); }
-  10%, 30% { opacity: 0.8; transform: translateY(-5px) scaleY(1.2); }
-  20% { opacity: 0.3; transform: translateY(-3px) scaleY(0.8); }
-  40% { opacity: 0.6; transform: translateY(-20px) scaleY(1); }
-  60% { opacity: 0; transform: translateY(-50px) scaleY(0.3); }
+  0%, 100% { opacity: 0; transform: translateY(0) scaleY(0.3) translateX(0); }
+  8% { opacity: 1; transform: translateY(-8px) scaleY(1.4) translateX(-3px); }
+  15% { opacity: 0.4; transform: translateY(-5px) scaleY(0.8) translateX(2px); }
+  22% { opacity: 0.9; transform: translateY(-15px) scaleY(1.2) translateX(-2px); }
+  35% { opacity: 0.7; transform: translateY(-35px) scaleY(1) translateX(4px); }
+  55% { opacity: 0.3; transform: translateY(-60px) scaleY(0.6) translateX(-1px); }
+  75% { opacity: 0.1; transform: translateY(-80px) scaleY(0.3) translateX(0); }
 }
 
-/* ===== 草元素粒子（叶子） ===== */
+.el-electro .el-particle:nth-child(3n),
+[data-element="electro"] .el-particle:nth-child(3n) {
+  width: 3px;
+  height: 24px;
+  animation-duration: 2s;
+  animation-delay: 0.5s;
+}
+
+/* ===== 草元素粒子 - 增强版（落叶自然飘落） ===== */
 .el-dendro .el-particle,
 [data-element="dendro"] .el-particle {
   width: 10px;
   height: 10px;
-  background: radial-gradient(ellipse at center, rgba(123,201,74,0.6) 0%, rgba(123,201,74,0.2) 50%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(123,201,74,0.7) 0%, rgba(168,226,125,0.3) 50%, transparent 70%);
   border-radius: 0 70% 0 70%;
+  box-shadow: 0 0 5px rgba(123,201,74,0.4);
   animation: dendroFall 12s linear infinite;
 }
 
 @keyframes dendroFall {
-  0% { opacity: 0; transform: translate(0, 0) rotate(0deg); }
-  10% { opacity: 0.6; }
-  25% { transform: translate(15px, 30px) rotate(90deg); }
-  50% { transform: translate(-10px, 80px) rotate(180deg); opacity: 0.4; }
-  75% { transform: translate(20px, 150px) rotate(270deg); opacity: 0.2; }
-  100% { opacity: 0; transform: translate(-5px, 250px) rotate(360deg); }
+  0% { opacity: 0; transform: translate(0, 0) rotate(0deg) scale(0.5); }
+  8% { opacity: 0.7; transform: translate(5px, 10px) rotate(45deg) scale(1); }
+  20% { transform: translate(-12px, 40px) rotate(120deg); }
+  35% { transform: translate(18px, 90px) rotate(180deg); opacity: 0.5; }
+  50% { transform: translate(-8px, 150px) rotate(220deg); }
+  65% { transform: translate(15px, 220px) rotate(280deg); opacity: 0.3; }
+  80% { transform: translate(-5px, 290px) rotate(330deg); }
+  92% { opacity: 0.1; transform: translate(3px, 340px) rotate(350deg) scale(0.6); }
+  100% { opacity: 0; transform: translate(0, 380px) rotate(360deg) scale(0.3); }
 }
 
-/* ===== 水元素粒子（水滴） ===== */
+.el-dendro .el-particle:nth-child(2n),
+[data-element="dendro"] .el-particle:nth-child(2n) {
+  width: 14px;
+  height: 14px;
+  animation-duration: 14s;
+  border-radius: 50% 0 50% 0;
+}
+
+/* ===== 水元素粒子 - 增强版（气泡上浮荡漾） ===== */
 .el-hydro .el-particle,
 [data-element="hydro"] .el-particle {
   width: 6px;
   height: 8px;
-  background: radial-gradient(ellipse at 30% 30%, rgba(125,218,255,0.8), rgba(76,194,240,0.4));
+  background: radial-gradient(ellipse at 30% 30%, rgba(125,218,255,0.9), rgba(76,194,240,0.5) 60%, transparent 70%);
   border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  box-shadow: 0 0 6px rgba(76,194,240,0.5);
-  animation: hydroBubble 6s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(76,194,240,0.6), inset 1px 1px 2px rgba(255,255,255,0.4);
+  animation: hydroBubble 6s cubic-bezier(0.23, 1, 0.32, 1) infinite;
 }
 
 @keyframes hydroBubble {
-  0% { opacity: 0; transform: translateY(0) scale(0.5); }
-  20% { opacity: 0.7; transform: translateY(-20px) scale(1); }
-  50% { opacity: 0.5; transform: translateY(-60px) translateX(10px) scale(0.9); }
-  80% { opacity: 0.3; transform: translateY(-100px) translateX(-5px) scale(0.6); }
-  100% { opacity: 0; transform: translateY(-130px) scale(0.3); }
+  0% { opacity: 0; transform: translateY(0) scale(0.4) translateX(0); }
+  10% { opacity: 0.8; transform: translateY(-15px) scale(1.1) translateX(3px); }
+  25% { transform: translateY(-35px) scale(1) translateX(-4px); }
+  40% { opacity: 0.6; transform: translateY(-60px) scale(0.9) translateX(5px); }
+  60% { opacity: 0.4; transform: translateY(-100px) scale(0.7) translateX(-3px); }
+  75% { transform: translateY(-130px) scale(0.5) translateX(2px); }
+  90% { opacity: 0.2; transform: translateY(-160px) scale(0.3) translateX(0); }
+  100% { opacity: 0; transform: translateY(-180px) scale(0); }
 }
 
-/* ===== 火元素粒子（火花） ===== */
+.el-hydro .el-particle:nth-child(3n),
+[data-element="hydro"] .el-particle:nth-child(3n) {
+  width: 10px;
+  height: 12px;
+  animation-duration: 8s;
+}
+
+/* 水元素涟漪效果 */
+.el-hydro .el-particle:nth-child(5n),
+[data-element="hydro"] .el-particle:nth-child(5n) {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(125,218,255,0.6), transparent 70%);
+  box-shadow: 0 0 10px rgba(76,194,240,0.4);
+  animation-duration: 4s;
+}
+
+/* ===== 火元素粒子 - 增强版（火星飞溅摇曳） ===== */
 .el-pyro .el-particle,
 [data-element="pyro"] .el-particle {
   width: 8px;
   height: 8px;
-  background: radial-gradient(circle, rgba(255,176,136,0.9) 0%, rgba(239,122,53,0.5) 50%, transparent 70%);
+  background: radial-gradient(circle at 40% 40%, rgba(255,200,150,1) 0%, rgba(255,176,136,0.8) 30%, rgba(239,122,53,0.5) 60%, transparent 75%);
   border-radius: 50%;
-  box-shadow: 0 0 8px rgba(239,122,53,0.6);
-  animation: pyroEmber 4s ease-in infinite;
+  box-shadow: 0 0 10px rgba(239,122,53,0.7), 0 0 20px rgba(239,122,53,0.3), 0 2px 4px rgba(239,122,53,0.2);
+  animation: pyroEmber 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
 
 @keyframes pyroEmber {
-  0% { opacity: 0; transform: translateY(0) scale(0.3); }
-  15% { opacity: 0.9; transform: translateY(-5px) scale(1); }
-  50% { opacity: 0.6; transform: translateY(-40px) translateX(5px) scale(0.8); }
-  85% { opacity: 0.3; transform: translateY(-80px) translateX(-3px) scale(0.5); }
-  100% { opacity: 0; transform: translateY(-110px) scale(0.2); }
+  0% { opacity: 0; transform: translateY(0) scale(0.2) translateX(0); }
+  10% { opacity: 1; transform: translateY(-8px) scale(1.2) translateX(-2px); }
+  20% { transform: translateY(-20px) scale(1) translateX(3px); }
+  35% { opacity: 0.8; transform: translateY(-40px) scale(0.9) translateX(-3px); }
+  55% { opacity: 0.5; transform: translateY(-65px) scale(0.7) translateX(4px); }
+  70% { transform: translateY(-85px) scale(0.5) translateX(-2px); }
+  85% { opacity: 0.2; transform: translateY(-105px) scale(0.3) translateX(1px); }
+  100% { opacity: 0; transform: translateY(-120px) scale(0) translateX(0); }
 }
 
-/* ===== 冰元素粒子（雪花） ===== */
+.el-pyro .el-particle:nth-child(2n),
+[data-element="pyro"] .el-particle:nth-child(2n) {
+  width: 5px;
+  height: 5px;
+  animation-duration: 3s;
+  background: radial-gradient(circle, rgba(255,220,100,0.9), rgba(239,122,53,0.4), transparent);
+}
+
+.el-pyro .el-particle:nth-child(5n),
+[data-element="pyro"] .el-particle:nth-child(5n) {
+  width: 12px;
+  height: 12px;
+  animation-duration: 5s;
+}
+
+/* ===== 冰元素粒子 - 增强版（雪花优雅飘落） ===== */
 .el-cryo .el-particle,
 [data-element="cryo"] .el-particle {
   width: 8px;
   height: 8px;
-  background: radial-gradient(circle, rgba(212,238,249,0.8) 0%, rgba(160,215,239,0.3) 60%, transparent 70%);
+  background: radial-gradient(circle, rgba(212,238,249,0.9) 0%, rgba(160,215,239,0.4) 60%, transparent 70%);
   clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  box-shadow: 0 0 6px rgba(160,215,239,0.6);
+  box-shadow: 0 0 8px rgba(160,215,239,0.7), 0 0 16px rgba(212,238,249,0.3);
   animation: cryoSnow 10s linear infinite;
 }
 
 @keyframes cryoSnow {
-  0% { opacity: 0; transform: translateY(0) rotate(0deg) scale(0.5); }
-  10% { opacity: 0.7; }
-  100% { opacity: 0; transform: translateY(300px) rotate(360deg) scale(0.3); }
+  0% { opacity: 0; transform: translateY(-20px) rotate(0deg) scale(0.3) translateX(0); }
+  8% { opacity: 0.8; }
+  25% { transform: translateY(60px) rotate(90deg) translateX(15px); }
+  50% { transform: translateY(160px) rotate(180deg) translateX(-10px); opacity: 0.6; }
+  75% { transform: translateY(260px) rotate(270deg) translateX(8px); opacity: 0.4; }
+  92% { opacity: 0.2; }
+  100% { opacity: 0; transform: translateY(350px) rotate(360deg) scale(0.4) translateX(0); }
+}
+
+.el-cryo .el-particle:nth-child(3n),
+[data-element="cryo"] .el-particle:nth-child(3n) {
+  width: 12px;
+  height: 12px;
+  animation-duration: 13s;
+}
+
+.el-cryo .el-particle:nth-child(4n),
+[data-element="cryo"] .el-particle:nth-child(4n) {
+  clip-path: none;
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, rgba(212,238,249,0.8), transparent 70%);
+  animation-duration: 8s;
 }
 
 /* ===== 角色立绘背景装饰 ===== */
@@ -476,10 +725,23 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .el-particle,
   .shooting-star,
+  .twinkle-star,
+  .energy-pulse,
+  .resonance-ring,
+  .float-glow,
   .char-portrait-bg,
   .gold-border-flow::after,
   .element-icon::after,
-  .currency-icon {
+  .currency-icon,
+  .char-aura {
     animation: none !important;
+  }
+  .el-particle,
+  .shooting-star,
+  .twinkle-star,
+  .float-glow,
+  .energy-pulse,
+  .resonance-ring {
+    display: none !important;
   }
 }
