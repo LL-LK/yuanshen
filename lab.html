@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="zh" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0D0B1A">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
+    <title>数学实验室 · 提瓦特数学图鉴</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <style id="theme-vars">
+/* ============================================================
+   提瓦特数学图鉴 · 原神视觉风格配色与字体系统
+   Brand prefix: genshin
+   主色：原神金（命之座/品质金）· 背景：提瓦特夜空深蓝紫
+   ============================================================ */
+
+/* ---------- Light Mode（浅色·白日提瓦特） ---------- */
+:root {
+  --genshin-primary: #B8932E;
+  --genshin-primary-foreground: #FBF7EC;
+
+  --genshin-primary-50: #FBF6E7;
+  --genshin-primary-100: #F3E8C2;
+  --genshin-primary-200: #E7D08A;
+  --genshin-primary-300: #D9B85A;
+  --genshin-primary-400: #C8A14A;
+  --genshin-primary-500: #B8932E;
+  --genshin-primary-600: #9A7826;
+  --genshin-primary-700: #7C5F20;
+  --genshin-primary-800: #5E471A;
+  --genshin-primary-900: #423014;
+  --genshin-primary-950: #2A1E0C;
+
+  /* 中性色 —— 暖羊皮纸 / 石板 */
+  --genshin-background: #F6F1E4;
+  --genshin-foreground: #2A2418;
+  --genshin-card: #FBF7EC;
+  --genshin-card-foreground: #2A2418;
+  --genshin-popover: #FBF7EC;
+  --genshin-popover-foreground: #2A2418;
+  --genshin-muted: #E7DFC9;
+  --genshin-muted-foreground: #6B6048;
+  --genshin-border: #D8CDA8;
+  --genshin-input: #D8CDA8;
+  --genshin-ring: #B8932E;
+
+  /* 状态色 */
+  --genshin-state-success: #4F9E78;
+  --genshin-state-warning: #C8941E;
+  --genshin-state-error: #C25442;
+  --genshin-state-info: #4A93C2;
+
+  /* 圆角 —— 原神 UI 偏方正克制 */
+  --genshin-radius-small: 4px;
+  --genshin-radius-medium: 8px;
+  --genshin-radius-large: 12px;
+  --genshin-radius-full: 9999px;
+}
+
+/* ---------- Dark Mode（深色·提瓦特夜空） 默认 ---------- */
+.dark {
+  --genshin-primary: #C8A95B;
+  --genshin-primary-foreground: #1A1408;
+
+  --genshin-primary-50: #2A1E0C;
+  --genshin-primary-100: #423014;
+  --genshin-primary-200: #5E471A;
+  --genshin-primary-300: #7C5F20;
+  --genshin-primary-400: #9A7826;
+  --genshin-primary-500: #B8932E;
+  --genshin-primary-600: #C8A95B;
+  --genshin-primary-700: #D9B85A;
+  --genshin-primary-800: #E7D08A;
+  --genshin-primary-900: #F3E8C2;
+  --genshin-primary-950: #FBF6E7;
+
+  /* 中性色 —— 提瓦特夜空深蓝紫 */
+  --genshin-background: #0E1120;
+  --genshin-foreground: #ECE7D8;
+  --genshin-card: #181C2E;
+  --genshin-card-foreground: #ECE7D8;
+  --genshin-popover: #1F2438;
+  --genshin-popover-foreground: #ECE7D8;
+  --genshin-muted: #262B42;
+  --genshin-muted-foreground: #9A968A;
+  --genshin-border: rgba(200, 169, 91, 0.18);
+  --genshin-input: rgba(200, 169, 91, 0.28);
+  --genshin-ring: #C8A95B;
+
+  /* 状态色 */
+  --genshin-state-success: #74C2A1;
+  --genshin-state-warning: #E6B445;
+  --genshin-state-error: #D97766;
+  --genshin-state-info: #6FB7E0;
+}
+
+/* ---------- Tailwind @theme inline 映射 ---------- */
+@theme inline {
+  --color-background: var(--genshin-background);
+  --color-foreground: var(--genshin-foreground);
+  --color-card: var(--genshin-card);
+  --color-card-foreground: var(--genshin-card-foreground);
+  --color-popover: var(--genshin-popover);
+  --color-popover-foreground: var(--genshin-popover-foreground);
+  --color-primary: var(--genshin-primary);
+  --color-primary-foreground: var(--genshin-primary-foreground);
+  --color-muted: var(--genshin-muted);
+  --color-muted-foreground: var(--genshin-muted-foreground);
+  --color-border: var(--genshin-border);
+  --color-input: var(--genshin-input);
+  --color-ring: var(--genshin-ring);
+
+  --color-state-success: var(--genshin-state-success);
+  --color-state-warning: var(--genshin-state-warning);
+  --color-state-error: var(--genshin-state-error);
+  --color-state-info: var(--genshin-state-info);
+
+  --radius-sm: var(--genshin-radius-small);
+  --radius-md: var(--genshin-radius-medium);
+  --radius-lg: var(--genshin-radius-large);
+  --radius-full: var(--genshin-radius-full);
+}
+
+/* ---------- 字体系统 ---------- */
+/* 标题：衬线体（奇幻史诗感） · 正文：无衬线（现代易读） */
+.font-display {
+  font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.font-body {
+  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+
+    @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:0.85}}
+</style>
+    <script src="assets/vendor/tailwind-browser-4.3.1.js"></script>
+    <script src="assets/vendor/lucide-1.8.0.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--genshin-background);
+    --color-foreground: var(--genshin-foreground);
+    --color-card: var(--genshin-card);
+    --color-card-foreground: var(--genshin-card-foreground);
+    --color-popover: var(--genshin-popover);
+    --color-popover-foreground: var(--genshin-popover-foreground);
+    --color-primary: var(--genshin-primary);
+    --color-primary-foreground: var(--genshin-primary-foreground);
+    --color-muted: var(--genshin-muted);
+    --color-muted-foreground: var(--genshin-muted-foreground);
+    --color-border: var(--genshin-border);
+    --color-input: var(--genshin-input);
+    --color-ring: var(--genshin-ring);
+    --radius-sm: var(--genshin-radius-small);
+    --radius-md: var(--genshin-radius-medium);
+    --radius-lg: var(--genshin-radius-large);
+  }
+  @layer base {
+    body { background: var(--genshin-background); color: var(--genshin-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--genshin-background); }
+      .text-background { color: var(--genshin-background); }
+      .border-background { border-color: var(--genshin-background); }
+      .ring-background { --tw-ring-color: var(--genshin-background); }
+      .bg-foreground { background-color: var(--genshin-foreground); }
+      .text-foreground { color: var(--genshin-foreground); }
+      .border-foreground { border-color: var(--genshin-foreground); }
+      .ring-foreground { --tw-ring-color: var(--genshin-foreground); }
+      .bg-card { background-color: var(--genshin-card); }
+      .text-card { color: var(--genshin-card); }
+      .border-card { border-color: var(--genshin-card); }
+      .ring-card { --tw-ring-color: var(--genshin-card); }
+      .bg-card-foreground { background-color: var(--genshin-card-foreground); }
+      .text-card-foreground { color: var(--genshin-card-foreground); }
+      .border-card-foreground { border-color: var(--genshin-card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--genshin-card-foreground); }
+      .bg-popover { background-color: var(--genshin-popover); }
+      .text-popover { color: var(--genshin-popover); }
+      .border-popover { border-color: var(--genshin-popover); }
+      .ring-popover { --tw-ring-color: var(--genshin-popover); }
+      .bg-popover-foreground { background-color: var(--genshin-popover-foreground); }
+      .text-popover-foreground { color: var(--genshin-popover-foreground); }
+      .border-popover-foreground { border-color: var(--genshin-popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--genshin-popover-foreground); }
+      .bg-primary { background-color: var(--genshin-primary); }
+      .text-primary { color: var(--genshin-primary); }
+      .border-primary { border-color: var(--genshin-primary); }
+      .ring-primary { --tw-ring-color: var(--genshin-primary); }
+      .bg-primary-foreground { background-color: var(--genshin-primary-foreground); }
+      .text-primary-foreground { color: var(--genshin-primary-foreground); }
+      .border-primary-foreground { border-color: var(--genshin-primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--genshin-primary-foreground); }
+      .bg-muted { background-color: var(--genshin-muted); }
+      .text-muted { color: var(--genshin-muted); }
+      .border-muted { border-color: var(--genshin-muted); }
+      .ring-muted { --tw-ring-color: var(--genshin-muted); }
+      .bg-muted-foreground { background-color: var(--genshin-muted-foreground); }
+      .text-muted-foreground { color: var(--genshin-muted-foreground); }
+      .border-muted-foreground { border-color: var(--genshin-muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--genshin-muted-foreground); }
+      .bg-border { background-color: var(--genshin-border); }
+      .text-border { color: var(--genshin-border); }
+      .border-border { border-color: var(--genshin-border); }
+      .ring-border { --tw-ring-color: var(--genshin-border); }
+      .bg-input { background-color: var(--genshin-input); }
+      .text-input { color: var(--genshin-input); }
+      .border-input { border-color: var(--genshin-input); }
+      .ring-input { --tw-ring-color: var(--genshin-input); }
+      .bg-ring { background-color: var(--genshin-ring); }
+      .text-ring { color: var(--genshin-ring); }
+      .border-ring { border-color: var(--genshin-ring); }
+      .ring-ring { --tw-ring-color: var(--genshin-ring); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+    <link rel="stylesheet" href="assets/genshin-enhancements.css">
+    <noscript><style>.reveal,.hero-reveal{opacity:1!important;transform:none!important;animation:none!important}</style></noscript>
+    <style id="enhanced-design">
+/* === 提瓦特数学图鉴 · 排版与动画增强系统 === */
+/* 性能安全：仅使用 transform + opacity（合成器友好），IntersectionObserver 替代 scroll 监听 */
+
+/* 排版优化 */
+body { line-height: 1.75; }
+.section-title { position: relative; padding-bottom: 14px; }
+.section-title::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 48px; height: 3px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--genshin-primary), transparent);
+}
+
+/* 滚动入场动画 (GPU 友好) */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal.reveal-visible { opacity: 1; transform: translateY(0); }
+
+/* 卡片悬浮提升 */
+.genshin-card {
+  transition: transform .3s cubic-bezier(.22,1,.36,1), border-color .3s, box-shadow .3s;
+}
+.genshin-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(200,169,91,.4);
+  box-shadow: 0 8px 32px rgba(0,0,0,.3);
+}
+
+/* 导航栏动画下划线 */
+.nav-link { position: relative; }
+.nav-link::after {
+  content: ''; position: absolute; bottom: 4px; left: 0;
+  width: 0; height: 2px; border-radius: 1px;
+  background: var(--genshin-primary);
+  transition: width .3s cubic-bezier(.22,1,.36,1);
+}
+.nav-link:hover::after, .nav-link[data-active="true"]::after { width: 100%; }
+
+/* 公式框 / 提示框左侧装饰边 */
+.formula-box { border-left: 3px solid currentColor; }
+.tip-box { border-left: 3px solid var(--genshin-primary); }
+
+/* 下一章节 CTA 悬浮 */
+.next-cta {
+  transition: transform .3s cubic-bezier(.22,1,.36,1), border-color .3s;
+}
+.next-cta:hover { transform: translateY(-2px); border-color: rgba(200,169,91,.45); }
+
+/* Hero 入场动画 */
+.hero-reveal {
+  opacity: 0; transform: translateY(20px);
+  animation: heroFadeUp .8s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay: var(--hero-delay, 0ms);
+}
+@keyframes heroFadeUp { to { opacity: 1; transform: translateY(0); } }
+
+/* === 侧边章节目录 TOC（v3 新增） === */
+/* 锚点目标上边距，避免被固定导航栏遮挡 */
+article[id^="kp-"] { scroll-margin-top: 90px; }
+
+/* 桌面端固定侧边目录 */
+.toc-desktop {
+  position: fixed;
+  right: 24px;
+  top: 88px;
+  width: 220px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  background: rgba(14, 17, 32, 0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 169, 91, 0.18);
+  border-radius: 8px;
+  padding: 16px 14px;
+  z-index: 40;
+}
+.toc-desktop::-webkit-scrollbar { width: 4px; }
+.toc-desktop::-webkit-scrollbar-thumb { background: rgba(200, 169, 91, 0.25); border-radius: 2px; }
+
+/* TOC 条目（桌面端与移动端面板共用） */
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--genshin-muted-foreground);
+  cursor: pointer;
+  transition: color .2s ease, background .2s ease;
+  text-decoration: none;
+  line-height: 1.4;
+  position: relative;
+}
+.toc-item .toc-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.toc-item:hover {
+  background: rgba(200, 169, 91, 0.08);
+  color: var(--genshin-foreground);
+}
+.toc-item.toc-active {
+  color: var(--genshin-primary);
+  background: rgba(200, 169, 91, 0.10);
+}
+.toc-item.toc-active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: var(--genshin-primary);
+  border-radius: 2px;
+}
+
+/* 移动端浮动目录下拉面板 */
+.toc-mobile-panel {
+  position: absolute;
+  right: 0;
+  bottom: 56px;
+  width: 220px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  background: rgba(14, 17, 32, 0.92);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 169, 91, 0.18);
+  border-radius: 8px;
+  padding: 16px 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* 移动端：将“回到顶部”按钮移至左下，避免与目录浮动按钮重叠 */
+@media (max-width: 767px) {
+  #back-to-top { right: auto; left: 24px; }
+}
+
+/* reduced-motion 完全禁用动画 */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .hero-reveal { opacity: 1; transform: none; animation: none; }
+  .genshin-card, .next-cta { transition: none; }
+  .genshin-card:hover, .next-cta:hover { transform: none; }
+  .toc-item { transition: none; }
+  html { scroll-behavior: auto; }
+  * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <!-- ===== 顶部固定导航栏 ===== -->
+    <nav class="fixed top-0 inset-x-0 z-50" style="background: rgba(14,17,32,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(200,169,91,0.28);">
+      <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between font-body">
+        <a href="index.html" data-nav-key="home" class="brand-link flex items-center gap-2.5 cursor-pointer shrink-0">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="shrink-0" aria-hidden="true">
+            <path d="M12 2 L20.5 6.75 L20.5 16.25 L12 21 L3.5 16.25 L3.5 6.75 Z" stroke="#C8A95B" stroke-width="1.4" fill="rgba(200,169,91,0.10)"></path>
+            <circle cx="12" cy="11.5" r="2.2" fill="#C8A95B"></circle>
+          </svg>
+          <span class="font-display text-lg whitespace-nowrap" style="color: var(--genshin-primary);">提瓦特数学图鉴</span>
+        </a>
+        <div class="hidden lg:flex items-center gap-5">
+          <a href="functions.html" data-nav-key="functions" class="nav-link flex items-center gap-2 px-1 py-2 text-sm whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full shrink-0" style="background:#74C2A1;"></span>
+            <span>函数与代数</span>
+          </a>
+          <a href="geometry.html" data-nav-key="geometry" class="nav-link flex items-center gap-2 px-1 py-2 text-sm whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full shrink-0" style="background:#D4B863;"></span>
+            <span>几何与图形</span>
+          </a>
+          <a href="probability.html" data-nav-key="probability" class="nav-link flex items-center gap-2 px-1 py-2 text-sm whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full shrink-0" style="background:#A85AF5;"></span>
+            <span>概率与统计</span>
+          </a>
+          <a href="calculus.html" data-nav-key="calculus" class="nav-link flex items-center gap-2 px-1 py-2 text-sm whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full shrink-0" style="background:#4CC2F0;"></span>
+            <span>导数与应用</span>
+          </a>
+          <a href="elective.html" data-nav-key="elective" class="nav-link flex items-center gap-2 px-1 py-2 text-sm whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full shrink-0" style="background:#7BC94A;"></span>
+            <span>选修拓展</span>
+          </a>
+          <a href="lab.html" data-nav-key="lab" data-active="true" class="nav-link flex items-center gap-2 px-1 py-2 text-sm whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full shrink-0" style="background:#EF7938;"></span>
+            <span>数学实验室</span>
+          </a>
+          <a href="lab.html" data-nav-key="lab" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#EF7938;"></span>数学实验室</a>
+          <a href="challenge.html" data-nav-key="challenge" class="nav-link flex items-center gap-2 px-3 py-2 text-sm whitespace-nowrap rounded-lg" style="position:relative;background: linear-gradient(135deg, rgba(200,169,91,0.15), rgba(200,169,91,0.05)); border: 1px solid rgba(200,169,91,0.3); color: #C8A95B; font-weight: 600;"><i data-lucide="swords" class="w-4 h-4"></i><span>秘境试炼</span><span class="NEW-badge" style="position:absolute;top:-6px;right:-4px;background:#FF6B6B;color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;font-weight:700;line-height:1.3;box-shadow:0 0 8px rgba(255,107,107,0.6);animation:pulse 2s infinite;">NEW</span>
+          </a>
+        </div>
+        <button id="mobile-menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" class="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-primary); border: 1px solid var(--genshin-border);">
+          <svg class="menu-icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="menu-icon-close hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="mobile-menu" class="lg:hidden hidden border-t" style="background: rgba(14,17,32,0.97); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-color: var(--genshin-border);">
+        <div class="max-w-7xl mx-auto px-6 py-3 flex flex-col gap-1 font-body">
+          <a href="functions.html" data-nav-key="functions" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#74C2A1;"></span>函数与代数</a>
+          <a href="geometry.html" data-nav-key="geometry" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#D4B863;"></span>几何与图形</a>
+          <a href="probability.html" data-nav-key="probability" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#A85AF5;"></span>概率与统计</a>
+          <a href="calculus.html" data-nav-key="calculus" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#4CC2F0;"></span>导数与应用</a>
+          <a href="elective.html" data-nav-key="elective" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#7BC94A;"></span>选修拓展</a>
+          <a href="challenge.html" data-nav-key="challenge" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors" style="color: #C8A95B; background: linear-gradient(135deg, rgba(200,169,91,0.15), rgba(200,169,91,0.05)); border: 1px solid rgba(200,169,91,0.3);"><i data-lucide="swords" class="w-4 h-4"></i>秘境试炼<span style="margin-left:4px;background:#FF6B6B;color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;font-weight:700;">NEW</span></a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ===== 侧边章节目录 TOC（桌面端，v3 新增） ===== -->
+    <aside class="toc-desktop hidden lg:block" aria-label="本章节目录">
+      <div class="font-display text-sm mb-3" style="color: var(--genshin-primary);">本章节目录</div>
+      <div style="height:1px; background: rgba(200,169,91,0.18); margin-bottom: 10px;"></div>
+      <nav>
+          <a href="#kp-lab-transform" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#EF7938;flex-shrink:0;"></span><span class="toc-text">公式炼金台 · 变形可视化</span></a>
+          <a href="#kp-lab-area" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#D4B863;flex-shrink:0;"></span><span class="toc-text">尘歌壶砌筑术 · 配方法</span></a>
+          <a href="#kp-lab-parabola" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#74C2A1;flex-shrink:0;"></span><span class="toc-text">风之翼 · 抛物线轨迹</span></a>
+          <a href="#kp-lab-circle" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#4CC2F0;flex-shrink:0;"></span><span class="toc-text">占星台 · 单位圆与正弦</span></a>
+          <a href="#kp-lab-gacha" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#A85AF5;flex-shrink:0;"></span><span class="toc-text">祈愿透视 · 大数定律</span></a>
+          <a href="#kp-lab-tangent" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#7BC94A;flex-shrink:0;"></span><span class="toc-text">切线斩 · 导数探索</span></a>
+        </nav>
+    </aside>
+
+    <!-- ===== 移动端浮动目录按钮（v3 新增） ===== -->
+    <div class="lg:hidden" style="position: fixed; right: 20px; bottom: 24px; z-index: 50;">
+      <button id="toc-mobile-btn" type="button" aria-label="打开章节目录" aria-expanded="false" style="width:48px;height:48px;border-radius:50%;background:var(--genshin-primary);color:var(--genshin-primary-foreground);display:inline-flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,0.4);cursor:pointer;border:none;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      </button>
+      <div id="toc-mobile-panel" class="toc-mobile-panel" style="display:none;">
+        <div class="font-display text-sm mb-3" style="color: var(--genshin-primary);">本章节目录</div>
+        <div style="height:1px; background: rgba(200,169,91,0.18); margin-bottom: 10px;"></div>
+        <nav>
+          <a href="#kp-lab-transform" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#EF7938;flex-shrink:0;"></span><span class="toc-text">公式炼金台 · 变形可视化</span></a>
+          <a href="#kp-lab-area" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#D4B863;flex-shrink:0;"></span><span class="toc-text">尘歌壶砌筑术 · 配方法</span></a>
+          <a href="#kp-lab-parabola" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#74C2A1;flex-shrink:0;"></span><span class="toc-text">风之翼 · 抛物线轨迹</span></a>
+          <a href="#kp-lab-circle" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#4CC2F0;flex-shrink:0;"></span><span class="toc-text">占星台 · 单位圆与正弦</span></a>
+          <a href="#kp-lab-gacha" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#A85AF5;flex-shrink:0;"></span><span class="toc-text">祈愿透视 · 大数定律</span></a>
+          <a href="#kp-lab-tangent" class="toc-item"><span style="width:6px;height:6px;border-radius:50%;background:#7BC94A;flex-shrink:0;"></span><span class="toc-text">切线斩 · 导数探索</span></a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ===== 主内容区（leaf 页面填充 SLOT） ===== -->
+    <main class="font-body max-w-7xl mx-auto px-6 lg:pr-[252px] pt-28 pb-12" style="min-height: calc(100vh - 200px);">
+
+    <style>
+    /* ===== 数学实验室专属样式（仅 lab.html 使用） ===== */
+    /* 数学公式排版：衬线数学字体 + 分数/高亮 */
+    .lab-math {
+      font-family: "Cambria Math", "STIX Two Math", "Times New Roman", Georgia, "Songti SC", serif;
+      font-size: 1.18rem;
+      line-height: 2;
+      letter-spacing: .02em;
+    }
+    .lab-math sup, .lab-math sub { font-size: .68em; }
+    .frac { display: inline-block; vertical-align: middle; text-align: center; margin: 0 .18em; line-height: 1.25; }
+    .frac .num { display: block; border-bottom: 1.2px solid currentColor; padding: 0 .35em; }
+    .frac .den { display: block; padding: 0 .35em; }
+    .eq-stage {
+      min-height: 76px; border-radius: 10px; padding: 14px 16px; margin-bottom: 12px;
+      background: var(--genshin-muted);
+      max-height: 420px; overflow-y: auto;
+    }
+    .eq-row {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+      padding: 7px 10px; border-radius: 8px;
+      opacity: 0; transform: translateY(10px);
+      transition: opacity .38s ease, transform .38s ease, background-color .38s ease;
+    }
+    .eq-row.on { opacity: 1; transform: none; }
+    .eq-row.now { background: var(--genshin-card); box-shadow: 0 1px 8px rgba(0,0,0,.08); }
+    .eq-row.dim .lab-math { opacity: .45; filter: saturate(.35); transition: opacity .38s, filter .38s; }
+    .eq-note { font-size: .78rem; color: var(--genshin-muted-foreground); max-width: 46%; }
+    .chg {
+      font-weight: 700; border-radius: 4px; padding: 0 3px;
+      animation: labChgPulse 1.8s ease-in-out infinite;
+    }
+    @keyframes labChgPulse {
+      0%, 100% { background: transparent; }
+      50% { background: rgba(200,169,91,.28); }
+    }
+    .lab-btn {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .5rem 1rem; border-radius: 8px; font-size: .85rem; font-weight: 600;
+      cursor: pointer; transition: transform .15s ease, box-shadow .15s ease, background-color .2s;
+      border: 1px solid var(--genshin-border); color: var(--genshin-foreground); background: var(--genshin-card);
+      user-select: none;
+    }
+    .lab-btn:hover:not(:disabled) { transform: translateY(-1px); border-color: rgba(200,169,91,.55); }
+    .lab-btn:disabled { opacity: .45; cursor: not-allowed; }
+    .lab-btn.primary { background: linear-gradient(135deg, #C8A95B, #9A7826); border-color: transparent; color: #FFF9EC; }
+    .lab-tab {
+      padding: .42rem .9rem; border-radius: 999px; font-size: .82rem; cursor: pointer;
+      border: 1px solid var(--genshin-border); color: var(--genshin-muted-foreground); background: transparent;
+      transition: all .2s ease;
+    }
+    .lab-tab.active { background: rgba(200,169,91,.16); border-color: rgba(200,169,91,.6); color: var(--genshin-primary); font-weight: 700; }
+    .lab-chip {
+      display: inline-flex; align-items: baseline; gap: .4rem;
+      padding: .3rem .75rem; border-radius: 8px; font-size: .8rem;
+      background: var(--genshin-muted); border: 1px solid var(--genshin-border);
+    }
+    .lab-chip b { font-size: .95rem; }
+    .lab-slider { width: 100%; accent-color: #C8A95B; cursor: pointer; }
+    .lab-slider-row { display: grid; grid-template-columns: 74px 1fr 58px; align-items: center; gap: 10px; margin-bottom: 8px; font-size: .84rem; }
+    .lab-slider-row output { text-align: right; font-weight: 700; color: var(--genshin-primary); }
+    .lab-canvas-box { border-radius: 10px; overflow: hidden; border: 1px solid var(--genshin-border); background: var(--genshin-card); touch-action: none; }
+    .lab-canvas-box canvas { display: block; width: 100%; cursor: crosshair; }
+    .lab-seg { display: inline-flex; flex-wrap: wrap; border-radius: 8px; overflow: hidden; border: 1px solid var(--genshin-border); }
+    .lab-seg button { padding: .4rem .8rem; font-size: .8rem; background: var(--genshin-card); color: var(--genshin-muted-foreground); cursor: pointer; border: none; }
+    .lab-seg button.active { background: rgba(200,169,91,.2); color: var(--genshin-primary); font-weight: 700; }
+    .lab-stat-num { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 700; color: var(--genshin-primary); }
+    @media (prefers-reduced-motion: reduce) {
+      .chg { animation: none; background: rgba(200,169,91,.24); }
+      .eq-row { transition: none; }
+    }
+    </style>
+
+    <noscript>
+      <div style="border:1px solid var(--genshin-border); background:var(--genshin-muted); border-radius:10px; padding:16px; margin-bottom:24px;">
+        数学实验室的全部互动装置都需要启用 JavaScript 才能运行。
+      </div>
+    </noscript>
+
+    <!-- ===== 实验室头部：火元素 · 纳塔 ===== -->
+    <section class="reveal relative overflow-hidden rounded-xl border border-[#EF7938]/25 mb-10" style="background-image: radial-gradient(ellipse 85% 70% at 50% 0%, rgba(239,122,53,0.18) 0%, rgba(239,122,53,0.04) 45%, transparent 75%);">
+      <div class="relative p-6 sm:p-10 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10">
+        <div class="flex-1 min-w-0 flex flex-col sm:flex-row sm:items-start gap-5">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center shrink-0 bg-[#EF7938]/15 border border-[#EF7938]/40">
+            <span class="font-display text-3xl text-[#EF7938]">焰</span>
+          </div>
+          <div class="min-w-0">
+            <p class="text-sm text-[#EF7938] mb-1.5">纳塔 · 火元素 · 互动装置群</p>
+            <h1 class="font-display text-2xl sm:text-3xl font-bold mb-3" style="color: var(--genshin-foreground);">提瓦特数学实验室</h1>
+            <p class="text-sm leading-relaxed max-w-2xl" style="color: var(--genshin-muted-foreground);">
+              知识图鉴告诉你「公式是什么」，实验室让你亲手看见「公式为什么是这样」。拖动滑块、拨动角度、掷出一万次骰子——每一条性质都不再需要死记硬背，因为你在实验里亲眼见过它发生。
+            </p>
+            <div class="flex flex-wrap gap-x-6 gap-y-2 mt-4 text-sm">
+              <span><b class="font-display text-lg" style="color:#EF7938;">6</b> <span style="color: var(--genshin-muted-foreground);">个互动实验</span></span>
+              <span><b class="font-display text-lg" style="color:#EF7938;">30+</b> <span style="color: var(--genshin-muted-foreground);">可调参数</span></span>
+              <span><b class="font-display text-lg" style="color:#EF7938;">∞</b> <span style="color: var(--genshin-muted-foreground);">种探索可能</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 实验一 · 公式炼金台（公式变形可视化） ===== -->
+    <article id="kp-lab-transform" class="genshin-card reveal overflow-hidden p-5 sm:p-8 mb-8 scroll-mt-24">
+      <div class="flex items-center gap-3 flex-wrap mb-1">
+        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:#EF7938;"></span>
+        <h2 class="font-display text-xl sm:text-2xl font-bold" style="color: var(--genshin-primary);">实验一 · 公式炼金台</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full" style="background:rgba(239,122,53,.12); color:#C25442; border:1px solid rgba(239,122,53,.35);">公式变形可视化</span>
+      </div>
+      <p class="text-sm mb-5" style="color: var(--genshin-muted-foreground);">
+        选一张「炼金配方」，然后一步步点击下一步：金色闪烁的部分就是这一步发生变化的地方，右侧小字告诉你这一步用了哪条恒等法则。旧步骤会留在炉中供你回看——变形不是替换，而是生长。
+      </p>
+
+      <div id="lab-deck-tabs" class="flex flex-wrap gap-2 mb-4"></div>
+
+      <div class="grid lg:grid-cols-[1fr_240px] gap-4 items-stretch">
+        <div>
+          <div id="lab-eq-stage" class="eq-stage" aria-live="polite"></div>
+          <div class="flex items-center gap-2 flex-wrap mt-1">
+            <button id="lab-eq-prev" class="lab-btn" type="button">◀ 上一步</button>
+            <button id="lab-eq-next" class="lab-btn primary" type="button">下一步 ▶</button>
+            <button id="lab-eq-auto" class="lab-btn" type="button">自动演示</button>
+            <button id="lab-eq-reset" class="lab-btn" type="button">重置</button>
+            <span id="lab-eq-progress" class="ml-auto text-xs" style="color: var(--genshin-muted-foreground);"></span>
+          </div>
+        </div>
+        <aside class="rounded-xl p-4 self-start w-full" style="background:var(--genshin-muted); border:1px solid var(--genshin-border);">
+          <div class="text-xs font-bold tracking-wider mb-2" style="color:#EF7938;">本步法则</div>
+          <p id="lab-eq-note" class="text-sm leading-relaxed" style="color: var(--genshin-foreground);">点击「下一步」开始炼金。</p>
+          <div class="mt-4 pt-3 text-xs leading-relaxed" style="border-top:1px dashed var(--genshin-border); color: var(--genshin-muted-foreground);" id="lab-eq-tip"></div>
+        </aside>
+      </div>
+    </article>
+
+    <!-- ===== 实验二 · 尘歌壶砌筑术（配方法面积模型） ===== -->
+    <article id="kp-lab-area" class="genshin-card reveal overflow-hidden p-5 sm:p-8 mb-8 scroll-mt-24">
+      <div class="flex items-center gap-3 flex-wrap mb-1">
+        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:#D4B863;"></span>
+        <h2 class="font-display text-xl sm:text-2xl font-bold" style="color: var(--genshin-primary);">实验二 · 尘歌壶砌筑术</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full" style="background:rgba(212,184,99,.14); color:#9A7826; border:1px solid rgba(212,184,99,.4);">配方法 · 面积模型</span>
+      </div>
+      <p class="text-sm mb-5" style="color: var(--genshin-muted-foreground);">
+        为什么配方要「加上一次项系数一半的平方」？先别背结论——把 <i class="lab-math">x</i><sup class="lab-math">2</sup> 和 <i class="lab-math">bx</i> 想成两块地皮。拖动岩之神瞳调整 <i class="lab-math">b</i>，再把长条地皮掰成两条搬到正方形右边和下边：缺口恰好是 (b/2)²，不补上它就砌不成大正方形。
+      </p>
+      <div class="grid lg:grid-cols-[340px_1fr] gap-6 items-center">
+        <div class="lab-canvas-box" style="cursor:default;">
+          <svg id="lab-area-svg" viewBox="0 0 340 300" width="100%" role="img" aria-label="配方法面积模型示意图"></svg>
+        </div>
+        <div>
+          <div class="lab-slider-row">
+            <label for="lab-area-b" class="whitespace-nowrap">b 的值（偶数）</label>
+            <input id="lab-area-b" class="lab-slider" type="range" min="2" max="8" step="2" value="6" aria-label="调整参数 b">
+            <output id="lab-area-b-out">6</output>
+          </div>
+          <div class="flex gap-2 flex-wrap my-3">
+            <button id="lab-area-toggle" class="lab-btn primary" type="button">砌上缺角 (b/2)² ▸</button>
+          </div>
+          <div id="lab-area-formula" class="lab-math text-center rounded-xl p-4" style="background:var(--genshin-muted); border:1px solid var(--genshin-border);"></div>
+          <p class="text-xs mt-3 leading-relaxed" style="color: var(--genshin-muted-foreground);">
+            这正是课本里配方法的全部秘密：<b>x² + 2·x·(b/2) + (b/2)² = (x + b/2)²</b>。解方程时两边同加 (b/2)²，就是为了凑出左边这块完美的大正方形。
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ===== 实验三 · 风之翼滑翔轨迹（抛物线参数实验室） ===== -->
+    <article id="kp-lab-parabola" class="genshin-card reveal overflow-hidden p-5 sm:p-8 mb-8 scroll-mt-24">
+      <div class="flex items-center gap-3 flex-wrap mb-1">
+        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:#74C2A1;"></span>
+        <h2 class="font-display text-xl sm:text-2xl font-bold" style="color: var(--genshin-primary);">实验三 · 风之翼滑翔轨迹</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full" style="background:rgba(116,194,161,.14); color:#4F9E78; border:1px solid rgba(116,194,161,.4);">二次函数图像</span>
+      </div>
+      <p class="text-sm mb-5" style="color: var(--genshin-muted-foreground);">
+        张开风之翼！<i class="lab-math">y = ax² + bx + c</i> 的三个系数各自掌管什么？拖动滑块立刻见分晓：<b>a</b> 管开口方向与胖瘦、<b>b</b> 拉着顶点左右漂移、<b>c</b> 决定起飞高度。判别式 Δ 会实时染色——绿色两交点、金色相切、红色相离。
+      </p>
+      <div class="grid lg:grid-cols-[1fr_300px] gap-6">
+        <div class="lab-canvas-box"><canvas id="lab-parabola-canvas" height="360" aria-label="抛物线图像画布"></canvas></div>
+        <div>
+          <div class="lab-slider-row">
+            <label for="lab-pb-a">a（开口）</label>
+            <input id="lab-pb-a" class="lab-slider" type="range" min="-3" max="3" step="0.25" value="1">
+            <output id="lab-pb-a-out">1</output>
+          </div>
+          <div class="lab-slider-row">
+            <label for="lab-pb-b">b（平移）</label>
+            <input id="lab-pb-b" class="lab-slider" type="range" min="-6" max="6" step="0.5" value="-2">
+            <output id="lab-pb-b-out">-2</output>
+          </div>
+          <div class="lab-slider-row">
+            <label for="lab-pb-c">c（高度）</label>
+            <input id="lab-pb-c" class="lab-slider" type="range" min="-6" max="6" step="0.5" value="-1">
+            <output id="lab-pb-c-out">-1</output>
+          </div>
+          <div class="flex gap-2 flex-wrap my-3">
+            <button class="lab-btn lab-pb-preset" type="button" data-a="1" data-b="-2" data-c="-3">两个交点</button>
+            <button class="lab-btn lab-pb-preset" type="button" data-a="1" data-b="-2" data-c="1">恰好相切</button>
+            <button class="lab-btn lab-pb-preset" type="button" data-a="1" data-b="0" data-c="2">永远不相交</button>
+          </div>
+          <div class="space-y-2">
+            <div class="lab-chip w-full justify-between"><span>判别式 Δ = b² − 4ac</span><b id="lab-pb-delta">-</b></div>
+            <div class="lab-chip w-full justify-between"><span>顶点</span><b id="lab-pb-vertex">-</b></div>
+            <div class="lab-chip w-full justify-between"><span>对称轴</span><b id="lab-pb-axis">-</b></div>
+            <div class="lab-chip w-full justify-between"><span>与 x 轴交点</span><b id="lab-pb-roots">-</b></div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ===== 实验四 · 占星台（单位圆与正弦波） ===== -->
+    <article id="kp-lab-circle" class="genshin-card reveal overflow-hidden p-5 sm:p-8 mb-8 scroll-mt-24">
+      <div class="flex items-center gap-3 flex-wrap mb-1">
+        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:#4CC2F0;"></span>
+        <h2 class="font-display text-xl sm:text-2xl font-bold" style="color: var(--genshin-primary);">实验四 · 占星台</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full" style="background:rgba(76,194,240,.14); color:#4A93C2; border:1px solid rgba(76,194,240,.4);">单位圆 · 三角函数</span>
+      </div>
+      <p class="text-sm mb-5" style="color: var(--genshin-muted-foreground);">
+        占星术士莫娜的秘技：星轨（单位圆上的动点）转一圈，它的纵坐标随角度扫出的影子，正是正弦曲线。拖动左侧星点（或按「自动运转」），观察右边的波如何被一点点画出来——三角函数的本质是<b>旋转的投影</b>。
+      </p>
+      <div class="grid lg:grid-cols-[300px_1fr] gap-6 items-center">
+        <div class="lab-canvas-box mx-auto" style="cursor:grab; max-width:320px;">
+          <svg id="lab-circle-svg" viewBox="0 0 300 300" width="100%" role="img" aria-label="单位圆交互图，可拖动圆周上的星点"></svg>
+        </div>
+        <div>
+          <div class="lab-canvas-box" style="margin-bottom:12px;"><canvas id="lab-wave-canvas" height="220" aria-label="正弦波展开图画布"></canvas></div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <div class="lab-seg" role="group" aria-label="选择追踪函数">
+              <button id="lab-wave-sin" class="active" type="button">追踪 sin θ</button>
+              <button id="lab-wave-cos" type="button">追踪 cos θ</button>
+            </div>
+            <button id="lab-circle-play" class="lab-btn" type="button">▶ 自动运转</button>
+            <span id="lab-circle-readout" class="lab-chip ml-auto"><b>θ = 60°</b><span>sin 0.87 · cos 0.50</span></span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ===== 实验五 · 祈愿概率透视（大数定律） ===== -->
+    <article id="kp-lab-gacha" class="genshin-card reveal overflow-hidden p-5 sm:p-8 mb-8 scroll-mt-24">
+      <div class="flex items-center gap-3 flex-wrap mb-1">
+        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:#A85AF5;"></span>
+        <h2 class="font-display text-xl sm:text-2xl font-bold" style="color: var(--genshin-primary);">实验五 · 祈愿概率透视</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full" style="background:rgba(168,90,245,.13); color:#8B47CC; border:1px solid rgba(168,90,245,.4);">频率与概率 · 大数定律</span>
+      </div>
+      <p class="text-sm mb-5" style="color: var(--genshin-muted-foreground);">
+        单抽可能天降金光，也可能十连全是蓝天——但一万抽之后，出金频率会死死贴住理论概率 1.6%。这就是<b>大数定律</b>：随机性并不可怕，大量重复之后，稳定会自己浮现。选一个事件，多掷几次试试。
+      </p>
+      <div class="grid lg:grid-cols-[1fr_290px] gap-6">
+        <div>
+          <div class="lab-canvas-box"><canvas id="lab-gacha-canvas" height="300" aria-label="频率收敛折线图画布"></canvas></div>
+          <div class="flex items-center gap-2 flex-wrap mt-3">
+            <div class="lab-seg" role="group" aria-label="选择随机事件">
+              <button class="active" data-mode="coin" type="button">🪙 硬币正面 50%</button>
+              <button data-mode="dice" type="button">🎲 掷出 6 点</button>
+              <button data-mode="wish" type="button">✨ 祈愿出金 1.6%</button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="flex gap-2 flex-wrap mb-4">
+            <button class="lab-btn primary lab-gacha-roll" data-n="1" type="button">祈愿 ×1</button>
+            <button class="lab-btn lab-gacha-roll" data-n="10" type="button">×10</button>
+            <button class="lab-btn lab-gacha-roll" data-n="100" type="button">×100</button>
+            <button class="lab-btn lab-gacha-roll" data-n="10000" type="button">×10000</button>
+            <button id="lab-gacha-clear" class="lab-btn" type="button">清空</button>
+          </div>
+          <div class="space-y-2">
+            <div class="lab-chip w-full justify-between"><span>总试验次数</span><b id="lab-gacha-total">0</b></div>
+            <div class="lab-chip w-full justify-between"><span>目标事件次数</span><b id="lab-gacha-hit">0</b></div>
+            <div class="lab-chip w-full justify-between"><span>实际频率</span><b id="lab-gacha-freq">—</b></div>
+            <div class="lab-chip w-full justify-between"><span>理论概率</span><b id="lab-gacha-theory">50%</b></div>
+          </div>
+          <p id="lab-gacha-hint" class="text-xs mt-3 leading-relaxed" style="color: var(--genshin-muted-foreground);">提示：先连点几次 ×1 感受波动，再按 ×10000 —— 折线会像被磁铁吸住一样贴向虚线。</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ===== 实验六 · 元素战技·切线斩（导数切线探索器） ===== -->
+    <article id="kp-lab-tangent" class="genshin-card reveal overflow-hidden p-5 sm:p-8 mb-8 scroll-mt-24">
+      <div class="flex items-center gap-3 flex-wrap mb-1">
+        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:#7BC94A;"></span>
+        <h2 class="font-display text-xl sm:text-2xl font-bold" style="color: var(--genshin-primary);">实验六 · 元素战技「切线斩」</h2>
+        <span class="text-xs px-2 py-0.5 rounded-full" style="background:rgba(123,201,74,.14); color:#5B9433; border:1px solid rgba(123,201,74,.4);">导数 · 极限思想</span>
+      </div>
+      <p class="text-sm mb-5" style="color: var(--genshin-muted-foreground);">
+        剑意凝聚于曲线上一点 P，另一柄剑落在它附近的 Q 点——两点连成的割线就是「平均变化率」。让 Q 不断向 P 收拢（把 h 推到最小），割线的极限位置便是切线：<b>瞬时变化率 = 导数</b>。拖动 P 点沿曲线移动，感受斜率的正负起伏。
+      </p>
+      <div class="grid lg:grid-cols-[1fr_290px] gap-6">
+        <div class="lab-canvas-box"><canvas id="lab-tangent-canvas" height="380" aria-label="切线探索画布，可拖动曲线上的 P 点"></canvas></div>
+        <div>
+          <label class="text-xs block mb-1" for="lab-tan-func" style="color: var(--genshin-muted-foreground);">选择曲线</label>
+          <select id="lab-tan-func" class="lab-btn w-full mb-4" style="appearance:auto;">
+            <option value="quad">f(x) = x²/2</option>
+            <option value="cubic">f(x) = x³/3 − x</option>
+            <option value="sine">f(x) = 2sin x</option>
+          </select>
+          <div class="lab-slider-row">
+            <label for="lab-tan-h">Q 靠近程度</label>
+            <input id="lab-tan-h" class="lab-slider" type="range" min="0" max="100" step="1" value="0">
+            <output id="lab-tan-h-out">h=2</output>
+          </div>
+          <p class="text-xs mb-3" style="color: var(--genshin-muted-foreground);">把滑块从左推到右：h 从 2 缩到 0.02，割线会缓缓「躺」到切线上。</p>
+          <label class="flex items-center gap-2 text-sm mb-4 cursor-pointer">
+            <input id="lab-tan-showdf" type="checkbox" style="accent-color:#C8A95B;"> 同时描出导函数 f′(x) 的轨迹
+          </label>
+          <div class="space-y-2">
+            <div class="lab-chip w-full justify-between"><span>P 点横坐标</span><b id="lab-tan-x">1.00</b></div>
+            <div class="lab-chip w-full justify-between"><span>割线斜率（平均变化率）</span><b id="lab-tan-ksec">-</b></div>
+            <div class="lab-chip w-full justify-between"><span>切线斜率 f′(x)</span><b id="lab-tan-ktan">-</b></div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ===== 章节导航 ===== -->
+    <div class="genshin-card mt-8 p-5 sm:p-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+      <span class="text-sm whitespace-nowrap" style="color: var(--genshin-muted-foreground);">实验室逛完了？</span>
+      <a href="challenge.html" class="reveal next-cta group inline-flex max-w-full min-w-0 items-center gap-3 px-5 py-3 rounded-lg cursor-pointer transition-colors hover:bg-[#C8A95B]/10" style="border: 1px solid var(--genshin-primary); color: var(--genshin-primary);">
+        <span class="text-xs tracking-wider opacity-70 whitespace-nowrap">前往实战</span>
+        <span class="font-display text-base">30 天秘境试炼</span>
+        <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+      </a>
+    </div>
+
+    
+
+    <!-- ===== 页脚 ===== -->
+    <footer class="reveal font-body" style="color: var(--genshin-muted-foreground);">
+      <div class="genshin-divider"></div>
+      <div style="background-color: var(--genshin-card);">
+        <div class="max-w-7xl mx-auto px-6 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          <div>
+            <div class="flex items-center gap-2.5 mb-3">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 2 L20.5 6.75 L20.5 16.25 L12 21 L3.5 16.25 L3.5 6.75 Z" stroke="#C8A95B" stroke-width="1.4" fill="rgba(200,169,91,0.10)"></path>
+                <circle cx="12" cy="11.5" r="2.2" fill="#C8A95B"></circle>
+              </svg>
+              <span class="font-display text-lg" style="color: var(--genshin-primary);">提瓦特数学图鉴</span>
+            </div>
+            <p class="text-sm leading-relaxed">以原神视觉重构高中三年数学知识体系，将五大数学模块映射提瓦特五国元素，让数学学习化作一场旅行者的探索之旅。</p>
+          </div>
+          <div>
+            <h3 class="section-title text-sm mb-4">五大知识模块</h3>
+            <ul class="space-y-2.5 text-sm">
+              <li class="flex items-center gap-2.5"><span class="w-2 h-2 rounded-full shrink-0" style="background:#74C2A1;"></span><span>函数与代数 · 风元素（蒙德）</span></li>
+              <li class="flex items-center gap-2.5"><span class="w-2 h-2 rounded-full shrink-0" style="background:#D4B863;"></span><span>几何与图形 · 岩元素（璃月）</span></li>
+              <li class="flex items-center gap-2.5"><span class="w-2 h-2 rounded-full shrink-0" style="background:#A85AF5;"></span><span>概率与统计 · 雷元素（稻妻）</span></li>
+              <li class="flex items-center gap-2.5"><span class="w-2 h-2 rounded-full shrink-0" style="background:#4CC2F0;"></span><span>导数与应用 · 水元素（枫丹）</span></li>
+              <li class="flex items-center gap-2.5"><span class="w-2 h-2 rounded-full shrink-0" style="background:#7BC94A;"></span><span>选修拓展 · 草元素（须弥）</span></li>
+            </ul>
+          </div>
+          <div class="sm:col-span-2 lg:col-span-1">
+            <h3 class="section-title text-sm mb-4">知识统计</h3>
+            <div class="space-y-3">
+              <div class="flex items-baseline gap-2">
+                <span class="font-display text-2xl whitespace-nowrap" style="color: var(--genshin-primary);">5</span>
+                <span class="text-sm">大知识模块</span>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span class="font-display text-2xl whitespace-nowrap" style="color: var(--genshin-primary);">27</span>
+                <span class="text-sm">个知识单元</span>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span class="font-display text-2xl whitespace-nowrap" style="color: var(--genshin-primary);">280+</span>
+                <span class="text-sm">核心考点</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 py-5 text-center text-xs" style="border-top: 1px solid var(--genshin-border);">
+          © 2026 提瓦特数学图鉴 · 旅行者，愿风指引你的数学之路
+        </div>
+      </div>
+    </footer>
+
+    <!-- ===== 共享装饰 CSS（位于 semantic-token-fallback 之后，body 内） ===== -->
+    <style>
+    /* ===== 提瓦特数学图鉴 · project-shell 共享装饰样式 ===== */
+
+    /* 1. 提瓦特夜空：深蓝紫渐变 + 星点纹理 */
+    body {
+      background-color: var(--genshin-background);
+      background-image:
+        radial-gradient(1.5px 1.5px at 5% 12%, rgba(255,255,255,0.65), transparent 60%),
+        radial-gradient(1px 1px at 18% 25%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1.5px 1.5px at 22% 8%, rgba(255,255,255,0.55), transparent 60%),
+        radial-gradient(1px 1px at 30% 67%, rgba(255,255,255,0.45), transparent 60%),
+        radial-gradient(2px 2px at 38% 23%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 44% 88%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1.5px 1.5px at 52% 15%, rgba(255,255,255,0.60), transparent 60%),
+        radial-gradient(1px 1px at 60% 52%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 68% 30%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 75% 72%, rgba(255,255,255,0.45), transparent 60%),
+        radial-gradient(2px 2px at 82% 18%, rgba(255,255,255,0.55), transparent 60%),
+        radial-gradient(1px 1px at 90% 58%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1.5px 1.5px at 95% 35%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 12% 78%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1.5px 1.5px at 28% 92%, rgba(255,255,255,0.55), transparent 60%),
+        radial-gradient(1px 1px at 48% 38%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 58% 82%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 72% 5%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(2px 2px at 85% 90%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 8% 60%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1px 1px at 34% 15%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 42% 72%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 50% 42%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1px 1px at 56% 28%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 64% 85%, rgba(255,255,255,0.55), transparent 60%),
+        radial-gradient(1px 1px at 70% 12%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1px 1px at 78% 48%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 86% 65%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 92% 22%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1px 1px at 6% 38%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 20% 88%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 36% 50%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1px 1px at 46% 62%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 54% 95%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 62% 40%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1px 1px at 74% 25%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 80% 80%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(1px 1px at 88% 45%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(1px 1px at 14% 52%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.5px 1.5px at 66% 60%, rgba(255,255,255,0.50), transparent 60%),
+        linear-gradient(180deg, var(--genshin-background) 0%, #14182B 100%);
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+
+    /* 2. 金色命之座分隔线：渐变线 + 中央菱形 */
+    .genshin-divider {
+      position: relative;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(200,169,91,0.45) 50%, transparent 100%);
+    }
+    .genshin-divider::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 8px;
+      height: 8px;
+      background: var(--genshin-primary);
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    /* 3. 元素徽章：小圆形，背景色由内联样式设定 */
+    .element-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(200,169,91,0.35);
+      flex-shrink: 0;
+    }
+
+    /* 4. 卡牌容器：金色微透明边框 + hover 变亮 */
+    .genshin-card {
+      background-color: var(--genshin-card);
+      border: 1px solid rgba(200,169,91,0.18);
+      border-radius: 12px;
+      transition: border-color 0.2s ease;
+    }
+    .genshin-card:hover {
+      border-color: rgba(200,169,91,0.40);
+    }
+
+    /* 5. 章节标题：衬线字体 + 左侧金色竖线 */
+    .section-title {
+      font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      position: relative;
+      padding-left: 0.75rem;
+      color: var(--genshin-foreground);
+    }
+    .section-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 3px;
+      height: 1.1em;
+      background: var(--genshin-primary);
+      border-radius: 2px;
+      transform: translateY(-50%);
+    }
+
+    /* 6. 导航链接：默认 muted，hover/active 金色 */
+    .brand-link {
+      text-decoration: none;
+    }
+    .nav-link {
+      text-decoration: none;
+      position: relative;
+      color: var(--genshin-muted-foreground);
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover {
+      color: var(--genshin-primary);
+    }
+    .nav-link[data-active="true"] {
+      color: var(--genshin-primary);
+      font-weight: 600;
+    }
+    .nav-link[data-active="true"]::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 70%;
+      height: 2px;
+      background: var(--genshin-primary);
+      transform: translateX(-50%);
+    }
+    </style>
+    <script>if(typeof lucide!=="undefined")lucide.createIcons();</script>
+<style>
+  html { scroll-behavior: smooth; }
+  .reveal-init { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal-in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal-init { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+  #back-to-top { background-color: var(--genshin-primary); color: var(--genshin-primary-foreground); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+  #back-to-top:hover { filter: brightness(1.1); }
+</style>
+<button id="back-to-top" type="button" aria-label="回到顶部" class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-lg opacity-0 pointer-events-none transition-all duration-300">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto; display:block;"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+<script>
+(function(){
+  // ---- mobile menu toggle ----
+  var btn=document.getElementById('mobile-menu-toggle');
+  var panel=document.getElementById('mobile-menu');
+  var openIc=btn?btn.querySelector('.menu-icon-open'):null;
+  var closeIc=btn?btn.querySelector('.menu-icon-close'):null;
+  function setMenu(open){
+    if(!panel)return;
+    if(open){panel.classList.remove('hidden');}
+    else{panel.classList.add('hidden');}
+    if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+    if(openIc&&closeIc){openIc.classList.toggle('hidden',open);closeIc.classList.toggle('hidden',!open);}
+  }
+  if(btn&&panel){
+    btn.addEventListener('click',function(){setMenu(panel.classList.contains('hidden'));});
+    panel.querySelectorAll('[data-nav-key]').forEach(function(a){a.addEventListener('click',function(){setMenu(false);});});
+  }
+  // ---- mobile active state by current filename ----
+  var file=(location.pathname.split('/').pop()||'index.html');
+  var keyMap={'index.html':'home','functions.html':'functions','geometry.html':'geometry','probability.html':'probability','calculus.html':'calculus','elective.html':'elective'};
+  var curKey=keyMap[file];
+  if(panel&&curKey){
+    panel.querySelectorAll('[data-nav-key]').forEach(function(a){
+      if(a.getAttribute('data-nav-key')===curKey){a.style.color='var(--genshin-primary)';a.style.fontWeight='600';}
+    });
+  }
+  // ---- back to top ----
+  var btt=document.getElementById('back-to-top');
+  if(btt){
+    window.addEventListener('scroll',function(){
+      if(window.scrollY>500){btt.classList.remove('opacity-0','pointer-events-none');}
+      else{btt.classList.add('opacity-0','pointer-events-none');}
+    },{passive:true});
+    btt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  }
+  // ---- safe scroll reveal (no-JS = visible) ----
+  var els=document.querySelectorAll('.genshin-card');
+  if(els.length&&'IntersectionObserver' in window){
+    els.forEach(function(el){el.classList.add('reveal-init');});
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('reveal-in');io.unobserve(e.target);}});
+    },{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(el){io.observe(el);});
+  }
+})();
+</script>
+<script>
+// 滚动入场动画 — IntersectionObserver（轻量，无 scroll 监听，触发后自动断开）
+(function(){
+  if(!('IntersectionObserver'in window)){
+    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('reveal-visible');});
+    return;
+  }
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('reveal-visible');obs.unobserve(e.target);}
+    });
+  },{rootMargin:'0px 0px -60px 0px',threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+})();
+</script>
+<script>
+// ===== 侧边目录 Scrollspy + 移动端面板控制（v3 新增） =====
+// 性能：仅使用 IntersectionObserver，不监听 scroll 事件
+(function(){
+  // ---- Scrollspy：监听带 id 的 article，同步高亮对应 TOC 项 ----
+  var articles = document.querySelectorAll('article[id^="kp-"]');
+  var tocLinks = document.querySelectorAll('.toc-item');
+  if('IntersectionObserver' in window && articles.length && tocLinks.length){
+    // 建立 id -> [链接] 映射（桌面端与移动端各一份）
+    var map = {};
+    tocLinks.forEach(function(a){
+      var href = a.getAttribute('href') || '';
+      if(href.charAt(0) === '#'){
+        var id = href.slice(1);
+        if(!map[id]){ map[id] = []; }
+        map[id].push(a);
+      }
+    });
+    function setActive(id){
+      tocLinks.forEach(function(a){ a.classList.remove('toc-active'); });
+      if(map[id]){ map[id].forEach(function(a){ a.classList.add('toc-active'); }); }
+    }
+    // 顶部减去导航栏高度，底部只在上 40% 区域内触发
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ setActive(e.target.id); }
+      });
+    }, { rootMargin: '-88px 0px -60% 0px', threshold: 0 });
+    articles.forEach(function(a){ io.observe(a); });
+  }
+
+  // ---- 移动端浮动目录面板：开关 / 选项后关闭 / 外部点击关闭 / Esc 关闭 ----
+  var btn = document.getElementById('toc-mobile-btn');
+  var panel = document.getElementById('toc-mobile-panel');
+  if(btn && panel){
+    function isOpen(){ return panel.style.display === 'block'; }
+    function open(){ panel.style.display = 'block'; btn.setAttribute('aria-expanded','true'); }
+    function close(){ panel.style.display = 'none'; btn.setAttribute('aria-expanded','false'); }
+    btn.addEventListener('click', function(e){ e.stopPropagation(); isOpen() ? close() : open(); });
+    panel.addEventListener('click', function(e){ e.stopPropagation(); });
+    // 点击某项后：原生锚点平滑滚动 + 自动关闭面板
+    panel.querySelectorAll('.toc-item').forEach(function(a){
+      a.addEventListener('click', function(){ close(); });
+    });
+    document.addEventListener('click', function(e){
+      if(isOpen() && !panel.contains(e.target) && e.target !== btn){ close(); }
+    });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && isOpen()){ close(); } });
+  }
+})();
+</script>
+<!-- 阅读进度条+点击粒子效果 -->
+<div id="__reading_bar" style="position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#C8A95B,#E8D5A3,#C8A95B);z-index:9998;width:0%;transition:width .1s linear;pointer-events:none;"></div>
+<script>
+(function(){
+  // 阅读进度条
+  var bar=document.getElementById('__reading_bar');
+  function updateBar(){
+    var h=document.documentElement,b=document.body;
+    var st=h.scrollTop||b.scrollTop;
+    var sh=(h.scrollHeight||b.scrollHeight)-h.clientHeight;
+    bar.style.width=(sh>0?(st/sh*100):0)+'%';
+  }
+  window.addEventListener('scroll',updateBar,{passive:true});
+  updateBar();
+
+
+  // 知识点卡片hover光晕效果
+  document.querySelectorAll('[class*="card"], .kp-card, .kp-item, section, article').forEach(function(el){
+    if(el.closest('nav')||el.closest('header'))return;
+    el.addEventListener('mouseenter',function(){
+      el.style.transition='transform .3s ease, box-shadow .3s ease';
+    });
+  });
+
+  // Back to top enhancement
+  var bk=document.getElementById('back-to-top');
+  if(bk){
+    bk.addEventListener('click',function(){playTone(600,0.08);setTimeout(function(){playTone(800,0.12);},80);});
+  }
+
+  // Web Audio click feedback (subtle)
+  var actx=null;
+  function playTone(f,d){
+    try{
+      if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();
+      var o=actx.createOscillator(),g=actx.createGain();
+      o.type='sine';o.frequency.value=f;
+      g.gain.setValueAtTime(0.04,actx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+d);
+      o.connect(g);g.connect(actx.destination);
+      o.start();o.stop(actx.currentTime+d);
+    }catch(e){}
+  }
+})();
+</script>
+    <script>
+    // ===== 提瓦特数学实验室 · 全部互动装置（无外部依赖） =====
+    (function () {
+      'use strict';
+
+      // ---------- 公共工具 ----------
+      function cssVar(name) {
+        return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+      }
+      function hexA(hex, a) {
+        var h = hex.replace('#', '');
+        if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+        var n = parseInt(h, 16);
+        return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')';
+      }
+      var GOLD = '#C8A95B';
+      var MUTED = null, FG = null, CARD = null, BORDER = null;
+      function refreshThemeColors() {
+        MUTED = cssVar('--genshin-muted-foreground') || '#888';
+        FG = cssVar('--genshin-foreground') || '#333';
+        CARD = cssVar('--genshin-card') || '#fff';
+        BORDER = cssVar('--genshin-border') || '#ddd';
+      }
+      function fmt(v, d) {
+        if (!isFinite(v)) return '-';
+        var s = Number(v).toFixed(d === undefined ? 2 : d);
+        return s.replace(/^-0(\.0+)?$/, '0' + (s.indexOf('.') >= 0 ? '.' + s.split('.')[1].slice(0, d || 2) : '')).replace('-0.', '0.');
+      }
+      function setupCanvas(canvas) {
+        // 首次调用时按 HTML height 属性锁定 CSS 高度：
+        // canvas 是带内在比例的替换元素，width:100% 下若不锁高，布局高度会随比例失真
+        if (!canvas.dataset.hlocked) {
+          canvas.dataset.hlocked = '1';
+          canvas.style.height = (canvas.getAttribute('height') || 300) + 'px';
+        }
+        var rect = canvas.getBoundingClientRect();
+        var dpr = window.devicePixelRatio || 1;
+        var w = Math.max(50, Math.round(rect.width)), h = Math.round(rect.height);
+        if (canvas.width !== w * dpr || canvas.height !== h * dpr) {
+          canvas.width = w * dpr; canvas.height = h * dpr;
+        }
+        var ctx = canvas.getContext('2d');
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        return { ctx: ctx, w: w, h: h };
+      }
+
+      // ============================================================
+      // 实验一 · 公式炼金台（公式变形分步可视化）
+      // 数据驱动：每一步 = {f: 公式HTML, n: 本步法则说明}，<em class="chg"> 标出变化项
+      // ============================================================
+      var DECKS = [
+        {
+          id: 'peifang', name: '配方 · 解一元二次方程', tip: '配方法的几何直觉见下方「实验二·尘歌壶砌筑术」，两边同加 (b/2)² 只为凑出一个完全平方。',
+          steps: [
+            { f: 'x<sup>2</sup> + 6x − 7 = 0', n: '原始方程：二次项、一次项、常数项各就各位。' },
+            { f: 'x<sup>2</sup> + 6x <em class="chg">= 7</em>', n: '移项法则：两边同加 7，常数项搬到等号右边。' },
+            { f: 'x<sup>2</sup> + 6x + <em class="chg">9</em> = 7 <em class="chg">+ 9</em>', n: '关键一步！两边同时加上「一次项系数一半的平方」：6 ÷ 2 = 3，3² = 9。等式仍成立。' },
+            { f: '<em class="chg">(x + 3)<sup>2</sup></em> = 16', n: '左边三个项恰好拼成完全平方式 (x+3)²；右边合并得 16。（为什么恰好？去实验二看面积模型！）' },
+            { f: 'x + 3 = <em class="chg">±4</em>', n: '开平方法则：16 的平方根有两个，±4，千万别丢负的那支。' },
+            { f: 'x = −3 ± 4', n: '移项：把 −3 移到右边。此时答案已经呼之欲出。' },
+            { f: '<em class="chg">x₁ = 1，x₂ = −7</em>', n: '分别取 +4 和 −4，得到两根。代回原方程验算：1+6−7=0 ✓，49−42−7=0 ✓。' }
+          ]
+        },
+        {
+          id: 'wanquan', name: '完全平方公式', tip: '(a+b)² ≠ a²+b²！中间那项 2ab 是展开时"交叉相乘"的产物——用实验二的面积模型拼一次就再也不会忘。',
+          steps: [
+            { f: '(a + b)<sup>2</sup>', n: '目标：把「和的平方」展开成不含括号的形式。' },
+            { f: '= (a + b)(a + b)', n: '平方的定义：就是两个相同的因式相乘。' },
+            { f: '= a(a + b) <em class="chg">+ b(a + b)</em>', n: '分配律第一轮：把第一个括号拆开，每一项都乘后面整个括号。' },
+            { f: '= a² + ab <em class="chg">+ ab + b²</em>', n: '分配律第二轮：a 和 b 分别乘 (a+b)，得到四个项。注意出现了两个 ab。' },
+            { f: '= a² + <em class="chg">2ab</em> + b²', n: '合并同类项：ab + ab = 2ab。这就是口诀「首平方、末平方、首末乘积二倍放中央」。' }
+          ]
+        },
+        {
+          id: 'pingfangcha', name: '平方差公式', tip: '平方差是"对称美"的极致：只要两个括号里一项完全相同、一项互为相反数，中间项必然成对抵消。',
+          steps: [
+            { f: '(a + b)(a − b)', n: '目标：展开「和 × 差」。' },
+            { f: '= a(a − b) <em class="chg">+ b(a − b)</em>', n: '分配律第一轮：先用 a 去乘后面整个括号。' },
+            { f: '= a² − ab <em class="chg">+ ab</em> − b²', n: '分配律第二轮：b 也乘一遍，得到 +ab；而前面已有 −ab。' },
+            { f: '= a² − <span style="text-decoration:line-through;opacity:.55;">ab + ab</span> − b²', n: '见证奇迹：−ab 与 +ab 恰好互为相反数，一对抵消！' },
+            { f: '= <em class="chg">a² − b²</em>', n: '只剩下两个平方之差。「乘积和差」与「平方之差」从此可以互相秒变。' }
+          ]
+        },
+        {
+          id: 'dengcha', name: '等差数列求和公式', tip: '高斯上小学时用同样的配对思想心算出 1+2+⋯+100=5050。"正序+倒序"是处理数列求和的万能起手式。',
+          steps: [
+            { f: 'S<sub>n</sub> = a₁ + a₂ + ⋯ + a<sub>n</sub>', n: '目标：求等差数列前 n 项的和。' },
+            { f: '= a₁ + (a₁+d) + ⋯ + <em class="chg">(a₁+(n−1)d)</em>', n: '通项公式：第 k 项是 a₁+(k−1)d，最后一项即 aₙ = a₁+(n−1)d。' },
+            { f: '2S<sub>n</sub> = <em class="chg">(a₁+aₙ)</em> + (a₁+aₙ) + ⋯ + (a₁+aₙ)', n: '高斯操作：把和正着写一遍、倒着写一遍，两行上下对齐后逐列相加——每列都是 a₁+aₙ！' },
+            { f: '2S<sub>n</sub> = <em class="chg">n(a₁ + aₙ)</em>', n: '一共 n 列，每列的和都是 a₁+aₙ，所以总和是它们的 n 倍。' },
+            { f: 'S<sub>n</sub> = <em class="chg">(a₁ + aₙ) · n ÷ 2</em>', n: '两边同除以 2。读作：「(首项+末项) × 项数 ÷ 2」——和梯形面积公式惊人地相似。' }
+          ]
+        }
+      ];
+
+      var eqStage = document.getElementById('lab-eq-stage');
+      var eqNote = document.getElementById('lab-eq-note');
+      var eqTip = document.getElementById('lab-eq-tip');
+      var eqProgress = document.getElementById('lab-eq-progress');
+      var btnPrev = document.getElementById('lab-eq-prev');
+      var btnNext = document.getElementById('lab-eq-next');
+      var btnAuto = document.getElementById('lab-eq-auto');
+      var btnReset = document.getElementById('lab-eq-reset');
+      var tabsBox = document.getElementById('lab-deck-tabs');
+      var curDeck = DECKS[0], curIdx = 0, autoTimer = null;
+
+      DECKS.forEach(function (deck, i) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'lab-tab' + (i === 0 ? ' active' : '');
+        b.textContent = deck.name;
+        b.addEventListener('click', function () {
+          tabsBox.querySelectorAll('.lab-tab').forEach(function (t) { t.classList.remove('active'); });
+          b.classList.add('active');
+          loadDeck(deck);
+        });
+        tabsBox.appendChild(b);
+      });
+
+      function makeRow(step, no) {
+        var row = document.createElement('div');
+        row.className = 'eq-row';
+        row.innerHTML =
+          '<span class="text-xs shrink-0 font-bold" style="color:' + GOLD + ';min-width:1.4em;">' + no + '</span>' +
+          '<span class="lab-math flex-1 min-w-0">' + step.f + '</span>' +
+          '<span class="eq-note">' + step.n + '</span>';
+        return row;
+      }
+
+      function syncStepper() {
+        var rows = eqStage.children;
+        for (var i = 0; i < rows.length; i++) {
+          var r = rows[i];
+          r.classList.add('on');
+          r.classList.remove('dim', 'now');
+          if (i === rows.length - 1 && rows.length > 1) r.classList.add('now');
+          else if (i < rows.length - 1) r.classList.add('dim');
+        }
+        btnPrev.disabled = curIdx === 0;
+        btnNext.disabled = curIdx >= curDeck.steps.length - 1;
+        eqProgress.textContent = '第 ' + (curIdx + 1) + ' / ' + curDeck.steps.length + ' 步';
+        eqNote.textContent = curDeck.steps[curIdx].n;
+        eqTip.textContent = curDeck.tip;
+        eqStage.scrollTop = eqStage.scrollHeight;
+      }
+
+      function appendStep() {
+        var roman = ['①','②','③','④','⑤','⑥','⑦','⑧'][curIdx];
+        var row = makeRow(curDeck.steps[curIdx], roman);
+        eqStage.appendChild(row);
+        requestAnimationFrame(function () { requestAnimationFrame(syncStepper); });
+      }
+
+      function stopAuto() {
+        if (autoTimer) { clearInterval(autoTimer); autoTimer = null; btnAuto.textContent = '自动演示'; }
+      }
+
+      function loadDeck(deck) {
+        stopAuto();
+        curDeck = deck; curIdx = 0;
+        eqStage.innerHTML = '';
+        appendStep();
+      }
+
+      btnNext.addEventListener('click', function () {
+        stopAuto();
+        if (curIdx < curDeck.steps.length - 1) { curIdx++; appendStep(); }
+      });
+      btnPrev.addEventListener('click', function () {
+        stopAuto();
+        if (curIdx > 0) { curIdx--; eqStage.lastElementChild.remove(); requestAnimationFrame(syncStepper); }
+      });
+      btnReset.addEventListener('click', function () { loadDeck(curDeck); });
+      btnAuto.addEventListener('click', function () {
+        if (autoTimer) { stopAuto(); return; }
+        if (curIdx >= curDeck.steps.length - 1) loadDeck(curDeck);
+        btnAuto.textContent = '⏸ 暂停';
+        autoTimer = setInterval(function () {
+          if (curIdx < curDeck.steps.length - 1) { curIdx++; appendStep(); }
+          else stopAuto();
+        }, 1700);
+      });
+      loadDeck(DECKS[0]);
+
+      // ============================================================
+      // 实验二 · 尘歌壶砌筑术（配方法面积模型）
+      // ============================================================
+      var areaSvg = document.getElementById('lab-area-svg');
+      var areaB = document.getElementById('lab-area-b');
+      var areaBOut = document.getElementById('lab-area-b-out');
+      var areaToggle = document.getElementById('lab-area-toggle');
+      var areaFormula = document.getElementById('lab-area-formula');
+      var areaFilled = false;
+
+      function drawAreaModel() {
+        var b = parseInt(areaB.value, 10);
+        areaBOut.textContent = b;
+        var X = 118, w = b * 10, pad = 34, top = 26;
+        var R = 200, G = 154, Bc = 82; // gold rgb
+        var svgNS = 'http://www.w3.org/2000/svg';
+        var html = '';
+        // 大正方形目标虚线框
+        html += '<rect x="' + (pad - 6) + '" y="' + (top - 6) + '" width="' + (X + w + 12) + '" height="' + (X + w + 12) + '" fill="none" stroke="' + hexA('#C8A95B', .5) + '" stroke-width="1.4" stroke-dasharray="5 4" rx="4"/>';
+        // x² 主方块
+        html += '<rect id="lab-rect-main" x="' + pad + '" y="' + top + '" width="' + X + '" height="' + X + '" fill="' + hexA('#D4B863', .28) + '" stroke="#B8932E" stroke-width="1.6" rx="3" style="transition:all .5s ease"/>';
+        // 右侧竖条 x·(b/2)
+        html += '<rect id="lab-rect-right" x="' + (pad + X) + '" y="' + top + '" width="' + w + '" height="' + X + '" fill="' + hexA('#74C2A1', .25) + '" stroke="#4F9E78" stroke-width="1.4" rx="3" style="transition:all .5s ease"/>';
+        // 下方横条 x·(b/2)
+        html += '<rect id="lab-rect-bottom" x="' + pad + '" y="' + (top + X) + '" width="' + X + '" height="' + w + '" fill="' + hexA('#74C2A1', .25) + '" stroke="#4F9E78" stroke-width="1.4" rx="3" style="transition:all .5s ease"/>';
+        // 缺角
+        var cornerFill = areaFilled ? hexA('#EF7938', .35) : hexA('#EF7938', .06);
+        var cornerDash = areaFilled ? '' : ' stroke-dasharray="4 3"';
+        html += '<rect id="lab-rect-corner" x="' + (pad + X) + '" y="' + (top + X) + '" width="' + w + '" height="' + w + '" fill="' + cornerFill + '" stroke="#EF7938" stroke-width="1.5" rx="3"' + cornerDash + ' style="transition:all .5s ease"/>';
+        // 缺角问号 / 面积标签
+        var cx = pad + X + w / 2, cy = top + X + w / 2;
+        html += '<text x="' + cx + '" y="' + (cy + 5) + '" text-anchor="middle" font-size="13" font-weight="700" fill="#C25442">' + (areaFilled ? '(b/2)²' : '?') + '</text>';
+        // 尺寸标注
+        html += '<text x="' + (pad + X / 2) + '" y="' + (top - 9) + '" text-anchor="middle" font-size="14" font-style="italic" fill="' + FG + '">x</text>';
+        html += '<text x="' + (pad + X + w / 2) + '" y="' + (top - 9) + '" text-anchor="middle" font-size="12" fill="' + FG + '">b/2</text>';
+        html += '<text x="' + (pad + X + w + 12) + '" y="' + (top + X / 2) + '" text-anchor="start" font-size="14" font-style="italic" fill="' + FG + '">x</text>';
+        html += '<text x="' + (pad - 8) + '" y="' + (top + X + w / 2 + 4) + '" text-anchor="end" font-size="12" fill="' + FG + '">b/2</text>';
+        // 区域中心标签
+        html += '<text x="' + (pad + X / 2) + '" y="' + (top + X / 2 + 5) + '" text-anchor="middle" font-size="15" font-style="italic" fill="#7C5F20">x²</text>';
+        html += '<text x="' + (pad + X + w / 2 - 2) + '" y="' + (top + X / 2) + '" text-anchor="middle" font-size="11" fill="#2F6B52" transform="rotate(-90 ' + (pad + X + w / 2 - 2) + ' ' + (top + X / 2) + ')">x·(b/2)</text>';
+        html += '<text x="' + (pad + X / 2) + '" y="' + (top + X + w / 2 + 4) + '" text-anchor="middle" font-size="11" fill="#2F6B52">x·(b/2)</text>';
+        // 底部大括号说明
+        html += '<text x="' + (pad + (X + w) / 2) + '" y="' + (top + X + w + 30) + '" text-anchor="middle" font-size="13" font-weight="700" fill="' + GOLD + '">' + (areaFilled ? '边长 (x + b/2) 的完美正方形' : '还差一个角的完美正方形') + '</text>';
+        areaSvg.innerHTML = html;
+        // 同步代数式
+        var hb = b / 2;
+        areaFormula.innerHTML =
+          'x<sup>2</sup> + ' + b + 'x' + (areaFilled ? ' + <em class="chg">' + (hb * hb) + '</em>' : ' + <span style="opacity:.45;">(b/2)²</span>') +
+          (areaFilled ? ' = <em class="chg">(x + ' + hb + ')²</em>' : ' = ?');
+        areaToggle.textContent = areaFilled ? ('拆掉缺角 ◂') : ('砌上缺角 (b/2)² ▸');
+        areaToggle.setAttribute('aria-pressed', String(areaFilled));
+      }
+      areaB.addEventListener('input', drawAreaModel);
+      areaToggle.addEventListener('click', function () { areaFilled = !areaFilled; drawAreaModel(); });
+      drawAreaModel();
+
+      // ============================================================
+      // 实验三 · 抛物线滑块实验室
+      // ============================================================
+      var pbCanvas = document.getElementById('lab-parabola-canvas');
+      var sa = document.getElementById('lab-pb-a'), sb = document.getElementById('lab-pb-b'), sc = document.getElementById('lab-pb-c');
+      var oa = document.getElementById('lab-pb-a-out'), ob = document.getElementById('lab-pb-b-out'), oc = document.getElementById('lab-pb-c-out');
+
+      function parabolaParams() {
+        return {
+          a: parseFloat(sa.value), b: parseFloat(sb.value), c: parseFloat(sc.value),
+          as: parseFloat(oa.textContent = sa.value), bs: parseFloat(ob.textContent = sb.value), cs: parseFloat(oc.textContent = sc.value)
+        };
+      }
+
+      function drawParabola() {
+        var p = parabolaParams();
+        var env = setupCanvas(pbCanvas), ctx = env.ctx, W = env.w, H = env.h;
+        refreshThemeColors();
+        var XR = 8, YR = 8;
+        function sx(x) { return W / 2 + (x / XR) * (W / 2 - 14); }
+        function sy(y) { return H / 2 - (y / YR) * (H / 2 - 14); }
+        ctx.clearRect(0, 0, W, H);
+        // 网格
+        ctx.strokeStyle = hexA(MUTED.startsWith('#') ? MUTED : '#888', .16); ctx.lineWidth = 1;
+        for (var gx = -XR; gx <= XR; gx++) { ctx.beginPath(); ctx.moveTo(sx(gx), sy(-YR)); ctx.lineTo(sx(gx), sy(YR)); ctx.stroke(); }
+        for (var gy = -YR; gy <= YR; gy++) { ctx.beginPath(); ctx.moveTo(sx(-XR), sy(gy)); ctx.lineTo(sx(XR), sy(gy)); ctx.stroke(); }
+        // 坐标轴
+        ctx.strokeStyle = hexA(MUTED.startsWith('#') ? MUTED : '#666', .75); ctx.lineWidth = 1.4;
+        ctx.beginPath(); ctx.moveTo(sx(-XR), sy(0)); ctx.lineTo(sx(XR), sy(0)); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(sx(0), sy(-YR)); ctx.lineTo(sx(0), sy(YR)); ctx.stroke();
+        // 曲线
+        ctx.strokeStyle = '#74C2A1'; ctx.lineWidth = 2.6;
+        ctx.beginPath();
+        for (var px = 0; px <= 400; px++) {
+          var xx = -XR + (px / 400) * 2 * XR;
+          var yy = p.a * xx * xx + p.b * xx + p.c;
+          if (yy < -YR - 2) yy = -YR - 2; if (yy > YR + 2) yy = YR + 2;
+          px === 0 ? ctx.moveTo(sx(xx), sy(yy)) : ctx.lineTo(sx(xx), sy(yy));
+        }
+        ctx.stroke();
+        // 读数区
+        var delta = p.b * p.b - 4 * p.a * p.c;
+        var isQuad = Math.abs(p.a) > 1e-9;
+        var deltaEl = document.getElementById('lab-pb-delta');
+        var vertexEl = document.getElementById('lab-pb-vertex');
+        var axisEl = document.getElementById('lab-pb-axis');
+        var rootsEl = document.getElementById('lab-pb-roots');
+        if (isQuad) {
+          var vx = -p.b / (2 * p.a), vy = p.a * vx * vx + p.b * vx + p.c;
+          // 对称轴
+          ctx.strokeStyle = hexA(GOLD, .65); ctx.setLineDash([6, 5]); ctx.lineWidth = 1.4;
+          ctx.beginPath(); ctx.moveTo(sx(vx), sy(-YR)); ctx.lineTo(sx(vx), sy(YR)); ctx.stroke();
+          ctx.setLineDash([]);
+          // 顶点
+          ctx.fillStyle = GOLD;
+          ctx.beginPath(); ctx.arc(sx(vx), sy(vy), 5, 0, 7); ctx.fill();
+          ctx.fillStyle = FG; ctx.font = '12px sans-serif';
+          ctx.fillText('(' + fmt(vx, 2) + ', ' + fmt(vy, 2) + ')', sx(vx) + 9, sy(vy) - 8);
+          // 根
+          if (delta >= 0) {
+            var sq = Math.sqrt(delta), r1 = (-p.b - sq) / (2 * p.a), r2 = (-p.b + sq) / (2 * p.a);
+            [[r1], [r2]].forEach(function (rp) {
+              var rx = rp[0];
+              if (rx >= -XR && rx <= XR) {
+                ctx.fillStyle = '#4CC2F0';
+                ctx.beginPath(); ctx.arc(sx(rx), sy(0), 5, 0, 7); ctx.fill();
+                ctx.fillStyle = '#4A93C2'; ctx.font = '11px sans-serif';
+                ctx.fillText(fmt(rx, 2), sx(rx) - 14, sy(0) + (p.a > 0 ? 18 : -10));
+              }
+            });
+            rootsEl.textContent = Math.abs(r1 - r2) < 1e-9 ? 'x = ' + fmt(r1, 2) + '（切点）' : fmt(Math.min(r1, r2), 2) + ' 和 ' + fmt(Math.max(r1, r2), 2);
+          } else {
+            rootsEl.textContent = '无交点';
+          }
+          deltaEl.textContent = fmt(delta, 2) + (delta > 0 ? ' ＞0' : delta === 0 ? ' ＝0' : ' ＜0');
+          deltaEl.style.color = delta > 0 ? '#4F9E78' : delta === 0 ? GOLD : '#C25442';
+          vertexEl.textContent = '(' + fmt(vx, 2) + ', ' + fmt(vy, 2) + ')';
+          axisEl.textContent = 'x = ' + fmt(vx, 2);
+        } else {
+          deltaEl.textContent = '—'; vertexEl.textContent = '—'; axisEl.textContent = '—';
+          rootsEl.textContent = 'x = ' + fmt(-p.c / p.b, 2);
+          deltaEl.style.color = MUTED;
+        }
+      }
+      [sa, sb, sc].forEach(function (el) { el.addEventListener('input', drawParabola); });
+      document.querySelectorAll('.lab-pb-preset').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          sa.value = btn.dataset.a; sb.value = btn.dataset.b; sc.value = btn.dataset.c;
+          drawParabola();
+        });
+      });
+      drawParabola();
+
+      // ============================================================
+      // 实验四 · 占星台（单位圆 + 正弦波）
+      // ============================================================
+      var circleSvg = document.getElementById('lab-circle-svg');
+      var waveCanvas = document.getElementById('lab-wave-canvas');
+      var circleReadout = document.getElementById('lab-circle-readout');
+      var playBtn = document.getElementById('lab-circle-play');
+      var sinBtn = document.getElementById('lab-wave-sin'), cosBtn = document.getElementById('lab-wave-cos');
+      var theta = Math.PI / 3, tracing = 'sin', spinning = false, spinRaf = null, lastT = 0;
+      var R = 92, CX = 150, CY = 150;
+
+      function drawCircle() {
+        refreshThemeColors();
+        var px = CX + R * Math.cos(theta), py = CY - R * Math.sin(theta);
+        var fx = CX + R * Math.cos(theta), fy = CY; // cos 投影点
+        function line(x1, y1, x2, y2, color, wd, dash) {
+          return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke="' + color + '" stroke-width="' + wd + '"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/>';
+        }
+        var html = '';
+        html += line(CX - R - 22, CY, CX + R + 22, CY, hexA(MUTED.startsWith('#') ? MUTED : '#888', .5), 1.2);
+        html += line(CX, CY + R + 22, CX, CY - R - 22, hexA(MUTED.startsWith('#') ? MUTED : '#888', .5), 1.2);
+        html += '<circle cx="' + CX + '" cy="' + CY + '" r="' + R + '" fill="none" stroke="' + hexA('#4CC2F0', .8) + '" stroke-width="2"/>';
+        // 角度弧
+        html += '<path d="M ' + (CX + 24) + ' ' + CY + ' A 24 24 0 ' + (theta > Math.PI ? 1 : 0) + ' 0 ' + (CX + 24 * Math.cos(theta)) + ' ' + (CY - 24 * Math.sin(theta)) + '" fill="none" stroke="' + GOLD + '" stroke-width="1.6"/>';
+        html += '<text x="' + (CX + 36 * Math.cos(theta / 2)) + '" y="' + (CY - 36 * Math.sin(theta / 2) + 4) + '" text-anchor="middle" font-size="11" fill="' + GOLD + '">θ=' + Math.round(theta * 180 / Math.PI) + '°</text>';
+        // 半径
+        html += line(CX, CY, px, py, hexA('#4CC2F0', .95), 2);
+        // cos 线段（圆心→垂足）
+        html += line(CX, CY, fx, fy, '#7BC94A', 3.4);
+        // sin 线段（垂足→P）
+        html += line(fx, fy, px, py, '#EF7938', 3.4);
+        // 角度刻度
+        [[0, '0'], [Math.PI / 2, 'π/2'], [Math.PI, 'π'], [3 * Math.PI / 2, '3π/2']].forEach(function (t) {
+          var tx = CX + (R + 14) * Math.cos(t[0]), ty = CY - (R + 14) * Math.sin(t[0]);
+          html += '<circle cx="' + tx + '" cy="' + ty + '" r="1.8" fill="' + hexA(MUTED.startsWith('#') ? MUTED : '#888', .8) + '"/>';
+        });
+        // 可拖动星点
+        html += '<circle cx="' + px + '" cy="' + py + '" r="9" fill="' + GOLD + '" stroke="' + CARD + '" stroke-width="2.5" id="lab-star-dot" style="filter:drop-shadow(0 0 6px rgba(200,169,91,.8))"/>';
+        circleSvg.innerHTML = html;
+        circleReadout.innerHTML = '<b>θ = ' + Math.round(theta * 180 / Math.PI) + '°</b><span>sin ' + fmt(Math.sin(theta), 2) + ' · cos ' + fmt(Math.cos(theta), 2) + '</span>';
+        drawWave();
+      }
+
+      function drawWave() {
+        var env = setupCanvas(waveCanvas), ctx = env.ctx, W = env.w, H = env.h;
+        var TMAX = 2 * Math.PI, padL = 34, padR = 12, padT = 14, padB = 20;
+        function wx(t) { return padL + (t / TMAX) * (W - padL - padR); }
+        function wy(v) { return H / 2 - v * (H / 2 - padT); }
+        ctx.clearRect(0, 0, W, H);
+        // 轴
+        ctx.strokeStyle = hexA(MUTED.startsWith('#') ? MUTED : '#888', .5); ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.moveTo(padL, wy(0)); ctx.lineTo(W - padR, wy(0)); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(wx(0), wy(1.25)); ctx.lineTo(wx(0), wy(-1.25)); ctx.stroke();
+        ctx.fillStyle = MUTED; ctx.font = '10px sans-serif';
+        [0.5, 1, 1.5, 2].forEach(function (k) {
+          ctx.fillText(k + 'π', wx(k * Math.PI) - 8, wy(0) + 14);
+        });
+        ctx.fillText('1', wx(0) - 16, wy(1) + 4); ctx.fillText('-1', wx(0) - 18, wy(-1) + 4);
+        // 背景双曲线（sin 橙 / cos 绿）
+        [['#EF7938', Math.sin], ['#7BC94A', Math.cos]].forEach(function (cfg) {
+          ctx.strokeStyle = hexA(cfg[0], .28); ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          for (var i = 0; i <= 300; i++) {
+            var t = i / 300 * TMAX, v = cfg[1](t);
+            i === 0 ? ctx.moveTo(wx(t), wy(v)) : ctx.lineTo(wx(t), wy(v));
+          }
+          ctx.stroke();
+        });
+        // 追踪曲线（粗）
+        var fn = tracing === 'sin' ? Math.sin : Math.cos;
+        ctx.strokeStyle = tracing === 'sin' ? '#EF7938' : '#7BC94A'; ctx.lineWidth = 3;
+        ctx.shadowColor = ctx.strokeStyle; ctx.shadowBlur = 5;
+        ctx.beginPath();
+        var N = 220;
+        for (var i2 = 0; i2 <= N; i2++) {
+          var t2 = theta * i2 / N, v2 = fn(t2);
+          i2 === 0 ? ctx.moveTo(wx(t2), wy(v2)) : ctx.lineTo(wx(t2), wy(v2));
+        }
+        ctx.stroke(); ctx.shadowBlur = 0;
+        // 动点
+        var dotX = wx(theta), dotY = wy(fn(theta));
+        ctx.fillStyle = GOLD;
+        ctx.beginPath(); ctx.arc(dotX, dotY, 5.5, 0, 7); ctx.fill();
+        // 引导虚线
+        ctx.strokeStyle = hexA(GOLD, .5); ctx.setLineDash([4, 4]); ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(dotX, dotY); ctx.lineTo(dotX, wy(fn(theta))); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      function svgPointTheta(event) {
+        var rect = circleSvg.getBoundingClientRect();
+        var sxr = (event.clientX - rect.left) / rect.width * 300;
+        var syr = (event.clientY - rect.top) / rect.height * 300;
+        var dx = sxr - CX, dy = CY - syr;
+        var ang = Math.atan2(dy, dx);
+        return ang < 0 ? ang + 2 * Math.PI : ang;
+      }
+      var draggingStar = false;
+      circleSvg.addEventListener('pointerdown', function (e) {
+        draggingStar = true; stopSpin();
+        circleSvg.setPointerCapture(e.pointerId);
+        theta = svgPointTheta(e); drawCircle();
+      });
+      circleSvg.addEventListener('pointermove', function (e) {
+        if (!draggingStar) return;
+        theta = svgPointTheta(e); drawCircle();
+      });
+      circleSvg.addEventListener('pointerup', function () { draggingStar = false; });
+
+      sinBtn.addEventListener('click', function () { tracing = 'sin'; sinBtn.classList.add('active'); cosBtn.classList.remove('active'); drawWave(); });
+      cosBtn.addEventListener('click', function () { tracing = 'cos'; cosBtn.classList.add('active'); sinBtn.classList.remove('active'); drawWave(); });
+
+      function stopSpin() {
+        spinning = false;
+        if (spinRaf) { cancelAnimationFrame(spinRaf); spinRaf = null; }
+        playBtn.textContent = '▶ 自动运转';
+      }
+      playBtn.addEventListener('click', function () {
+        if (spinning) { stopSpin(); return; }
+        spinning = true; playBtn.textContent = '⏸ 暂停';
+        lastT = performance.now();
+        (function tick(now) {
+          if (!spinning) return;
+          theta = (theta + (now - lastT) / 1000 * 0.9) % (2 * Math.PI);
+          lastT = now;
+          drawCircle();
+          spinRaf = requestAnimationFrame(tick);
+        })(lastT);
+      });
+      drawCircle();
+
+      // ============================================================
+      // 实验五 · 祈愿概率透视（大数定律模拟器）
+      // ============================================================
+      var gachaCanvas = document.getElementById('lab-gacha-canvas');
+      var MODES = {
+        coin: { p: 0.5, theory: '50%' },
+        dice: { p: 1 / 6, theory: '16.7%' },
+        wish: { p: 0.016, theory: '1.6%' }
+      };
+      var gMode = 'coin', gTotal = 0, gHit = 0, gFreqs = [];
+      var MAXN = 50000;
+      var elTotal = document.getElementById('lab-gacha-total');
+      var elHit = document.getElementById('lab-gacha-hit');
+      var elFreq = document.getElementById('lab-gacha-freq');
+      var elTheory = document.getElementById('lab-gacha-theory');
+
+      function rollOnce() {
+        gTotal++;
+        var hit = Math.random() < MODES[gMode].p;
+        if (hit) gHit++;
+        gFreqs.push(gHit / gTotal);
+      }
+      function drawGacha() {
+        refreshThemeColors();
+        var env = setupCanvas(gachaCanvas), ctx = env.ctx, W = env.w, H = env.h;
+        var p = MODES[gMode].p;
+        ctx.clearRect(0, 0, W, H);
+        var padL = 46, padR = 12, padT = 16, padB = 24;
+        // 自适应纵窗：样本多时聚焦理论值附近
+        var ymin = 0, ymax = 1;
+        if (gTotal > 60) {
+          var spread = Math.max(0.12, 3.2 * Math.sqrt(p * (1 - p) / gTotal));
+          ymin = Math.max(0, p - spread); ymax = Math.min(1, p + spread);
+          if (ymax - ymin < 0.02) { ymax = p + 0.01; ymin = Math.max(0, p - 0.01); }
+        }
+        function gx(i) { return padL + (gTotal <= 1 ? 0 : i / (gTotal - 1)) * (W - padL - padR); }
+        function gy(v) { return H - padB - (v - ymin) / (ymax - ymin) * (H - padT - padB); }
+        // 网格横线 + y 轴刻度
+        ctx.font = '10px sans-serif';
+        for (var k = 0; k <= 4; k++) {
+          var v = ymin + (ymax - ymin) * k / 4;
+          ctx.strokeStyle = hexA(MUTED.startsWith('#') ? MUTED : '#888', .14);
+          ctx.beginPath(); ctx.moveTo(padL, gy(v)); ctx.lineTo(W - padR, gy(v)); ctx.stroke();
+          ctx.fillStyle = MUTED;
+          ctx.fillText((v * 100).toFixed(v === 0 || v === 1 ? 0 : 1) + '%', 6, gy(v) + 3);
+        }
+        // 理论概率虚线
+        ctx.strokeStyle = GOLD; ctx.lineWidth = 1.8; ctx.setLineDash([7, 5]);
+        ctx.beginPath(); ctx.moveTo(padL, gy(p)); ctx.lineTo(W - padR, gy(p)); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = GOLD; ctx.font = 'bold 11px sans-serif';
+        ctx.fillText('理论概率 ' + (p * 100).toFixed(1) + '%', padL + 6, gy(p) - 6);
+        // 频率折线（降采样到像素宽）
+        if (gFreqs.length > 1) {
+          ctx.strokeStyle = '#A85AF5'; ctx.lineWidth = 2; ctx.lineJoin = 'round';
+          ctx.shadowColor = hexA('#A85AF5', .5); ctx.shadowBlur = 4;
+          ctx.beginPath();
+          var stride = Math.max(1, Math.floor(gFreqs.length / (W - padL - padR)));
+          var started = false;
+          for (var i = 0; i < gFreqs.length; i += stride) {
+            var X = gx(i), Y = gy(Math.min(Math.max(gFreqs[i], ymin), ymax));
+            started ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y);
+            started = true;
+          }
+          ctx.lineTo(gx(gFreqs.length - 1), gy(Math.min(Math.max(gFreqs[gFreqs.length - 1], ymin), ymax)));
+          ctx.stroke(); ctx.shadowBlur = 0;
+        }
+        // x 轴说明
+        ctx.fillStyle = MUTED; ctx.font = '10px sans-serif';
+        ctx.fillText('试验次数 →（当前 ' + gTotal + ' 次）', padL + 4, H - 8);
+      }
+      function syncGachaStats() {
+        elTotal.textContent = gTotal;
+        elHit.textContent = gHit;
+        elFreq.textContent = gTotal ? (gHit / gTotal * 100).toFixed(2) + '%' : '—';
+        elTheory.textContent = MODES[gMode].theory;
+        drawGacha();
+      }
+      document.querySelectorAll('.lab-gacha-roll').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var n = parseInt(btn.dataset.n, 10);
+          var add = Math.min(n, MAXN - gTotal);
+          for (var i = 0; i < add; i++) rollOnce();
+          syncGachaStats();
+        });
+      });
+      document.querySelectorAll('.lab-seg [data-mode]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.lab-seg [data-mode]').forEach(function (x) { x.classList.remove('active'); });
+          btn.classList.add('active');
+          gMode = btn.dataset.mode;
+          gTotal = 0; gHit = 0; gFreqs = [];
+          syncGachaStats();
+        });
+      });
+      document.getElementById('lab-gacha-clear').addEventListener('click', function () {
+        gTotal = 0; gHit = 0; gFreqs = []; syncGachaStats();
+      });
+      syncGachaStats();
+
+      // ============================================================
+      // 实验六 · 元素战技「切线斩」（导数切线探索器）
+      // ============================================================
+      var tanCanvas = document.getElementById('lab-tangent-canvas');
+      var funcSel = document.getElementById('lab-tan-func');
+      var hSlider = document.getElementById('lab-tan-h');
+      var hOut = document.getElementById('lab-tan-h-out');
+      var showDfBox = document.getElementById('lab-tan-showdf');
+      var xOut = document.getElementById('lab-tan-x');
+      var ksecOut = document.getElementById('lab-tan-ksec');
+      var ktanOut = document.getElementById('lab-tan-ktan');
+      var FUNCS = {
+        quad: { f: function (x) { return x * x / 2; }, d: function (x) { return x; }, label: "f(x)=x²/2", xp0: 1 },
+        cubic: { f: function (x) { return x * x * x / 3 - x; }, d: function (x) { return x * x - 1; }, label: "f(x)=x³/3−x", xp0: -1.6 },
+        sine: { f: function (x) { return 2 * Math.sin(x); }, d: function (x) { return 2 * Math.cos(x); }, label: "f(x)=2sin x", xp0: 0.8 }
+      };
+      var tanState = { key: 'quad', xp: 1 };
+
+      function currentH() {
+        var t = parseInt(hSlider.value, 10); // 0..100
+        return 2 * Math.pow(10, -t / 50);   // h: 2 → 0.02
+      }
+
+      function drawTangent() {
+        var F = FUNCS[tanState.key];
+        var h = currentH();
+        hOut.textContent = 'h=' + fmt(h, h < 0.1 ? 2 : 1);
+        refreshThemeColors();
+        var env = setupCanvas(tanCanvas), ctx = env.ctx, W = env.w, H = env.h;
+        var XR = 5, YR = 4;
+        function sx(x) { return W / 2 + x / XR * (W / 2 - 10); }
+        function sy(y) { return H / 2 - y / YR * (H / 2 - 10); }
+        ctx.clearRect(0, 0, W, H);
+        // 网格与轴
+        ctx.lineWidth = 1; ctx.strokeStyle = hexA(MUTED.startsWith('#') ? MUTED : '#888', .14);
+        for (var gx2 = Math.ceil(-XR); gx2 <= XR; gx2++) { ctx.beginPath(); ctx.moveTo(sx(gx2), sy(-YR)); ctx.lineTo(sx(gx2), sy(YR)); ctx.stroke(); }
+        for (var gy2 = Math.ceil(-YR); gy2 <= YR; gy2++) { ctx.beginPath(); ctx.moveTo(sx(-XR), sy(gy2)); ctx.lineTo(sx(XR), sy(gy2)); ctx.stroke(); }
+        ctx.strokeStyle = hexA(MUTED.startsWith('#') ? MUTED : '#666', .7); ctx.lineWidth = 1.3;
+        ctx.beginPath(); ctx.moveTo(sx(-XR), sy(0)); ctx.lineTo(sx(XR), sy(0)); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(sx(0), sy(-YR)); ctx.lineTo(sx(0), sy(YR)); ctx.stroke();
+
+        var xp = tanState.xp, yp = F.f(xp), kTan = F.d(xp), xq = Math.max(-XR, Math.min(XR, xp + h)), yq = F.f(xq), kSec = (yq - yp) / (xq - xp);
+
+        function drawSlopeLine(x0, y0, k, color, dash) {
+          // 直线两端取满横轴范围，越界部分靠 canvas 裁剪
+          var x1 = -XR, x2 = XR;
+          ctx.strokeStyle = color; ctx.lineWidth = 1.8; if (dash) ctx.setLineDash(dash);
+          ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.clip();
+          ctx.beginPath();
+          ctx.moveTo(sx(x1), sy(y0 + k * (x1 - x0)));
+          ctx.lineTo(sx(x2), sy(y0 + k * (x2 - x0)));
+          ctx.stroke(); ctx.restore(); ctx.setLineDash([]);
+        }
+
+        // 导函数轨迹
+        if (showDfBox.checked) {
+          ctx.strokeStyle = hexA('#7BC94A', .5); ctx.lineWidth = 1.6; ctx.setLineDash([2, 3]);
+          ctx.beginPath();
+          for (var i = 0; i <= 240; i++) {
+            var xd = -XR + i / 240 * 2 * XR, yd = F.d(xd);
+            if (yd < -YR - 1 || yd > YR + 1) continue;
+            i === 0 ? ctx.moveTo(sx(xd), sy(yd)) : ctx.lineTo(sx(xd), sy(yd));
+          }
+          ctx.stroke(); ctx.setLineDash([]);
+          ctx.fillStyle = '#7BC94A';
+          ctx.beginPath(); ctx.arc(sx(xp), sy(kTan), 4, 0, 7); ctx.fill();
+        }
+
+        // 曲线本体
+        ctx.strokeStyle = '#7BC94A'; ctx.lineWidth = 2.6;
+        ctx.beginPath();
+        var pen = false;
+        for (var j = 0; j <= 320; j++) {
+          var xt = -XR + j / 320 * 2 * XR, yt = F.f(xt);
+          if (yt < -YR - 2 || yt > YR + 2) { pen = false; continue; }
+          pen ? ctx.lineTo(sx(xt), sy(yt)) : ctx.moveTo(sx(xt), sy(yt));
+          pen = true;
+        }
+        ctx.stroke();
+
+        // 割线（灰实线）与切线（金色虚线）
+        drawSlopeLine(xp, yp, kSec, '#8A93A8');
+        drawSlopeLine(xp, yp, kTan, GOLD, [8, 5]);
+
+        // Q 点与 P 点
+        ctx.strokeStyle = '#8A93A8'; ctx.lineWidth = 2; ctx.fillStyle = CARD;
+        ctx.beginPath(); ctx.arc(sx(xq), sy(yq), 5.5, 0, 7); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = '#7BC94A';
+        ctx.beginPath(); ctx.arc(sx(xp), sy(yp), 7, 0, 7); ctx.fill();
+        ctx.strokeStyle = CARD; ctx.lineWidth = 2; ctx.stroke();
+        ctx.fillStyle = FG; ctx.font = 'bold 12px sans-serif';
+        ctx.fillText('P', sx(xp) + 10, sy(yp) - 8);
+        ctx.fillStyle = '#8A93A8';
+        ctx.fillText('Q', sx(xq) + 9, sy(yq) + 4);
+
+        // 图例
+        ctx.font = '11px sans-serif';
+        ctx.fillStyle = '#8A93A8'; ctx.fillText('— 割线 PQ（平均变化率）', 12, 20);
+        ctx.fillStyle = GOLD; ctx.fillText('--- 切线（瞬时变化率）', 12, 38);
+
+        xOut.textContent = fmt(xp, 2);
+        ksecOut.textContent = isFinite(kSec) ? fmt(kSec, 3) : '∞';
+        ktanOut.textContent = fmt(kTan, 3);
+      }
+
+      function canvasToX(clientX) {
+        var rect = tanCanvas.getBoundingClientRect();
+        return (clientX - rect.left) / rect.width * 10 - 5; // XR=5
+      }
+      var draggingP = false;
+      tanCanvas.addEventListener('pointerdown', function (e) {
+        draggingP = true;
+        tanCanvas.setPointerCapture(e.pointerId);
+        tanState.xp = Math.max(-5, Math.min(5, canvasToX(e.clientX)));
+        drawTangent();
+      });
+      tanCanvas.addEventListener('pointermove', function (e) {
+        if (!draggingP) return;
+        tanState.xp = Math.max(-5, Math.min(5, canvasToX(e.clientX)));
+        drawTangent();
+      });
+      tanCanvas.addEventListener('pointerup', function () { draggingP = false; });
+      funcSel.addEventListener('change', function () {
+        tanState.key = funcSel.value;
+        tanState.xp = FUNCS[tanState.key].xp0;
+        drawTangent();
+      });
+      hSlider.addEventListener('input', drawTangent);
+      showDfBox.addEventListener('change', drawTangent);
+      drawTangent();
+
+      // ============================================================
+      // 自适应重绘 + 主题联动（护眼模式切换时同步换色）
+      // ============================================================
+      var redrawAll = function () {
+        try { refreshThemeColors(); drawAreaModel(); drawParabola(); drawCircle(); drawGacha(); drawTangent(); } catch (e) { /* 单个装置异常不影响其余 */ }
+      };
+      if ('ResizeObserver' in window) {
+        var pending = false;
+        var ro = new ResizeObserver(function () {
+          if (pending) return;
+          pending = true;
+          requestAnimationFrame(function () { pending = false; redrawAll(); });
+        });
+        [pbCanvas, waveCanvas, gachaCanvas, tanCanvas].forEach(function (c) { ro.observe(c.parentElement || c); });
+      } else {
+        window.addEventListener('resize', redrawAll);
+      }
+      new MutationObserver(redrawAll).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    })();
+    </script>
+    <script src="assets/genshin-enhancements.js"></script>
+</body>
+</html>

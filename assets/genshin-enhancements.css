@@ -909,8 +909,16 @@ article.genshin-card .char-portrait-bg {
   .gold-border-flow::after,
   .element-icon::after,
   .currency-icon,
-  .char-aura {
+  .char-aura,
+  .particle,
+  .combo-popup,
+  .question-enter,
+  .star-pop,
+  .shake,
+  .animate-in,
+  .NEW-badge {
     animation: none !important;
+    transition: none !important;
   }
   .el-particle,
   .shooting-star,
@@ -920,4 +928,25 @@ article.genshin-card .char-portrait-bg {
   .resonance-ring {
     display: none !important;
   }
+}
+/* ===== 角色立绘加载失败占位（双 404 兜底） ===== */
+.char-card.char-img-failed img { display: none !important; }
+.char-card.char-img-failed .char-aura {
+  position: absolute;
+  inset: 0;
+  opacity: 0.9;
+  z-index: 0;
+}
+.char-card.char-img-failed .char-aura::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, rgba(14,17,32,0.55) 0%, rgba(14,17,32,0.85) 100%);
+}
+.char-card.char-img-failed .element-icon {
+  z-index: 1;
+  border: 2px solid currentColor;
+  box-shadow: 0 0 18px rgba(0,0,0,0.45);
+  border-radius: 14px !important;
+  background: rgba(14,17,32,0.6) !important;
 }

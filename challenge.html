@@ -2,14 +2,15 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0D0B1A">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
     <title>原神数学冒险 - 30天闯关计划</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <script src="assets/vendor/tailwind-v3.js"></script>
+    <script src="assets/vendor/lucide-1.8.0.min.js"></script>
     <style>
         :root {
             --primary-gold: #C8A95B;
@@ -137,6 +138,11 @@
 
         .day-card.unlocked:hover {
             transform: translateY(-4px);
+        }
+
+        .day-card.unlocked:focus-visible {
+            outline: 3px solid var(--primary-gold);
+            outline-offset: 3px;
         }
 
         .day-card.locked {
@@ -1047,6 +1053,10 @@
                             <i data-lucide="book-open" class="w-4 h-4"></i>
                             <span class="hidden sm:inline">返回图鉴</span>
                         </a>
+                        <a href="lab.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition hover:bg-white/10" style="color: var(--text-secondary); border: 1px solid rgba(255,255,255,0.1);">
+                            <i data-lucide="flask-conical" class="w-4 h-4"></i>
+                            <span class="hidden sm:inline">数学实验室</span>
+                        </a>
                         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center animate-pulse-gold">
                             <i data-lucide="sparkles" class="w-6 h-6 text-yellow-300"></i>
                         </div>
@@ -1068,11 +1078,11 @@
                             </div>
                             <span class="text-sm font-bold" id="primogemCount">0</span>
                         </div>
-                        <button onclick="showAchievements()" class="p-2 rounded-lg hover:bg-white/10 transition relative" title="命之座成就">
+                        <button onclick="showAchievements()" class="p-2 rounded-lg hover:bg-white/10 transition relative" title="命之座成就" aria-label="查看命之座成就">
                             <i data-lucide="star" class="w-5 h-5" style="color: var(--primary-gold);"></i>
                             <span id="achievementBadge" class="countdown-badge hidden">0</span>
                         </button>
-                        <button onclick="showSaveMenu()" class="p-2 rounded-lg hover:bg-white/10 transition" title="存档管理">
+                        <button onclick="showSaveMenu()" class="p-2 rounded-lg hover:bg-white/10 transition" title="存档管理" aria-label="打开存档管理">
                             <i data-lucide="settings" class="w-5 h-5" style="color: var(--text-secondary);"></i>
                         </button>
                     </div>
@@ -1141,7 +1151,7 @@
                 <div class="flex flex-wrap gap-2 justify-center mb-6">
                     <button onclick="startRevengeMode()" class="btn-gold inline-flex items-center gap-2" id="revengeBtn">
                         <i data-lucide="swords" class="w-4 h-4"></i>
-                        复仇模式（重做所有错题）
+                        复仇模式（本轮最多 10 道）
                     </button>
                     <button onclick="clearWrongBook()" class="px-4 py-2 rounded-lg text-sm transition hover:bg-red-500/20" style="border:1px solid rgba(244,67,54,0.3);color:#F44336;">
                         <i data-lucide="trash-2" class="w-4 h-4 inline mr-1"></i>清空错题本
@@ -1152,14 +1162,14 @@
         </main>
     </div>
 
-    <div id="quizModal" class="modal-overlay hidden">
-        <div class="modal-content gold-border p-6" style="position:relative;overflow:hidden;">
+    <div id="quizModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+        <div class="modal-content gold-border p-6" tabindex="-1" style="position:relative;overflow:hidden;">
             <div id="quizModalBg" style="position:absolute;right:-60px;bottom:-40px;width:55%;height:120%;opacity:0.12;pointer-events:none;z-index:0;mask-image:linear-gradient(to left,black 30%,transparent 80%);-webkit-mask-image:linear-gradient(to left,black 30%,transparent 80%);">
-                <img id="quizCharSplash" src="" alt="" style="width:100%;height:100%;object-fit:contain;object-position:right bottom;display:none;" onerror="this.style.display='none';">
+                <img id="quizCharSplash" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" style="width:100%;height:100%;object-fit:contain;object-position:right bottom;display:none;" onerror="this.style.display='none';">
             </div>
             <div style="position:relative;z-index:1;">
             <div class="flex items-start gap-3 mb-4">
-                <img id="quizCharPortrait" class="quiz-char-portrait" src="" alt="" style="display:none;"
+                <img id="quizCharPortrait" class="quiz-char-portrait" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" style="display:none;"
                      onerror="this.style.display='none';">
                 <div class="quiz-char-info flex-1">
                     <div class="flex items-center gap-2 flex-wrap">
@@ -1175,10 +1185,10 @@
                         <span id="comboCount">0</span>连击
                     </div>
                     <span id="difficultyBadge" class="difficulty-badge difficulty-basic">基础</span>
-                    <button id="soundToggle" onclick="toggleSound()" class="sound-toggle" title="音效开关">
+                    <button id="soundToggle" onclick="toggleSound()" class="sound-toggle" title="关闭音效" aria-label="关闭音效" aria-pressed="true">
                         <i data-lucide="volume-2" class="w-5 h-5"></i>
                     </button>
-                    <button onclick="closeQuiz()" class="p-2 hover:bg-white/10 rounded-lg transition">
+                    <button onclick="closeQuiz()" class="p-2 hover:bg-white/10 rounded-lg transition" aria-label="退出当前挑战">
                         <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
                 </div>
@@ -1188,17 +1198,17 @@
                 <span id="quizTipText"></span>
             </div>
             <div class="progress-bar mb-6">
-                <div class="progress-fill" id="quizProgress" style="width: 20%"></div>
+                <div class="progress-fill" id="quizProgress" role="progressbar" aria-label="答题进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="20" style="width: 20%"></div>
             </div>
             <div id="questionContainer" class="mb-6">
                 <div class="text-lg mb-6 leading-relaxed" id="questionText"></div>
                 <div id="optionsContainer" class="space-y-3"></div>
             </div>
-            <div id="explanationBox" class="explain-box hidden">
+            <div id="explanationBox" class="explain-box hidden" aria-live="polite">
                 <div class="flex items-center gap-2 mb-2">
                     <i data-lucide="book-open" class="w-5 h-5" style="color: var(--primary-gold);"></i>
                     <span class="font-bold" style="color: var(--primary-gold);">详细解析</span>
-                    <a id="kpLink" href="#" target="_blank" class="ml-auto text-xs px-2 py-1 rounded inline-flex items-center gap-1 transition hover:brightness-125" style="background:rgba(76,194,240,0.15);border:1px solid rgba(76,194,240,0.3);color:#4CC2F0;display:none;">
+                    <a id="kpLink" href="#" target="_blank" rel="noopener" class="ml-auto text-xs px-2 py-1 rounded inline-flex items-center gap-1 transition hover:brightness-125" style="background:rgba(76,194,240,0.15);border:1px solid rgba(76,194,240,0.3);color:#4CC2F0;display:none;">
                         <i data-lucide="book-marked" class="w-3 h-3"></i>复习知识点
                     </a>
                 </div>
@@ -1216,16 +1226,16 @@
         </div>
     </div>
 
-    <div id="resultModal" class="modal-overlay hidden">
-        <div class="modal-content gold-border p-8 text-center" style="position:relative;overflow:hidden;">
+    <div id="resultModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+        <div class="modal-content gold-border p-8 text-center" tabindex="-1" style="position:relative;overflow:hidden;">
             <div id="resultModalBg" style="position:absolute;left:-40px;bottom:-30px;width:45%;height:110%;opacity:0.15;pointer-events:none;z-index:0;mask-image:linear-gradient(to right,black 20%,transparent 80%);-webkit-mask-image:linear-gradient(to right,black 20%,transparent 80%);">
-                <img id="resultCharSplash" src="" alt="" style="width:100%;height:100%;object-fit:contain;object-position:left bottom;display:none;" onerror="this.style.display='none';">
+                <img id="resultCharSplash" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" style="width:100%;height:100%;object-fit:contain;object-position:left bottom;display:none;" onerror="this.style.display='none';">
             </div>
             <div style="position:relative;z-index:1;">
             <div class="animate-float mb-4">
                 <i data-lucide="trophy" class="w-20 h-20 mx-auto" style="color: var(--primary-gold);"></i>
             </div>
-            <h3 class="text-2xl font-bold mb-2" style="color: var(--primary-gold-light);">挑战完成！</h3>
+            <h3 id="resultTitle" class="text-2xl font-bold mb-2" style="color: var(--primary-gold-light);">挑战完成！</h3>
             <p class="mb-4" id="resultDay">Day 1 - 集合与逻辑</p>
             <div class="flex justify-center gap-2 mb-6" id="starRating">
                 <i data-lucide="star" class="w-10 h-10 star fill-current"></i>
@@ -1281,17 +1291,31 @@
         </div>
     </div>
 
-    <div id="achievementModal" class="modal-overlay hidden">
-        <div class="modal-content gold-border p-6">
+    <div id="achievementModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="achievementTitle">
+        <div class="modal-content gold-border p-6" tabindex="-1">
             <div class="flex items-center justify-between mb-6">
-                <h3 class="text-xl font-bold" style="color: var(--primary-gold-light);">
+                <h3 id="achievementTitle" class="text-xl font-bold" style="color: var(--primary-gold-light);">
                     <i data-lucide="star" class="w-5 h-5 inline mr-2" style="color: var(--primary-gold);"></i>成就列表
                 </h3>
-                <button onclick="closeAchievements()" class="p-2 hover:bg-white/10 rounded-lg transition">
+                <button onclick="closeAchievements()" class="p-2 hover:bg-white/10 rounded-lg transition" aria-label="关闭成就列表">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
             <div id="achievementList" class="space-y-3 max-h-96 overflow-y-auto"></div>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="modal-overlay hidden" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmMessage">
+        <div class="modal-content gold-border p-6 max-w-sm w-full" tabindex="-1">
+            <div class="flex items-center mb-4">
+                <i data-lucide="help-circle" class="w-5 h-5 mr-2 shrink-0" style="color: var(--primary-gold);"></i>
+                <h3 id="confirmTitle" class="text-lg font-bold" style="color: var(--primary-gold-light);">确认操作</h3>
+            </div>
+            <p id="confirmMessage" class="text-sm leading-relaxed mb-6 whitespace-pre-line" style="color: var(--genshin-muted-foreground);"></p>
+            <div class="flex items-center justify-end gap-3">
+                <button id="confirmCancelBtn" onclick="resolveConfirm(false)" class="px-4 py-2 rounded-lg text-sm transition border" style="border-color: rgba(255,255,255,0.15); color: var(--genshin-muted-foreground);">取消</button>
+                <button id="confirmOkBtn" onclick="resolveConfirm(true)" class="btn-gold px-5 py-2 rounded-lg text-sm font-bold" style="background: linear-gradient(135deg, #C8A95B, #9A7B3F); color: #1a1410;">确定</button>
+            </div>
         </div>
     </div>
 
@@ -1784,11 +1808,11 @@
                     kpPage: 'functions.html'
                 },
                 {
-                    q: '不等式(1/3)^(x²-1) > 9的解集是？',
+                    q: '不等式(1/3)^(x²-1) > 1/9的解集是？',
                     options: ['(-√3, √3)', '(-∞, -√3)∪(√3, +∞)', '(-2, 2)', '(-√3+1, √3+1)'],
                     answer: 0,
                     difficulty: 'challenge',
-                    explanation: '9 = 3² = (1/3)^(-2)。不等式变为(1/3)^(x²-1) > (1/3)^(-2)。因为0<1/3<1，函数递减，所以x²-1 < -2，即x² < -1？不对，应仔细算：x²-1 < -2 → x² < -1？这不对。重新算：(1/3)^(x²-1) = 3^(1-x²) > 9 = 3²，所以1-x² > 2 → -x² > 1 → x² < -1？还是不对。正确：(1/3)^(x²-1) > 9 → 3^(1-x²) > 3² → 1-x² > 2 → -x² > 1，这无实数解？让我重新检查题目。应该是(1/3)^(x²-1) > 1/9 = 3^(-2)，则x²-1 < 2 → x² < 3 → x∈(-√3,√3)。题目写的是>9，即3²，那应是(1/3)^(x²-1) > 3² → 3^(1-x²) > 3² → 1-x² > 2 → -x² > 1，确实无解。修正一下：答案应为(-√3,√3)，题目应该是大于1/9，让我调整解析：当底数<1时，指数函数递减，所以(1/3)^(x²-1) > (1/3)^(-2) 等价于 x²-1 < 2，即x²<3，解得-√3<x<√3。',
+                    explanation: '1/9=(1/3)^2。因为0<1/3<1，指数函数递减，所以x²-1<2，即x²<3，解得-√3<x<√3。',
                     knowledgePoint: '指数函数',
                     kpPage: 'functions.html'
                 },
@@ -2484,9 +2508,9 @@
                 {
                     q: '△ABC的面积为√3，A=60°，b=2，则a = ?',
                     options: ['√3', '2', '√7', '3'],
-                    answer: 2,
+                    answer: 1,
                     difficulty: 'advanced',
-                    explanation: 'S=(1/2)bc·sinA→√3=(1/2)×2×c×(√3/2)→√3=√3c/2→c=2。余弦定理：a²=b²+c²-2bc·cosA=4+4-2×2×2×0.5=8-4=4，a=2。等等，c=2，b=2，A=60°，这是等边三角形，a=2。但选项有√7，让我重算：√3=(1/2)×2×c×(√3/2)=(c√3)/2 → c=2。a²=4+4-8×0.5=8-4=4，a=2。答案选B。',
+                    explanation: '由面积公式√3=(1/2)×b×c×sinA=(1/2)×2×c×(√3/2)，得c=2。再由余弦定理a²=2²+2²-2×2×2×cos60°=4，所以a=2，选B。',
                     knowledgePoint: '解三角形',
                     kpPage: 'geometry.html'
                 },
@@ -2895,11 +2919,11 @@
                     kpPage: 'geometry.html'
                 },
                 {
-                    q: '正三棱锥的底面边长为2，侧棱长为√3，则其体积为？',
+                    q: '正四面体的棱长为2，则其体积为？',
                     options: ['2√2/3', '√2/3', '√3/3', '2√3/3'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '底面正三角形面积=√3/4×4=√3。底面中心到底面顶点距离=2/3×√3=2√3/3。高h=√((√3)²-(2√3/3)²)=√(3-4/3)=√(5/3)？不对：(√3)²=3，(2√3/3)²=4×3/9=4/3，h=√(3-4/3)=√(5/3)？这给的选项不对。让我重新想：侧棱长√3，底面外接圆半径=2/3×√3=2√3/3。h²=3-4/3=5/3，h=√15/3。V=1/3×√3×√15/3=√45/9=3√5/9=√5/3。这也不在选项中。让我调整题目：底面边长√3，侧棱长√2... 不，让我改底面边长为√2，侧棱长2... 不，更简单：底面边长为√3，侧棱长为√5。底面外接圆半径=2/3×(√3/2×√3)=2/3×3/2=1。h=√(5-1)=2。底面积=√3/4×3=3√3/4。V=1/3×3√3/4×2=√3/2。还是不对。让我用简单数值：正四面体（所有棱相等）棱长为2，则高h=√(4-4/3)=√(8/3)=2√6/3，底面积√3，V=1/3×√3×2√6/3=2√18/9=6√2/9=2√2/3，选A。就当这是正四面体吧。',
+                    explanation: '正四面体可视为底面边长2的正三棱锥。底面积为√3，高为2√6/3，因此体积V=(1/3)×√3×(2√6/3)=2√2/3，选A。',
                     knowledgePoint: '空间几何体',
                     kpPage: 'geometry.html'
                 },
@@ -3501,11 +3525,11 @@
                     kpPage: 'probability.html'
                 },
                 {
-                    q: '某人射击命中率为p，射击3次，命中次数X的方差D(X)=21/25，则p = ?',
+                    q: '某人射击命中率为p，射击3次，命中次数X的方差D(X)=18/25，则p = ?',
                     options: ['2/5', '3/5', '3/5或2/5', '1/5'],
                     answer: 2,
                     difficulty: 'challenge',
-                    explanation: 'X~B(3,p)，D(X)=3p(1-p)=21/25→p(1-p)=7/25→25p²-25p+7=0→p=(25±√(625-700))/50？不对，判别式625-700<0？改D(X)=18/25：3p(1-p)=18/25→p(1-p)=6/25→25p²-25p+6=0→(5p-2)(5p-3)=0→p=2/5或3/5，选C。',
+                    explanation: 'X~B(3,p)，D(X)=3p(1-p)=18/25，得25p²-25p+6=0，即(5p-2)(5p-3)=0，所以p=2/5或3/5，选C。',
                     knowledgePoint: '统计综合',
                     kpPage: 'probability.html'
                 },
@@ -3795,20 +3819,20 @@
                     kpPage: 'geometry.html'
                 },
                 {
-                    q: '已知椭圆过点(2,√3)，焦点(±2,0)，则椭圆方程是？',
+                    q: '已知椭圆过点(2,√2)，焦点(±2,0)，则椭圆方程是？',
                     options: ['x²/8+y²/4=1', 'x²/16+y²/12=1', 'x²/12+y²/8=1', 'x²/16+y²/4=1'],
                     answer: 0,
                     difficulty: 'advanced',
-                    explanation: '焦点在x轴，c=2，设x²/a²+y²/b²=1，b²=a²-4。代入(2,√3)：4/a²+3/(a²-4)=1→4(a²-4)+3a²=a²(a²-4)→7a²-16=a⁴-4a²→a⁴-11a²+16=0？不对，应该是4(a²-4)+3a²=a²(a²-4)→7a²-16=a⁴-4a²→a⁴-11a²+16=0无整数解。调整点(2,0)不行，点(3,0)太简单。用点(2,√3)，焦点(±1,0)，c=1，b²=a²-1，4/a²+3/(a²-1)=1→4(a²-1)+3a²=a²(a²-1)→7a²-4=a⁴-a²→a⁴-8a²+4=0也不好。让我改焦点(±√5,0)，点(3,0)，则a=3,c=√5,b²=4，方程x²/9+y²/4=1，但不经过(2,√3)：4/9+3/4≠1。让我直接给方程x²/8+y²/4=1，c²=4，焦点(±2,0)，代入(2,√3)：4/8+3/4=1/2+3/4=5/4≠1。那给点(2,√2)：4/8+2/4=1/2+1/2=1。题目改点(2,√2)。那就选A，解析中说明c=2,a²=8,b²=4。',
+                    explanation: '设椭圆为x²/a²+y²/b²=1，则a²-b²=c²=4。代入点(2,√2)得4/a²+2/(a²-4)=1，解得a²=8，b²=4，所以方程为x²/8+y²/4=1，选A。',
                     knowledgePoint: '椭圆',
                     kpPage: 'geometry.html'
                 },
                 {
                     q: '椭圆x²/4+y²=1上的点到直线2x+4y-√2=0的距离最大值是？',
                     options: ['√10/2', '√10', '√10/5', '2√10/5'],
-                    answer: 1,
+                    answer: 0,
                     difficulty: 'challenge',
-                    explanation: '设椭圆上点(2cosθ,sinθ)，d=|4cosθ+4sinθ-√2|/√20=|4√2sin(θ+π/4)-√2|/(2√5)。最大值为|4√2×(-1)-√2|/(2√5)=|-5√2|/(2√5)=5√2/(2√5)=√10/2？不对，5√2/(2√5)=5√10/(2×5)=√10/2，选A。',
+                    explanation: '设椭圆上点为(2cosθ,sinθ)，则距离为|4cosθ+4sinθ-√2|/√20。线性组合的最大绝对值为5√2，故最大距离为5√2/(2√5)=√10/2，选A。',
                     knowledgePoint: '椭圆',
                     kpPage: 'geometry.html'
                 },
@@ -4244,11 +4268,11 @@
                     kpPage: 'calculus.html'
                 },
                 {
-                    q: '∫₀^π sinx dx = ?',
-                    options: ['2', '0', 'π', '1'],
+                    q: '∫₀¹ 3x² dx = ?',
+                    options: ['1', '0', '3', '1/3'],
                     answer: 0,
                     difficulty: 'basic',
-                    explanation: '∫sinxdx=-cosx，[0,π]=-cosπ+cos0=1+1=2。',
+                    explanation: '∫3x²dx=x³，[0,1]上=1³-0³=1。',
                     knowledgePoint: '定积分',
                     kpPage: 'calculus.html'
                 },
@@ -4496,6 +4520,43 @@
         /* ===== 音效系统（Web Audio API，无需外部文件） ===== */
         let audioCtx = null;
         let soundEnabled = true;
+        let storageWarningShown = false;
+
+        function reportStorageUnavailable(error) {
+            if (storageWarningShown) return;
+            storageWarningShown = true;
+            console.warn('本地存储不可用，进度仅在当前页面保留。', error);
+            setTimeout(() => showSaveNotification('当前浏览器禁止本地存储，进度仅在本次页面保留', 'warn'), 0);
+        }
+
+        function safeStorageGet(key) {
+            try {
+                return window.localStorage.getItem(key);
+            } catch (error) {
+                reportStorageUnavailable(error);
+                return null;
+            }
+        }
+
+        function safeStorageSet(key, value) {
+            try {
+                window.localStorage.setItem(key, value);
+                return true;
+            } catch (error) {
+                reportStorageUnavailable(error);
+                return false;
+            }
+        }
+
+        function safeStorageRemove(key) {
+            try {
+                window.localStorage.removeItem(key);
+                return true;
+            } catch (error) {
+                reportStorageUnavailable(error);
+                return false;
+            }
+        }
 
         function initAudio() {
             if (!audioCtx) {
@@ -4550,17 +4611,27 @@
 
         function toggleSound() {
             soundEnabled = !soundEnabled;
-            localStorage.setItem('genshinMathSound', soundEnabled);
-            const icon = document.querySelector('#soundToggle i');
+            safeStorageSet('genshinMathSound', String(soundEnabled));
+            syncSoundToggle();
+            if (soundEnabled) playClick();
+        }
+
+        function syncSoundToggle() {
+            const button = document.getElementById('soundToggle');
+            if (!button) return;
+            const icon = button.querySelector('[data-lucide]');
             if (icon) {
                 icon.setAttribute('data-lucide', soundEnabled ? 'volume-2' : 'volume-x');
-                lucide.createIcons();
             }
-            if (soundEnabled) playClick();
+            button.title = soundEnabled ? '关闭音效' : '开启音效';
+            button.setAttribute('aria-label', button.title);
+            button.setAttribute('aria-pressed', String(soundEnabled));
+            lucide.createIcons();
         }
 
         /* ===== 粒子特效 ===== */
         function spawnParticles(x, y, color, count = 12) {
+            if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
             for (let i = 0; i < count; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
@@ -4635,20 +4706,157 @@
             wrongQuestionIndices: []
         };
 
+        function toSafeInt(value, fallback = 0, min = 0, max = Number.MAX_SAFE_INTEGER) {
+            const number = Number(value);
+            if (!Number.isFinite(number)) return fallback;
+            return Math.min(max, Math.max(min, Math.trunc(number)));
+        }
+
+        function safeText(value, maxLength = 500) {
+            return typeof value === 'string' ? value.slice(0, maxLength) : '';
+        }
+
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, char => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            })[char]);
+        }
+
+        function sanitizeKpPage(value) {
+            const page = safeText(value, 120);
+            return /^(?:index|functions|geometry|probability|calculus|elective)\.html(?:#[A-Za-z0-9_-]+)?$/.test(page)
+                ? page
+                : 'index.html';
+        }
+
+        function sanitizeWrongQuestion(value) {
+            if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+            const q = safeText(value.q, 500);
+            const options = Array.isArray(value.options)
+                ? value.options.slice(0, 4).map(option => safeText(option, 300))
+                : [];
+            const answer = toSafeInt(value.answer, -1, -1);
+            if (!q || options.length < 2 || options.some(option => !option) || answer < 0 || answer >= options.length) return null;
+
+            const rawDay = toSafeInt(value.day, 0);
+
+            const normalized = {
+                day: rawDay >= 1 && rawDay <= 30 ? rawDay : 0,
+                q,
+                options,
+                answer,
+                difficulty: ['basic', 'advanced', 'challenge'].includes(value.difficulty) ? value.difficulty : 'basic',
+                explanation: safeText(value.explanation, 2000),
+                knowledgePoint: safeText(value.knowledgePoint, 100) || '数学',
+                kpPage: sanitizeKpPage(value.kpPage),
+                wrongCount: toSafeInt(value.wrongCount, 1, 1, 999),
+                lastWrong: toSafeInt(value.lastWrong, Date.now(), 0, Date.now() + 86400000)
+            };
+            normalized._key = getQuestionKey(normalized);
+            return normalized;
+        }
+
+        function sanitizeSeenQuestionKeys(value) {
+            const result = {};
+            if (!value || typeof value !== 'object' || Array.isArray(value)) return result;
+            for (let day = 1; day <= 30; day++) {
+                const key = `day${day}`;
+                if (!Array.isArray(value[key])) continue;
+                result[key] = [...new Set(value[key]
+                    .map(item => safeText(item, 2000))
+                    .filter(Boolean))].slice(-20);
+            }
+            return result;
+        }
+
+        function normalizeGameState(value) {
+            const source = value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+            const completedDays = [...new Set((Array.isArray(source.completedDays) ? source.completedDays : [])
+                .map(day => toSafeInt(day, 0))
+                .filter(day => day >= 1 && day <= 30))].sort((a, b) => a - b);
+
+            const starByDay = new Map();
+            (Array.isArray(source.starRecords) ? source.starRecords : []).forEach(record => {
+                if (!record || typeof record !== 'object') return;
+                const day = toSafeInt(record.day, 0);
+                const stars = toSafeInt(record.stars, 0, 0, 3);
+                if (day >= 1 && stars >= 1) starByDay.set(day, Math.max(starByDay.get(day) || 0, stars));
+            });
+            const starRecords = [...starByDay].map(([day, stars]) => ({ day, stars }));
+
+            const wrongByKey = new Map();
+            (Array.isArray(source.wrongQuestions) ? source.wrongQuestions : []).slice(-500).forEach(item => {
+                const normalized = sanitizeWrongQuestion(item);
+                if (!normalized) return;
+                const previous = wrongByKey.get(normalized._key);
+                if (previous) {
+                    previous.wrongCount = Math.max(previous.wrongCount, normalized.wrongCount);
+                    previous.lastWrong = Math.max(previous.lastWrong, normalized.lastWrong);
+                } else {
+                    wrongByKey.set(normalized._key, normalized);
+                }
+            });
+
+            const masteredByKey = new Map();
+            (Array.isArray(source.masteredQuestions) ? source.masteredQuestions : []).slice(-1000).forEach(item => {
+                if (!item || typeof item !== 'object') return;
+                const key = safeText(item._key, 2000);
+                const q = safeText(item.q, 500);
+                if (!key || !q) return;
+                masteredByKey.set(key, {
+                    _key: key,
+                    q,
+                    masteredAt: toSafeInt(item.masteredAt, Date.now(), 0, Date.now() + 86400000)
+                });
+            });
+
+            const savedQuests = new Map((Array.isArray(source.dailyQuests) ? source.dailyQuests : [])
+                .filter(quest => quest && typeof quest === 'object')
+                .map(quest => [safeText(quest.id, 20), quest]));
+            const dailyQuests = dailyQuestTemplates.map(template => {
+                const saved = savedQuests.get(template.id) || {};
+                const progress = toSafeInt(saved.progress, 0, 0, template.target);
+                const completed = Boolean(saved.completed) || progress >= template.target;
+                return { ...template, progress, completed, claimed: completed && Boolean(saved.claimed) };
+            });
+
+            const totalAnswered = toSafeInt(source.totalAnswered, 0, 0, 10000000);
+            const totalCorrect = Math.min(totalAnswered, toSafeInt(source.totalCorrect, 0, 0, 10000000));
+            const validConstellations = new Set(constellations.map(item => item.id));
+            const unlockedConstellations = [...new Set((Array.isArray(source.unlockedConstellations)
+                ? source.unlockedConstellations
+                : []).filter(id => validConstellations.has(id)))];
+
+            const saveTimestamp = toSafeInt(source.saveTimestamp, 0, 0, Date.now() + 86400000);
+            return {
+                ...DEFAULT_GAME_STATE,
+                adventureRank: toSafeInt(source.adventureRank, 1, 1, 999),
+                currentExp: toSafeInt(source.currentExp, 0, 0, 100000000),
+                mora: toSafeInt(source.mora, DEFAULT_GAME_STATE.mora, 0, 1000000000),
+                primogem: toSafeInt(source.primogem, DEFAULT_GAME_STATE.primogem, 0, 1000000000),
+                completedDays,
+                starRecords,
+                totalAnswered,
+                totalCorrect,
+                unlockedConstellations,
+                dailyQuests,
+                lastDailyReset: safeText(source.lastDailyReset, 80) || null,
+                bestCombo: toSafeInt(source.bestCombo, 0, 0, 1000000),
+                soundEnabled: source.soundEnabled !== false,
+                saveTimestamp: saveTimestamp || null,
+                totalPlayTime: toSafeInt(source.totalPlayTime, 0, 0, 1000000000),
+                wrongQuestions: [...wrongByKey.values()],
+                masteredQuestions: [...masteredByKey.values()],
+                seenQuestionKeys: sanitizeSeenQuestionKeys(source.seenQuestionKeys)
+            };
+        }
+
         function loadGameState() {
             try {
-                const saved = localStorage.getItem('genshinMathGame');
+                const saved = safeStorageGet('genshinMathGame');
                 if (saved) {
                     const parsed = JSON.parse(saved);
-                    // Merge with defaults to handle old saves missing new fields
-                    gameState = { ...DEFAULT_GAME_STATE, ...parsed };
-                    // Ensure arrays are arrays (corruption protection)
-                    ['completedDays','starRecords','unlockedConstellations','dailyQuests','wrongQuestions','masteredQuestions'].forEach(k => {
-                        if (!Array.isArray(gameState[k])) gameState[k] = [];
-                    });
-                    if (typeof gameState.seenQuestionKeys !== 'object' || gameState.seenQuestionKeys === null) {
-                        gameState.seenQuestionKeys = {};
-                    }
+                    gameState = normalizeGameState(parsed);
                     // 30-day expiry check (show warning but don't delete)
                     if (gameState.saveTimestamp) {
                         const daysSince = Math.floor((Date.now() - gameState.saveTimestamp) / 86400000);
@@ -4666,7 +4874,7 @@
             } catch(e) {
                 console.error('存档加载失败，将使用新存档:', e);
                 gameState = { ...DEFAULT_GAME_STATE };
-                localStorage.removeItem('genshinMathGame');
+                safeStorageRemove('genshinMathGame');
             }
             checkDailyReset();
             updateUI();
@@ -4675,7 +4883,7 @@
         function saveGameState() {
             try {
                 gameState.saveTimestamp = Date.now();
-                localStorage.setItem('genshinMathGame', JSON.stringify(gameState));
+                safeStorageSet('genshinMathGame', JSON.stringify(gameState));
             } catch(e) {
                 console.error('存档保存失败:', e);
                 showSaveNotification('存档保存失败！可能是浏览器存储已满', 'error');
@@ -4692,10 +4900,72 @@
             const n = document.createElement('div');
             n.className = 'fixed top-20 left-1/2 -translate-x-1/2 px-5 py-3 rounded-lg z-50 shadow-lg';
             n.style.cssText = 'background: rgba(20,20,40,0.95); border: 1px solid ' + colors[type] + '; color: ' + colors[type] + '; backdrop-filter: blur(8px); animation: fadeInDown .4s ease;';
-            n.innerHTML = `<div class="flex items-center gap-2 text-sm"><i data-lucide="${type==='success'?'check-circle':type==='error'?'alert-circle':'info'}" class="w-4 h-4"></i><span>${msg}</span></div>`;
+            const row = document.createElement('div');
+            row.className = 'flex items-center gap-2 text-sm';
+            const icon = document.createElement('i');
+            icon.className = 'w-4 h-4';
+            icon.setAttribute('data-lucide', type === 'success' ? 'check-circle' : type === 'error' ? 'alert-circle' : 'info');
+            const text = document.createElement('span');
+            text.textContent = String(msg);
+            row.append(icon, text);
+            n.appendChild(row);
             document.body.appendChild(n);
             lucide.createIcons();
             setTimeout(() => { n.style.opacity = '0'; n.style.transition = 'opacity .4s'; setTimeout(() => n.remove(), 400); }, 3500);
+        }
+
+        let dialogReturnFocus = null;
+
+        function focusDialog(id, rememberFocus = true) {
+            const dialog = document.getElementById(id);
+            if (!dialog) return;
+            if (rememberFocus && !dialogReturnFocus) dialogReturnFocus = document.activeElement;
+            requestAnimationFrame(() => dialog.querySelector('.modal-content')?.focus());
+        }
+
+        function restoreDialogFocus() {
+            const target = dialogReturnFocus;
+            dialogReturnFocus = null;
+            if (target && target.isConnected) target.focus();
+        }
+
+        function trapDialogFocus(event) {
+            if (event.key !== 'Tab') return false;
+            const visibleDialogs = [...document.querySelectorAll('[role="dialog"], [role="alertdialog"]')].filter(dialog =>
+                !dialog.closest('.hidden') && dialog.getClientRects().length > 0
+            );
+            const dialog = visibleDialogs.at(-1);
+            if (!dialog) return false;
+
+            const focusable = [...dialog.querySelectorAll(
+                'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            )].filter(element =>
+                element.getClientRects().length > 0 &&
+                element.getAttribute('aria-hidden') !== 'true'
+            );
+
+            if (focusable.length === 0) {
+                event.preventDefault();
+                (dialog.querySelector('.modal-content') || dialog).focus();
+                return true;
+            }
+
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            const active = document.activeElement;
+            if (event.shiftKey && (active === first || !dialog.contains(active))) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && (active === last || !dialog.contains(active))) {
+                event.preventDefault();
+                first.focus();
+            }
+            return true;
+        }
+
+        function closeSaveMenu() {
+            document.getElementById('saveMenuOverlay')?.remove();
+            restoreDialogFocus();
         }
 
         function showSaveMenu() {
@@ -4709,12 +4979,12 @@
             overlay.className = 'fixed inset-0 z-50 flex items-center justify-center p-4';
             overlay.style.cssText = 'background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);';
             overlay.innerHTML = `
-                <div class="modal-content gold-border rounded-xl p-6 max-w-md w-full" style="background: linear-gradient(135deg, rgba(30,25,50,0.98), rgba(20,15,35,0.98));">
+                <div class="modal-content gold-border rounded-xl p-6 max-w-md w-full" role="dialog" aria-modal="true" aria-labelledby="saveMenuTitle" tabindex="-1" style="background: linear-gradient(135deg, rgba(30,25,50,0.98), rgba(20,15,35,0.98));">
                     <div class="flex items-center justify-between mb-5">
-                        <h3 class="text-xl font-bold flex items-center gap-2" style="color: var(--primary-gold);">
+                        <h3 id="saveMenuTitle" class="text-xl font-bold flex items-center gap-2" style="color: var(--primary-gold);">
                             <i data-lucide="settings" class="w-5 h-5"></i>存档管理
                         </h3>
-                        <button onclick="document.getElementById('saveMenuOverlay').remove()" class="p-1 hover:bg-white/10 rounded">
+                        <button onclick="closeSaveMenu()" class="p-1 hover:bg-white/10 rounded" aria-label="关闭存档管理">
                             <i data-lucide="x" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -4745,9 +5015,10 @@
                     </div>
                 </div>
             `;
-            overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+            overlay.addEventListener('click', (e) => { if (e.target === overlay) closeSaveMenu(); });
             document.body.appendChild(overlay);
             lucide.createIcons();
+            focusDialog('saveMenuOverlay');
         }
 
         function exportSave() {
@@ -4758,44 +5029,67 @@
             a.download = `yuanshen-math-save-${new Date().toISOString().slice(0,10)}.json`;
             a.click();
             URL.revokeObjectURL(a.href);
-            document.getElementById('saveMenuOverlay')?.remove();
+            closeSaveMenu();
             showSaveNotification('存档已导出为JSON文件，请妥善保存', 'success');
         }
 
         function importSave(event) {
             const file = event.target.files[0];
             if (!file) return;
+            if (file.size > 1024 * 1024) {
+                showSaveNotification('导入失败：存档文件不能超过 1 MB', 'error');
+                event.target.value = '';
+                return;
+            }
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = async function(e) {
                 try {
                     const data = JSON.parse(e.target.result);
                     if (!data.completedDays || !Array.isArray(data.completedDays)) throw new Error('无效存档');
-                    if (!confirm('导入将覆盖当前进度，确定继续？')) return;
-                    gameState = { ...DEFAULT_GAME_STATE, ...data };
-                    ['completedDays','starRecords','unlockedConstellations','dailyQuests'].forEach(k => {
-                        if (!Array.isArray(gameState[k])) gameState[k] = [];
+                    const overwrite = await themedConfirm({
+                        title: '导入存档',
+                        message: '导入将覆盖当前进度，确定继续？',
+                        confirmText: '覆盖导入'
                     });
+                    if (!overwrite) return;
+                    gameState = normalizeGameState(data);
+                    checkDailyReset();
                     saveGameState();
-                    document.getElementById('saveMenuOverlay')?.remove();
+                    closeSaveMenu();
                     renderCalendar();
                     updateUI();
+                    updateWrongBookBadge();
                     showSaveNotification('存档导入成功！', 'success');
                 } catch(err) {
                     showSaveNotification('导入失败：存档文件格式错误', 'error');
+                } finally {
+                    event.target.value = '';
                 }
             };
             reader.readAsText(file);
         }
 
-        function resetProgress() {
-            if (!confirm('⚠️ 确定要重置全部进度吗？\n\n这将清除：\n• 所有通关记录和星级\n• 冒险等阶和资源\n• 成就和每日委托\n\n此操作不可恢复！建议先导出备份。')) return;
-            if (!confirm('再次确认：真的要从头开始吗？')) return;
-            localStorage.removeItem('genshinMathGame');
+        async function resetProgress() {
+            const firstAsk = await themedConfirm({
+                title: '重置全部进度',
+                danger: true,
+                confirmText: '重置进度',
+                message: '⚠️ 确定要重置全部进度吗？\n\n这将清除：\n• 所有通关记录和星级\n• 冒险等阶和资源\n• 成就和每日委托\n\n此操作不可恢复！建议先导出备份。'
+            });
+            if (!firstAsk) return;
+            const secondAsk = await themedConfirm({
+                title: '再次确认',
+                danger: true,
+                confirmText: '从头开始',
+                message: '真的要从头开始吗？此操作不可恢复。'
+            });
+            if (!secondAsk) return;
+            safeStorageRemove('genshinMathGame');
             gameState = { ...DEFAULT_GAME_STATE };
             gameState.lastDailyReset = new Date().toDateString();
             gameState.dailyQuests = dailyQuestTemplates.map(q => ({...q, progress:0, completed:false, claimed:false}));
             saveGameState();
-            document.getElementById('saveMenuOverlay')?.remove();
+            closeSaveMenu();
             renderCalendar();
             updateUI();
             showSaveNotification('进度已重置，开始新的冒险吧！', 'info');
@@ -4825,28 +5119,37 @@
         }
 
         function updateExpBar() {
+            let ranksGained = 0;
+            while (gameState.adventureRank < 999) {
+                const requiredExp = gameState.adventureRank * 100;
+                if (gameState.currentExp < requiredExp) break;
+                gameState.currentExp -= requiredExp;
+                gameState.adventureRank++;
+                gameState.primogem += 50;
+                ranksGained++;
+            }
+
             const nextRankExp = gameState.adventureRank * 100;
             const progress = (gameState.currentExp / nextRankExp) * 100;
+            document.getElementById('adventureRank').textContent = gameState.adventureRank;
+            document.getElementById('primogemCount').textContent = gameState.primogem;
             document.getElementById('currentExp').textContent = gameState.currentExp;
             document.getElementById('nextRankExp').textContent = nextRankExp;
             document.getElementById('expProgress').style.width = `${Math.min(progress, 100)}%`;
-            
-            if (gameState.currentExp >= nextRankExp) {
-                gameState.currentExp -= nextRankExp;
-                gameState.adventureRank++;
-                gameState.primogem += 50;
+
+            if (ranksGained > 0) {
                 saveGameState();
-                showRankUpNotification();
+                showRankUpNotification(ranksGained);
             }
         }
 
-        function showRankUpNotification() {
+        function showRankUpNotification(ranksGained = 1) {
             const notification = document.createElement('div');
             notification.className = 'fixed top-20 left-1/2 -translate-x-1/2 gold-border px-6 py-3 rounded-lg z-50 animate-fade-in';
             notification.innerHTML = `
                 <div class="flex items-center gap-3">
                     <i data-lucide="trending-up" class="w-6 h-6" style="color: var(--primary-gold);"></i>
-                    <span style="color: var(--primary-gold-light);">冒险等阶提升至 ${gameState.adventureRank}！获得50原石</span>
+                    <span style="color: var(--primary-gold-light);">冒险等阶提升至 ${gameState.adventureRank}！获得${ranksGained * 50}原石</span>
                 </div>
             `;
             document.body.appendChild(notification);
@@ -4867,11 +5170,13 @@
 
         function updateAchievementBadge() {
             const unlocked = gameState.unlockedConstellations.length;
-            const total = constellations.length;
             const badge = document.getElementById('achievementBadge');
             if (unlocked > 0) {
                 badge.textContent = unlocked;
                 badge.classList.remove('hidden');
+            } else {
+                badge.textContent = '';
+                badge.classList.add('hidden');
             }
         }
 
@@ -4912,6 +5217,13 @@
             });
             
             lucide.createIcons();
+        }
+
+        function activateDayCard(event, day) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                startQuiz(day);
+            }
         }
 
         function renderDayCard(day, nationColor, index, animate) {
@@ -4965,7 +5277,7 @@
             return `
                 <div class="day-card nation-${day.nation} ${isCompleted ? 'completed' : ''} ${isUnlocked ? 'unlocked' : 'locked'} ${animClass}"
                      style="${animStyle}padding-right:64px;"
-                     ${isUnlocked ? `onclick="startQuiz(${day.day})"` : ''}>
+                     ${isUnlocked ? `role="button" tabindex="0" aria-label="开始第${day.day}天：${escapeHtml(day.title)}" onclick="startQuiz(${day.day})" onkeydown="activateDayCard(event, ${day.day})"` : 'aria-disabled="true"'}>
                     ${charGlow}
                     ${charPortraitBg}
                     ${particles}
@@ -5086,8 +5398,9 @@
         }
 
         function getQuestionKey(q) {
-            // Generate a unique key for a question based on its text
-            return q.q.substring(0, 50);
+            // Include every option: some题目 share the same stem but test different facts.
+            const options = Array.isArray(q.options) ? [...q.options].map(String).sort().join('\u241f') : '';
+            return `${q.q}\u241e${options}`;
         }
 
         function pickQuestionsForDay(day, count) {
@@ -5100,15 +5413,17 @@
             const unseen = rawQ.filter(q => !seenSet.has(getQuestionKey(q)));
             const seenQs = rawQ.filter(q => seenSet.has(getQuestionKey(q)));
 
-            let selected;
-            if (unseen.length >= count) {
-                // Enough new questions - shuffle and pick
-                selected = shuffleArray(unseen).slice(0, count);
-            } else {
-                // Not enough new - take all unseen + fill with random seen
-                selected = [...unseen];
-                const shuffledSeen = shuffleArray(seenQs);
-                selected = selected.concat(shuffledSeen.slice(0, count - selected.length));
+            // Keep one question per stem in a quiz. Several days contain variants
+            // with the same wording but different option sets; showing both in one
+            // run is confusing even though their persistent keys are distinct.
+            const selected = [];
+            const stems = new Set();
+            for (const question of [...shuffleArray(unseen), ...shuffleArray(seenQs)]) {
+                const stem = String(question.q).trim();
+                if (stems.has(stem)) continue;
+                stems.add(stem);
+                selected.push(question);
+                if (selected.length >= count) break;
             }
 
             // Remember these questions as seen
@@ -5227,19 +5542,41 @@
             }
             document.getElementById('quizTitle').textContent = title;
             document.getElementById('quizModal').classList.remove('hidden');
+            focusDialog('quizModal');
             const modal = document.querySelector('#quizModal .modal-content');
             modal.classList.add('question-enter');
             setTimeout(() => modal.classList.remove('question-enter'), 300);
             renderQuestion();
         }
 
+        function updateExplanation(q, visible) {
+            const box = document.getElementById('explanationBox');
+            const kpLink = document.getElementById('kpLink');
+            if (!visible) {
+                box.classList.add('hidden');
+                return;
+            }
+            document.getElementById('explanationText').textContent = q.explanation;
+            if (q.kpPage && q.knowledgePoint) {
+                kpLink.href = sanitizeKpPage(q.kpPage);
+                kpLink.title = '复习：' + q.knowledgePoint;
+                kpLink.style.display = 'inline-flex';
+            } else {
+                kpLink.removeAttribute('href');
+                kpLink.style.display = 'none';
+            }
+            box.classList.remove('hidden');
+        }
+
         function renderQuestion() {
             const q = currentQuiz.questions[currentQuiz.currentQuestion];
             const qNum = currentQuiz.currentQuestion + 1;
             const totalQ = currentQuiz.questions.length;
+            const progressPercent = Math.round((qNum / totalQ) * 100);
             
             document.getElementById('currentQuestionNum').textContent = qNum;
-            document.getElementById('quizProgress').style.width = `${(qNum / totalQ) * 100}%`;
+            document.getElementById('quizProgress').style.width = `${progressPercent}%`;
+            document.getElementById('quizProgress').setAttribute('aria-valuenow', String(progressPercent));
             document.getElementById('questionText').textContent = q.q;
             
             const diffClass = q.difficulty === 'basic' ? 'difficulty-basic' : 
@@ -5270,9 +5607,9 @@
                     else if (i === currentQuiz.answers[currentQuiz.currentQuestion]) className += ' wrong';
                 }
                 return `
-                    <button class="${className}" onclick="selectOption(${i})" ${answered ? 'disabled' : ''}>
+                    <button class="${className}" onclick="selectOption(this, ${i})" ${answered ? 'disabled' : ''}>
                         <span class="font-bold mr-2" style="color: var(--primary-gold);">${labels[i]}.</span>
-                        ${opt}
+                        ${escapeHtml(opt)}
                         ${answered && i === q.answer ? '<i data-lucide="check" class="w-4 h-4 inline ml-2" style="color: #4CAF50;"></i>' : ''}
                         ${answered && i === currentQuiz.answers[currentQuiz.currentQuestion] && i !== q.answer ? '<i data-lucide="x" class="w-4 h-4 inline ml-2" style="color: #f44336;"></i>' : ''}
                     </button>
@@ -5284,7 +5621,7 @@
             void qContainer.offsetWidth;
             qContainer.classList.add('question-enter');
             
-            document.getElementById('explanationBox').classList.add('hidden');
+            updateExplanation(q, answered);
             document.getElementById('prevQuestion').disabled = currentQuiz.currentQuestion === 0;
             document.getElementById('prevQuestion').classList.toggle('opacity-50', currentQuiz.currentQuestion === 0);
             
@@ -5302,15 +5639,15 @@
             lucide.createIcons();
         }
 
-        function selectOption(index) {
+        function selectOption(btnEl, index) {
             if (currentQuiz.answers[currentQuiz.currentQuestion] !== undefined) return;
-            
+
             const q = currentQuiz.questions[currentQuiz.currentQuestion];
             currentQuiz.answers[currentQuiz.currentQuestion] = index;
             gameState.totalAnswered++;
-            
+
             const isCorrect = index === q.answer;
-            const btn = event.currentTarget;
+            const btn = btnEl;
             const rect = btn.getBoundingClientRect();
             const cx = rect.left + rect.width / 2;
             const cy = rect.top + rect.height / 2;
@@ -5394,16 +5731,7 @@
                 }
             }
             
-            document.getElementById('explanationText').textContent = q.explanation;
-            const kpLink = document.getElementById('kpLink');
-            if (q.kpPage && q.knowledgePoint) {
-                kpLink.href = q.kpPage;
-                kpLink.title = '复习：' + q.knowledgePoint;
-                kpLink.style.display = 'inline-flex';
-            } else {
-                kpLink.style.display = 'none';
-            }
-            document.getElementById('explanationBox').classList.remove('hidden');
+            updateExplanation(q, true);
             
             setTimeout(() => renderQuestion(), 100);
             // 每答完一题自动保存
@@ -5464,13 +5792,14 @@
                 }
                 
                 const existingStar = gameState.starRecords.find(s => s.day === currentQuiz.day);
+                const previousStars = existingStar ? existingStar.stars : 0;
                 if (existingStar) {
                     if (stars > existingStar.stars) existingStar.stars = stars;
                 } else {
                     gameState.starRecords.push({ day: currentQuiz.day, stars: stars });
                 }
                 
-                if (stars === 3 && (!existingStar || existingStar.stars < 3)) {
+                if (stars === 3 && previousStars < 3) {
                     updateDailyQuestProgress('threeStar', 1);
                 }
             }
@@ -5494,6 +5823,7 @@
             
             document.getElementById('quizModal').classList.add('hidden');
             document.getElementById('resultModal').classList.remove('hidden');
+            focusDialog('resultModal', false);
             
             // Set result character splash
             const resultSplash = document.getElementById('resultCharSplash');
@@ -5572,11 +5902,48 @@
             updateWrongBookBadge();
         }
 
-        function closeQuiz() {
-            if (confirm('确定要退出挑战吗？当前进度将不会保存。')) {
-                document.getElementById('quizModal').classList.add('hidden');
-                resetCurrentQuiz();
+        let confirmResolver = null;
+        function themedConfirm(opts) {
+            const { title = '确认操作', message = '', confirmText = '确定', cancelText = '取消', danger = false } = opts || {};
+            return new Promise(resolve => {
+                confirmResolver = resolve;
+                document.getElementById('confirmTitle').textContent = title;
+                document.getElementById('confirmMessage').textContent = message;
+                const okBtn = document.getElementById('confirmOkBtn');
+                okBtn.textContent = confirmText;
+                document.getElementById('confirmCancelBtn').textContent = cancelText;
+                okBtn.style.background = danger
+                    ? 'linear-gradient(135deg, #F44336, #B71C1C)'
+                    : 'linear-gradient(135deg, #C8A95B, #9A7B3F)';
+                document.getElementById('confirmModal').classList.remove('hidden');
+                lucide.createIcons();
+                setTimeout(() => okBtn.focus(), 60);
+            });
+        }
+
+        function resolveConfirm(result) {
+            const modal = document.getElementById('confirmModal');
+            if (!modal || modal.classList.contains('hidden')) return;
+            modal.classList.add('hidden');
+            if (confirmResolver) {
+                const resolver = confirmResolver;
+                confirmResolver = null;
+                playClick();
+                resolver(result);
             }
+        }
+
+        async function closeQuiz() {
+            const quit = await themedConfirm({
+                title: '退出挑战',
+                message: '确定要退出挑战吗？当前进度将不会保存。',
+                confirmText: '退出挑战',
+                cancelText: '继续答题'
+            });
+            if (!quit) return;
+            document.getElementById('quizModal').classList.add('hidden');
+            resetCurrentQuiz();
+            restoreDialogFocus();
         }
 
         function closeResult() {
@@ -5589,6 +5956,7 @@
             if (wasRevenge) {
                 switchTab('wrongbook');
             }
+            restoreDialogFocus();
         }
 
         function resetCurrentQuiz() {
@@ -5630,7 +5998,6 @@
             });
             // Take up to 10 wrong questions
             const selected = sorted.slice(0, Math.min(10, sorted.length));
-            gameState.wrongQuestions = selected.map(w => ({...w})); // will be filtered as answered correctly
             // Set currentQuiz for revenge
             currentQuiz.day = 0;
             currentQuiz.mode = 'revenge';
@@ -5650,18 +6017,25 @@
             document.getElementById('quizTitle').textContent = `⚔️ 复仇模式 - 错题反攻 (${currentQuiz.questions.length}题)`;
             document.getElementById('resultModal').classList.add('hidden');
             document.getElementById('quizModal').classList.remove('hidden');
+            focusDialog('quizModal');
             const modal = document.querySelector('#quizModal .modal-content');
             modal.classList.add('question-enter');
             setTimeout(() => modal.classList.remove('question-enter'), 300);
             renderQuestion();
         }
 
-        function clearWrongBook() {
+        async function clearWrongBook() {
             if (gameState.wrongQuestions.length === 0) {
                 showSaveNotification('错题本已经是空的', 'info');
                 return;
             }
-            if (!confirm(`确定清空错题本吗？将删除 ${gameState.wrongQuestions.length} 道错题记录。`)) return;
+            const doClear = await themedConfirm({
+                title: '清空错题本',
+                danger: true,
+                confirmText: '清空',
+                message: `确定清空错题本吗？将删除 ${gameState.wrongQuestions.length} 道错题记录。`
+            });
+            if (!doClear) return;
             gameState.wrongQuestions = [];
             saveGameState();
             renderWrongBook();
@@ -5684,7 +6058,7 @@
             }
 
             // Group by knowledge point
-            const grouped = {};
+            const grouped = Object.create(null);
             wrongs.forEach(w => {
                 const kp = w.knowledgePoint || '其他';
                 if (!grouped[kp]) grouped[kp] = [];
@@ -5701,10 +6075,10 @@
                 html += `<div class="mb-4 p-4 rounded-lg" style="background: rgba(20,15,40,0.6); border: 1px solid var(--border-color);">
                     <div class="flex items-center justify-between mb-3">
                         <h4 class="font-bold flex items-center gap-2" style="color:var(--primary-gold-light);">
-                            <i data-lucide="book-open" class="w-4 h-4"></i>${kp}
+                            <i data-lucide="book-open" class="w-4 h-4"></i>${escapeHtml(kp)}
                             <span class="text-xs px-2 py-0.5 rounded-full" style="background:rgba(244,67,54,0.2);color:#F44336;">${items.length}题</span>
                         </h4>
-                        <a href="${kpPage}" target="_blank" class="text-xs px-3 py-1.5 rounded-lg transition hover:brightness-125 inline-flex items-center gap-1" style="background:linear-gradient(135deg,rgba(76,194,240,0.15),rgba(76,194,240,0.05));border:1px solid rgba(76,194,240,0.3);color:#4CC2F0;">
+                        <a href="${escapeHtml(kpPage)}" target="_blank" rel="noopener" class="text-xs px-3 py-1.5 rounded-lg transition hover:brightness-125 inline-flex items-center gap-1" style="background:linear-gradient(135deg,rgba(76,194,240,0.15),rgba(76,194,240,0.05));border:1px solid rgba(76,194,240,0.3);color:#4CC2F0;">
                             <i data-lucide="book-marked" class="w-3 h-3"></i>复习知识点
                         </a>
                     </div>
@@ -5717,12 +6091,12 @@
                             <span class="text-xs px-2 py-0.5 rounded" style="background:${diffColors[w.difficulty]||'#F44336'}22;color:${diffColors[w.difficulty]||'#F44336'};">${diffNames[w.difficulty]||'基础'} · ${dayLabel}</span>
                             <span class="text-xs" style="color:var(--text-secondary);">错${wrongTimes}次</span>
                         </div>
-                        <p class="text-sm mb-2" style="color:var(--text-primary);">${w.q}</p>
+                        <p class="text-sm mb-2" style="color:var(--text-primary);">${escapeHtml(w.q)}</p>
                         <details class="text-xs">
                             <summary style="color:var(--primary-gold);cursor:pointer;" class="hover:brightness-125">查看解析 ▾</summary>
                             <div class="mt-2 p-2 rounded" style="background:rgba(76,194,161,0.08);color:var(--text-secondary);line-height:1.6;">
-                                <p style="color:#4CAF50;margin-bottom:4px;">正确答案：${String.fromCharCode(65 + w.answer)}. ${w.options[w.answer]}</p>
-                                <p>${w.explanation}</p>
+                                <p style="color:#4CAF50;margin-bottom:4px;">正确答案：${String.fromCharCode(65 + w.answer)}. ${escapeHtml(w.options[w.answer])}</p>
+                                <p>${escapeHtml(w.explanation)}</p>
                             </div>
                         </details>
                     </div>`;
@@ -5761,6 +6135,7 @@
 
         function showAchievements() {
             document.getElementById('achievementModal').classList.remove('hidden');
+            focusDialog('achievementModal');
             const list = document.getElementById('achievementList');
             list.innerHTML = constellations.map(c => {
                 const isUnlocked = gameState.unlockedConstellations.includes(c.id);
@@ -5788,11 +6163,13 @@
 
         function closeAchievements() {
             document.getElementById('achievementModal').classList.add('hidden');
+            restoreDialogFocus();
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const savedSound = localStorage.getItem('genshinMathSound');
+            const savedSound = safeStorageGet('genshinMathSound');
             if (savedSound !== null) soundEnabled = savedSound === 'true';
+            syncSoundToggle();
             
             loadGameState();
             renderCalendar();
@@ -5813,6 +6190,29 @@
             window.addEventListener('pagehide', () => saveGameState());
             // 定期自动保存（每30秒）
             setInterval(saveGameState, 30000);
+        });
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Tab') {
+                trapDialogFocus(event);
+                return;
+            }
+            if (event.key !== 'Escape') return;
+            const confirmModal = document.getElementById('confirmModal');
+            if (confirmModal && !confirmModal.classList.contains('hidden')) {
+                resolveConfirm(false);
+                return;
+            }
+            const saveMenu = document.getElementById('saveMenuOverlay');
+            if (saveMenu) {
+                closeSaveMenu();
+            } else if (!document.getElementById('achievementModal').classList.contains('hidden')) {
+                closeAchievements();
+            } else if (!document.getElementById('resultModal').classList.contains('hidden')) {
+                closeResult();
+            } else if (!document.getElementById('quizModal').classList.contains('hidden')) {
+                closeQuiz();
+            }
         });
     </script>
     <script src="assets/genshin-enhancements.js"></script>

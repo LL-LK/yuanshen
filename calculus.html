@@ -2,12 +2,13 @@
 <html lang="zh" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0D0B1A">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
     <title>提瓦特数学图鉴</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <style id="theme-vars">
 /* ============================================================
    提瓦特数学图鉴 · 原神视觉风格配色与字体系统
@@ -135,8 +136,8 @@
 
     @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:0.85}}
 </style>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
-    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <script src="assets/vendor/tailwind-browser-4.3.1.js"></script>
+    <script src="assets/vendor/lucide-1.8.0.min.js"></script>
     <style type="text/tailwindcss">
   @theme inline {
     --color-background: var(--genshin-background);
@@ -232,10 +233,8 @@
         background-color: currentColor;
       }
     </style>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/genshin-enhancements.css">
+    <noscript><style>.reveal,.hero-reveal{opacity:1!important;transform:none!important;animation:none!important}</style></noscript>
     <style id="enhanced-design">
 /* === 提瓦特数学图鉴 · 排版与动画增强系统 === */
 /* 性能安全：仅使用 transform + opacity（合成器友好），IntersectionObserver 替代 scroll 监听 */
@@ -405,7 +404,7 @@ article[id^="kp-"] { scroll-margin-top: 90px; }
           </svg>
           <span class="font-display text-lg whitespace-nowrap" style="color: var(--genshin-primary);">提瓦特数学图鉴</span>
         </a>
-        <div class="hidden sm:flex items-center gap-5">
+        <div class="hidden lg:flex items-center gap-5">
           <a href="functions.html" data-nav-key="functions" class="nav-link flex items-center gap-2 px-1 py-2 text-sm whitespace-nowrap">
             <span class="w-2 h-2 rounded-full shrink-0" style="background:#74C2A1;"></span>
             <span>函数与代数</span>
@@ -426,28 +425,33 @@ article[id^="kp-"] { scroll-margin-top: 90px; }
             <span class="w-2 h-2 rounded-full shrink-0" style="background:#7BC94A;"></span>
             <span>选修拓展</span>
           </a>
+          <a href="lab.html" data-nav-key="lab" class="nav-link flex items-center gap-2 px-1 py-2 text-sm whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full shrink-0" style="background:#EF7938;"></span>
+            <span>数学实验室</span>
+          </a>
+          <a href="lab.html" data-nav-key="lab" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#EF7938;"></span>数学实验室</a>
           <a href="challenge.html" data-nav-key="challenge" class="nav-link flex items-center gap-2 px-3 py-2 text-sm whitespace-nowrap rounded-lg" style="position:relative;background: linear-gradient(135deg, rgba(200,169,91,0.15), rgba(200,169,91,0.05)); border: 1px solid rgba(200,169,91,0.3); color: #C8A95B; font-weight: 600;"><i data-lucide="swords" class="w-4 h-4"></i><span>秘境试炼</span><span class="NEW-badge" style="position:absolute;top:-6px;right:-4px;background:#FF6B6B;color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;font-weight:700;line-height:1.3;box-shadow:0 0 8px rgba(255,107,107,0.6);animation:pulse 2s infinite;">NEW</span>
           </a>
 </div>
-        <button id="mobile-menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" class="sm:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-primary); border: 1px solid var(--genshin-border);">
+        <button id="mobile-menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" class="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-primary); border: 1px solid var(--genshin-border);">
           <svg class="menu-icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           <svg class="menu-icon-close hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
         </button>
       </div>
-      <div id="mobile-menu" class="sm:hidden hidden border-t" style="background: rgba(14,17,32,0.97); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-color: var(--genshin-border);">
+      <div id="mobile-menu" class="lg:hidden hidden border-t" style="background: rgba(14,17,32,0.97); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-color: var(--genshin-border);">
         <div class="max-w-7xl mx-auto px-6 py-3 flex flex-col gap-1 font-body">
-          <a data-nav-key="functions" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#74C2A1;"></span>函数与代数</a>
-          <a data-nav-key="geometry" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#D4B863;"></span>几何与图形</a>
-          <a data-nav-key="probability" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#A85AF5;"></span>概率与统计</a>
-          <a data-nav-key="calculus" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#4CC2F0;"></span>导数与应用</a>
-          <a data-nav-key="elective" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#7BC94A;"></span>选修拓展</a>
+          <a href="functions.html" data-nav-key="functions" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#74C2A1;"></span>函数与代数</a>
+          <a href="geometry.html" data-nav-key="geometry" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#D4B863;"></span>几何与图形</a>
+          <a href="probability.html" data-nav-key="probability" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#A85AF5;"></span>概率与统计</a>
+          <a href="calculus.html" data-nav-key="calculus" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#4CC2F0;"></span>导数与应用</a>
+          <a href="elective.html" data-nav-key="elective" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#7BC94A;"></span>选修拓展</a>
           <a href="challenge.html" data-nav-key="challenge" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors" style="color: #C8A95B; background: linear-gradient(135deg, rgba(200,169,91,0.15), rgba(200,169,91,0.05)); border: 1px solid rgba(200,169,91,0.3);"><i data-lucide="swords" class="w-4 h-4"></i>秘境试炼<span style="margin-left:4px;background:#FF6B6B;color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;font-weight:700;">NEW</span></a>
         </div>
       </div>
     </nav>
 
     <!-- ===== 侧边章节目录 TOC（桌面端，v3 新增） ===== -->
-    <aside class="toc-desktop hidden md:block" aria-label="本章节目录">
+    <aside class="toc-desktop hidden lg:block" aria-label="本章节目录">
       <div class="font-display text-sm mb-3" style="color: var(--genshin-primary);">本章节目录</div>
       <div style="height:1px; background: rgba(200,169,91,0.18); margin-bottom: 10px;"></div>
       <nav>
@@ -460,7 +464,7 @@ article[id^="kp-"] { scroll-margin-top: 90px; }
     </aside>
 
     <!-- ===== 移动端浮动目录按钮（v3 新增） ===== -->
-    <div class="md:hidden" style="position: fixed; right: 20px; bottom: 24px; z-index: 50;">
+    <div class="lg:hidden" style="position: fixed; right: 20px; bottom: 24px; z-index: 50;">
       <button id="toc-mobile-btn" type="button" aria-label="打开章节目录" aria-expanded="false" style="width:48px;height:48px;border-radius:50%;background:var(--genshin-primary);color:var(--genshin-primary-foreground);display:inline-flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,0.4);cursor:pointer;border:none;">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
       </button>
@@ -883,11 +887,11 @@ article[id^="kp-"] { scroll-margin-top: 90px; }
                 <span class="text-sm">大知识模块</span>
               </div>
               <div class="flex items-baseline gap-2">
-                <span class="font-display text-2xl whitespace-nowrap" style="color: var(--genshin-primary);">21</span>
+                <span class="font-display text-2xl whitespace-nowrap" style="color: var(--genshin-primary);">27</span>
                 <span class="text-sm">个知识单元</span>
               </div>
               <div class="flex items-baseline gap-2">
-                <span class="font-display text-2xl whitespace-nowrap" style="color: var(--genshin-primary);">120+</span>
+                <span class="font-display text-2xl whitespace-nowrap" style="color: var(--genshin-primary);">280+</span>
                 <span class="text-sm">核心考点</span>
               </div>
             </div>
@@ -1181,24 +1185,6 @@ article[id^="kp-"] { scroll-margin-top: 90px; }
   window.addEventListener('scroll',updateBar,{passive:true});
   updateBar();
 
-  // 点击金色粒子效果
-  var colors=['#C8A95B','#E8D5A3','#FFD700','#74C2A1','#4CC2F0','#A85AF5'];
-  document.addEventListener('click',function(e){
-    if(e.target.closest('button,a,.day-card,.option-btn')){
-      colors.forEach(function(c,i){
-        var p=document.createElement('div');
-        var ang=Math.PI*2/colors.length*i+Math.random()*0.5;
-        var dist=25+Math.random()*35;
-        p.style.cssText='position:fixed;width:6px;height:6px;border-radius:50%;background:'+c+';pointer-events:none;z-index:99999;left:'+e.clientX+'px;top:'+e.clientY+'px;box-shadow:0 0 6px '+c+';transition:all .6s ease-out;';
-        document.body.appendChild(p);
-        requestAnimationFrame(function(){
-          p.style.transform='translate('+Math.cos(ang)*dist+'px,'+Math.sin(ang)*dist+'px) scale(0)';
-          p.style.opacity='0';
-        });
-        setTimeout(function(){p.remove();},650);
-      });
-    }
-  });
 
   // 知识点卡片hover光晕效果
   document.querySelectorAll('[class*="card"], .kp-card, .kp-item, section, article').forEach(function(el){

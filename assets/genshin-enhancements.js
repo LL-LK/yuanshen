@@ -117,6 +117,7 @@
     'probability.html': { element: 'electro', chars: ['raiden', 'yaemiko', 'cyno', 'clorinde', 'fischl', 'beidou', 'kujousara', 'kuki', 'keqing', 'sethos', 'iansan', 'ororon', 'varesa'], nation: '稻妻' },
     'calculus.html': { element: 'hydro', chars: ['furina', 'neuvillette', 'yelan', 'tartaglia', 'mona', 'barbara', 'xingqiu', 'ayato', 'nilou', 'candace', 'sigewinne', 'mualani'], nation: '枫丹' },
     'elective.html': { element: 'dendro', chars: ['nahida', 'alhaitham', 'tighnari', 'baizhu', 'collei', 'kaveh', 'yaoyao', 'kirara', 'emilie', 'kinich'], nation: '须弥' },
+    'lab.html': { element: 'pyro', chars: ['mavuika', 'hutao', 'klee', 'yoimiya', 'bennett', 'xiangling', 'dehya', 'thoma', 'yanfei', 'amber'], nation: '纳塔' },
     'challenge.html': { element: null, chars: [] }
   };
 
@@ -125,6 +126,25 @@
     const path = window.location.pathname;
     const file = path.split('/').pop() || 'index.html';
     return file;
+  }
+
+  function safeStorageGet(key) {
+    try {
+      return window.localStorage.getItem(key);
+    } catch (error) {
+      console.warn('无法读取本地设置，将使用默认值。', error);
+      return null;
+    }
+  }
+
+  function safeStorageSet(key, value) {
+    try {
+      window.localStorage.setItem(key, value);
+      return true;
+    } catch (error) {
+      console.warn('无法保存本地设置，本次设置仅在当前页面生效。', error);
+      return false;
+    }
   }
 
   function getCharUrl(slug, type) {
@@ -297,7 +317,7 @@
   // ===== 护眼模式控制 =====
   function initEyeCare() {
     // 读取本地存储的护眼设置
-    const eyeCareEnabled = localStorage.getItem('genshin_eyecare') === 'true';
+    const eyeCareEnabled = safeStorageGet('genshin_eyecare') === 'true';
     if (eyeCareEnabled) {
       document.body.classList.add('eye-care');
     }
@@ -315,7 +335,8 @@
       btn.className = 'eye-care-toggle' + (eyeCareEnabled ? ' active' : '');
       btn.title = eyeCareEnabled ? '关闭护眼模式' : '开启护眼模式';
       btn.innerHTML = '👁';
-      btn.setAttribute('aria-label', '护眼模式');
+      btn.setAttribute('aria-label', btn.title);
+      btn.setAttribute('aria-pressed', String(eyeCareEnabled));
       btn.type = 'button';
       
       btn.addEventListener('click', function(e) {
@@ -324,7 +345,9 @@
         const isActive = document.body.classList.toggle('eye-care');
         btn.classList.toggle('active', isActive);
         btn.title = isActive ? '关闭护眼模式' : '开启护眼模式';
-        localStorage.setItem('genshin_eyecare', isActive ? 'true' : 'false');
+        btn.setAttribute('aria-label', btn.title);
+        btn.setAttribute('aria-pressed', String(isActive));
+        safeStorageSet('genshin_eyecare', isActive ? 'true' : 'false');
       });
       
       // 插入到mobile-menu-toggle按钮之前（这样在桌面和移动端都能看到）
@@ -528,6 +551,19 @@
       img.alt = CHAR_DATA[charSlug]?.name || '';
       img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
       img.loading = 'lazy';
+      img.addEventListener('error', () => {
+        img.remove();
+        const fallbackIcons = {
+          anemo: '🌪️', geo: '🪨', electro: '⚡', hydro: '💧', dendro: '🍃'
+        };
+        charIcon.textContent = fallbackIcons[el] || '✦';
+        charIcon.setAttribute('role', 'img');
+        charIcon.setAttribute('aria-label', `${CHAR_DATA[charSlug]?.name || '角色'}头像占位符`);
+        charIcon.style.display = 'flex';
+        charIcon.style.alignItems = 'center';
+        charIcon.style.justifyContent = 'center';
+        charIcon.style.fontSize = '24px';
+      });
       charIcon.appendChild(img);
       card.style.position = 'relative';
       card.appendChild(charIcon);
@@ -615,6 +651,7 @@
     const currentEl = config?.element || null;
 
     document.addEventListener('click', function(e) {
+      if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
       // 不处理已处理的点击粒子（已有脚本的情况）
       const target = e.target;
       if (!target.closest('button, a, .day-card, .option-btn, .genshin-card, .next-cta')) return;
@@ -642,8 +679,33 @@
     });
   }
 
+  // ===== 首页角色卡键盘可访问性 =====
+  function enhanceCardAccessibility() {
+    document.querySelectorAll('.char-card[onclick]').forEach(card => {
+      card.setAttribute('role', 'link');
+      card.tabIndex = 0;
+      if (!card.hasAttribute('aria-label')) {
+        const name = card.querySelector('h4')?.textContent?.trim();
+        card.setAttribute('aria-label', name ? `打开${name}对应课程` : '打开对应课程');
+      }
+      card.addEventListener('keydown', event => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          card.click();
+        }
+      });
+    });
+  }
+
   // ===== 导航栏增强 =====
   function enhanceNavbar() {
+    const currentPage = getCurrentPage();
+    document.querySelectorAll('a[data-nav-key][href]').forEach(link => {
+      const targetPage = link.getAttribute('href').split('#')[0];
+      if (targetPage === currentPage) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+
     // 为导航栏添加元素图标
     const navLinks = document.querySelectorAll('.nav-link[data-nav-key]');
     const navElements = {
@@ -750,13 +812,6 @@
       window.addEventListener('resize', setVh);
       window.addEventListener('orientationchange', () => setTimeout(setVh, 300));
       
-      // 防止双击缩放
-      let lastTouchEnd = 0;
-      document.addEventListener('touchend', function(e) {
-        const now = Date.now();
-        if (now - lastTouchEnd <= 300) e.preventDefault();
-        lastTouchEnd = now;
-      }, { passive: false });
     }
 
     const page = getCurrentPage();
@@ -771,6 +826,9 @@
     
     // 增强导航栏
     enhanceNavbar();
+
+    // 让首页角色卡可通过键盘访问
+    enhanceCardAccessibility();
     
     // 增强点击效果
     enhanceClickEffects();

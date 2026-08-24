@@ -2,12 +2,13 @@
 <html lang="zh" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0D0B1A">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
     <title>提瓦特数学图鉴</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <style id="theme-vars">
 /* ============================================================
    提瓦特数学图鉴 · 原神视觉风格配色与字体系统
@@ -135,8 +136,8 @@
 
     @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:0.85}}
 </style>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
-    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <script src="assets/vendor/tailwind-browser-4.3.1.js"></script>
+    <script src="assets/vendor/lucide-1.8.0.min.js"></script>
     <style type="text/tailwindcss">
   @theme inline {
     --color-background: var(--genshin-background);
@@ -232,10 +233,8 @@
         background-color: currentColor;
       }
     </style>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/genshin-enhancements.css">
+    <noscript><style>.reveal,.hero-reveal{opacity:1!important;transform:none!important;animation:none!important}</style></noscript>
     <style id="enhanced-design">
 /* === 提瓦特数学图鉴 · 排版与动画增强系统 === */
 /* 性能安全：仅使用 transform + opacity（合成器友好），IntersectionObserver 替代 scroll 监听 */
@@ -309,14 +308,14 @@ body { line-height: 1.75; }
     <!-- ===== 顶部固定导航栏 ===== -->
     <nav class="fixed top-0 inset-x-0 z-50" style="background: rgba(14,17,32,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(200,169,91,0.28);">
       <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between font-body">
-        <a href="index.html" data-nav-key="home" data-active="true" class="brand-link flex items-center gap-2.5 cursor-pointer shrink-0">
+        <a href="index.html" data-nav-key="home" data-active="true" aria-current="page" class="brand-link flex items-center gap-2.5 cursor-pointer shrink-0">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="shrink-0" aria-hidden="true">
             <path d="M12 2 L20.5 6.75 L20.5 16.25 L12 21 L3.5 16.25 L3.5 6.75 Z" stroke="#C8A95B" stroke-width="1.4" fill="rgba(200,169,91,0.10)"></path>
             <circle cx="12" cy="11.5" r="2.2" fill="#C8A95B"></circle>
           </svg>
           <span class="font-display text-lg whitespace-nowrap" style="color: var(--genshin-primary);">提瓦特数学图鉴</span>
         </a>
-        <div class="hidden sm:flex items-center gap-5">
+        <div class="hidden lg:flex items-center gap-5">
           <a href="functions.html" data-nav-key="functions" class="nav-link flex items-center gap-2 px-1 py-2 text-sm whitespace-nowrap">
             <span class="w-2 h-2 rounded-full shrink-0" style="background:#74C2A1;"></span>
             <span>函数与代数</span>
@@ -337,21 +336,26 @@ body { line-height: 1.75; }
             <span class="w-2 h-2 rounded-full shrink-0" style="background:#7BC94A;"></span>
             <span>选修拓展</span>
           </a>
+          <a href="lab.html" data-nav-key="lab" class="nav-link flex items-center gap-2 px-1 py-2 text-sm whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full shrink-0" style="background:#EF7938;"></span>
+            <span>数学实验室</span>
+          </a>
+          <a href="lab.html" data-nav-key="lab" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#EF7938;"></span>数学实验室</a>
           <a href="challenge.html" data-nav-key="challenge" class="nav-link flex items-center gap-2 px-3 py-2 text-sm whitespace-nowrap rounded-lg" style="position:relative;background: linear-gradient(135deg, rgba(200,169,91,0.15), rgba(200,169,91,0.05)); border: 1px solid rgba(200,169,91,0.3); color: #C8A95B; font-weight: 600;"><i data-lucide="swords" class="w-4 h-4"></i><span>秘境试炼</span><span class="NEW-badge" style="position:absolute;top:-6px;right:-4px;background:#FF6B6B;color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;font-weight:700;line-height:1.3;box-shadow:0 0 8px rgba(255,107,107,0.6);animation:pulse 2s infinite;">NEW</span>
           </a>
         </div>
-        <button id="mobile-menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" class="sm:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-primary); border: 1px solid var(--genshin-border);">
+        <button id="mobile-menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" class="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-primary); border: 1px solid var(--genshin-border);">
           <svg class="menu-icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           <svg class="menu-icon-close hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
         </button>
       </div>
-      <div id="mobile-menu" class="sm:hidden hidden border-t" style="background: rgba(14,17,32,0.97); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-color: var(--genshin-border);">
+      <div id="mobile-menu" class="lg:hidden hidden border-t" style="background: rgba(14,17,32,0.97); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-color: var(--genshin-border);">
         <div class="max-w-7xl mx-auto px-6 py-3 flex flex-col gap-1 font-body">
-          <a data-nav-key="functions" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#74C2A1;"></span>函数与代数</a>
-          <a data-nav-key="geometry" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#D4B863;"></span>几何与图形</a>
-          <a data-nav-key="probability" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#A85AF5;"></span>概率与统计</a>
-          <a data-nav-key="calculus" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#4CC2F0;"></span>导数与应用</a>
-          <a data-nav-key="elective" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#7BC94A;"></span>选修拓展</a>
+          <a href="functions.html" data-nav-key="functions" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#74C2A1;"></span>函数与代数</a>
+          <a href="geometry.html" data-nav-key="geometry" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#D4B863;"></span>几何与图形</a>
+          <a href="probability.html" data-nav-key="probability" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#A85AF5;"></span>概率与统计</a>
+          <a href="calculus.html" data-nav-key="calculus" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#4CC2F0;"></span>导数与应用</a>
+          <a href="elective.html" data-nav-key="elective" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors hover:bg-[#C8A95B]/10" style="color: var(--genshin-foreground);"><span class="w-2 h-2 rounded-full shrink-0" style="background:#7BC94A;"></span>选修拓展</a>
           <a href="challenge.html" data-nav-key="challenge" class="mobile-nav-link flex items-center gap-3 px-3 py-3 rounded-lg text-sm transition-colors" style="background: rgba(200,169,91,0.1); color: #C8A95B; font-weight: 600;"><i data-lucide="swords" class="w-4 h-4"></i>秘境试炼<span style="margin-left:4px;background:#FF6B6B;color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;font-weight:700;">NEW</span></a>
         </div>
       </div>
@@ -369,8 +373,8 @@ body { line-height: 1.75; }
       <!-- 居中内容 -->
       <div class="relative max-w-4xl mx-auto px-6 flex flex-col items-center justify-center text-center" style="min-height: 80vh;">
         <span class="hero-reveal text-xs md:text-sm tracking-[0.35em] uppercase mb-6 whitespace-nowrap" style="color: var(--genshin-primary); --hero-delay: 0ms;">原神视觉 · 高中数学</span>
-        <h1 class="hero-reveal font-display text-6xl md:text-7xl mb-6 bg-gradient-to-b from-[#F3E8C2] to-[#C8A95B] bg-clip-text text-transparent" style="text-wrap: balance; word-break: keep-all; overflow-wrap: break-word; --hero-delay: 100ms;">提瓦特数学图鉴</h1>
-        <p class="hero-reveal text-base md:text-lg mb-10 max-w-2xl leading-relaxed" style="color: var(--genshin-muted-foreground); --hero-delay: 200ms;">以提瓦特大陆的奇幻美学，重构高中三年数学知识体系</p>
+        <h1 class="hero-reveal font-display text-4xl sm:text-5xl md:text-6xl md:text-7xl mb-6 bg-gradient-to-b from-[#F3E8C2] to-[#C8A95B] bg-clip-text text-transparent" style="text-wrap: balance; overflow-wrap: break-word; --hero-delay: 100ms;">提瓦特数学图鉴</h1>
+        <p class="hero-reveal text-base md:text-lg mb-10 max-w-2xl leading-relaxed" style="color: var(--genshin-muted-foreground); text-shadow: 0 2px 12px rgba(0,0,0,0.75); --hero-delay: 200ms;">以提瓦特大陆的奇幻美学，重构高中三年数学知识体系</p>
         <div class="hero-reveal flex flex-col sm:flex-row items-center gap-4" style="--hero-delay: 300ms;">
           <a href="functions.html" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg text-base font-medium cursor-pointer transition hover:brightness-110" style="background-color: #C8A95B; color: #1A1408;">
             开启旅途
@@ -380,7 +384,7 @@ body { line-height: 1.75; }
             秘境试炼<span class="NEW-badge" style="position:absolute;top:-8px;right:-4px;background:linear-gradient(135deg,#FF6B6B,#FF9F43);color:#fff;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:700;line-height:1.3;box-shadow:0 0 12px rgba(255,107,107,0.7);animation:pulse 1.5s infinite;">NEW</span>
           </a>
         </div>
-        <div class="hero-reveal mt-12 flex items-center gap-2 text-sm" style="color: var(--genshin-muted-foreground); --hero-delay: 400ms;">
+        <div class="hero-reveal mt-12 flex items-center gap-2 text-sm" style="color: var(--genshin-muted-foreground); text-shadow: 0 2px 12px rgba(0,0,0,0.8); --hero-delay: 400ms;">
           <span class="whitespace-nowrap">5大模块</span>
           <span style="color: var(--genshin-primary);">·</span>
           <span class="whitespace-nowrap">27知识单元</span>
@@ -428,8 +432,7 @@ body { line-height: 1.75; }
                 <p class="text-xs truncate" style="color: var(--genshin-muted-foreground);">璃月 · 岩元素</p>
               </div>
             </div>
-            <p class="text-sm mb-2 whitespace-nowrap" style="color: var(--genshin-primary);">4个知识单元</p>
-            <p class="text-sm leading-relaxed line-clamp-2" style="color: var(--genshin-muted-foreground);">立体几何、解析几何、圆锥曲线——空间与图形的智慧</p>
+            <p class="text-sm mb-2 whitespace-nowrap" style="color: var(--genshin-primary);">7个知识单元</p><p class="text-sm leading-relaxed line-clamp-2" style="color: var(--genshin-muted-foreground);">立体几何、解析几何、圆锥曲线——空间与图形的智慧</p>
             <div class="mt-5 pt-4" style="border-top: 1px solid var(--genshin-border);">
               <span class="text-sm font-medium" style="color: var(--genshin-primary);">探索 →</span>
             </div>
@@ -466,8 +469,7 @@ body { line-height: 1.75; }
                 <p class="text-xs truncate" style="color: var(--genshin-muted-foreground);">枫丹 · 水元素</p>
               </div>
             </div>
-            <p class="text-sm mb-2 whitespace-nowrap" style="color: var(--genshin-primary);">4个知识单元</p>
-            <p class="text-sm leading-relaxed line-clamp-2" style="color: var(--genshin-muted-foreground);">极限、导数、定积分——变化与累积的精髓</p>
+            <p class="text-sm mb-2 whitespace-nowrap" style="color: var(--genshin-primary);">5个知识单元</p><p class="text-sm leading-relaxed line-clamp-2" style="color: var(--genshin-muted-foreground);">极限、导数、定积分——变化与累积的精髓</p>
             <div class="mt-5 pt-4" style="border-top: 1px solid var(--genshin-border);">
               <span class="text-sm font-medium" style="color: var(--genshin-primary);">探索 →</span>
             </div>
@@ -489,6 +491,25 @@ body { line-height: 1.75; }
             <p class="text-sm leading-relaxed line-clamp-2" style="color: var(--genshin-muted-foreground);">复数、推理证明、极坐标、向量——数学的广度延伸</p>
             <div class="mt-5 pt-4" style="border-top: 1px solid var(--genshin-border);">
               <span class="text-sm font-medium" style="color: var(--genshin-primary);">探索 →</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- 卡片6：数学实验室 · 火元素（纳塔） -->
+        <a href="lab.html" class="genshin-card block overflow-hidden cursor-pointer reveal" style="--reveal-delay: 400ms">
+          <div style="height: 4px; background-color: #EF7938;"></div>
+          <div class="p-6">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="w-12 h-12 rounded-full flex items-center justify-center shrink-0 font-display text-lg" style="background-color: #EF7938; color: #FFFFFF;">焰</span>
+              <div class="min-w-0">
+                <h3 class="font-display text-lg truncate">数学实验室</h3>
+                <p class="text-xs truncate" style="color: var(--genshin-muted-foreground);">纳塔 · 火元素</p>
+              </div>
+            </div>
+            <p class="text-sm mb-2 whitespace-nowrap" style="color: var(--genshin-primary);">6个互动实验<span class="NEW-badge" style="margin-left:8px;position:static;background:#FF6B6B;color:#fff;font-size:9px;padding:1px 6px;border-radius:8px;font-weight:700;">NEW</span></p>
+            <p class="text-sm leading-relaxed line-clamp-2" style="color: var(--genshin-muted-foreground);">公式变形可视化、抛物线滑块、单位圆占星、祈愿概率——亲手看见公式为什么成立</p>
+            <div class="mt-5 pt-4" style="border-top: 1px solid var(--genshin-border);">
+              <span class="text-sm font-medium" style="color: var(--genshin-primary);">进入实验 →</span>
             </div>
           </div>
         </a>
@@ -546,7 +567,7 @@ body { line-height: 1.75; }
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="anemo" onclick="location.href='functions.html'">
           <div class="char-aura" style="background: radial-gradient(circle, var(--el-anemo-glow), transparent);"></div>
           <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-anemo); box-shadow: 0 0 15px rgba(116,194,168,0.3);">
-            <img src="https://genshin.jmp.blue/characters/venti/gacha-splash" alt="温迪" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/venti/icon';this.onerror=null;">
+            <img src="https://genshin.jmp.blue/characters/venti/gacha-splash" alt="温迪" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=function(){this.style.display='none';var c=this.closest('.char-card');if(c){c.classList.add('char-img-failed');var ic=c.querySelector('.element-icon');if(ic){ic.style.cssText='position:absolute;inset:0;width:auto;height:auto;display:flex;align-items:center;justify-content:center;font-size:40px;background:transparent;border-radius:0;';}}};this.src='https://genshin.jmp.blue/characters/venti/icon';">
             <div class="absolute top-2 left-2 element-icon" style="background: var(--el-anemo); color: #fff;">🌪️</div>
           </div>
           <h4 class="font-display text-sm truncate">温迪</h4>
@@ -556,7 +577,7 @@ body { line-height: 1.75; }
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="geo" onclick="location.href='geometry.html'">
           <div class="char-aura" style="background: radial-gradient(circle, var(--el-geo-glow), transparent);"></div>
           <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-geo); box-shadow: 0 0 15px rgba(240,182,50,0.3);">
-            <img src="https://genshin.jmp.blue/characters/zhongli/gacha-splash" alt="钟离" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/zhongli/icon';this.onerror=null;">
+            <img src="https://genshin.jmp.blue/characters/zhongli/gacha-splash" alt="钟离" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=function(){this.style.display='none';var c=this.closest('.char-card');if(c){c.classList.add('char-img-failed');var ic=c.querySelector('.element-icon');if(ic){ic.style.cssText='position:absolute;inset:0;width:auto;height:auto;display:flex;align-items:center;justify-content:center;font-size:40px;background:transparent;border-radius:0;';}}};this.src='https://genshin.jmp.blue/characters/zhongli/icon';">
             <div class="absolute top-2 left-2 element-icon" style="background: var(--el-geo); color: #fff;">🪨</div>
           </div>
           <h4 class="font-display text-sm truncate">钟离</h4>
@@ -566,7 +587,7 @@ body { line-height: 1.75; }
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="electro" onclick="location.href='probability.html'">
           <div class="char-aura" style="background: radial-gradient(circle, var(--el-electro-glow), transparent);"></div>
           <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-electro); box-shadow: 0 0 15px rgba(176,136,232,0.3);">
-            <img src="https://genshin.jmp.blue/characters/raiden/gacha-splash" alt="雷电将军" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/raiden/icon';this.onerror=null;">
+            <img src="https://genshin.jmp.blue/characters/raiden/gacha-splash" alt="雷电将军" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=function(){this.style.display='none';var c=this.closest('.char-card');if(c){c.classList.add('char-img-failed');var ic=c.querySelector('.element-icon');if(ic){ic.style.cssText='position:absolute;inset:0;width:auto;height:auto;display:flex;align-items:center;justify-content:center;font-size:40px;background:transparent;border-radius:0;';}}};this.src='https://genshin.jmp.blue/characters/raiden/icon';">
             <div class="absolute top-2 left-2 element-icon" style="background: var(--el-electro); color: #fff;">⚡</div>
           </div>
           <h4 class="font-display text-sm truncate">雷电将军</h4>
@@ -576,7 +597,7 @@ body { line-height: 1.75; }
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="dendro" onclick="location.href='elective.html'">
           <div class="char-aura" style="background: radial-gradient(circle, var(--el-dendro-glow), transparent);"></div>
           <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-dendro); box-shadow: 0 0 15px rgba(123,201,74,0.3);">
-            <img src="https://genshin.jmp.blue/characters/nahida/gacha-splash" alt="纳西妲" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/nahida/icon';this.onerror=null;">
+            <img src="assets/chars/nahida.png" alt="纳西妲" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=function(){this.style.display='none';var c=this.closest('.char-card');if(c)c.classList.add('char-img-failed');}">
             <div class="absolute top-2 left-2 element-icon" style="background: var(--el-dendro); color: #fff;">🍃</div>
           </div>
           <h4 class="font-display text-sm truncate">纳西妲</h4>
@@ -586,7 +607,7 @@ body { line-height: 1.75; }
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="hydro" onclick="location.href='calculus.html'">
           <div class="char-aura" style="background: radial-gradient(circle, var(--el-hydro-glow), transparent);"></div>
           <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-hydro); box-shadow: 0 0 15px rgba(76,194,240,0.3);">
-            <img src="https://genshin.jmp.blue/characters/furina/gacha-splash" alt="芙宁娜" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/furina/icon';this.onerror=null;">
+            <img src="https://genshin.jmp.blue/characters/furina/gacha-splash" alt="芙宁娜" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=function(){this.style.display='none';var c=this.closest('.char-card');if(c){c.classList.add('char-img-failed');var ic=c.querySelector('.element-icon');if(ic){ic.style.cssText='position:absolute;inset:0;width:auto;height:auto;display:flex;align-items:center;justify-content:center;font-size:40px;background:transparent;border-radius:0;';}}};this.src='https://genshin.jmp.blue/characters/furina/icon';">
             <div class="absolute top-2 left-2 element-icon" style="background: var(--el-hydro); color: #fff;">💧</div>
           </div>
           <h4 class="font-display text-sm truncate">芙宁娜</h4>
@@ -596,7 +617,7 @@ body { line-height: 1.75; }
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="pyro" onclick="location.href='challenge.html'">
           <div class="char-aura" style="background: radial-gradient(circle, var(--el-pyro-glow), transparent);"></div>
           <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-pyro); box-shadow: 0 0 15px rgba(239,122,53,0.3);">
-            <img src="https://genshin.jmp.blue/characters/mavuika/gacha-splash" alt="玛薇卡" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/mavuika/icon';this.onerror=null;">
+            <img src="assets/chars/mavuika.png" alt="玛薇卡" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=function(){this.style.display='none';var c=this.closest('.char-card');if(c)c.classList.add('char-img-failed');}">
             <div class="absolute top-2 left-2 element-icon" style="background: var(--el-pyro); color: #fff;">🔥</div>
           </div>
           <h4 class="font-display text-sm truncate">玛薇卡</h4>
@@ -606,7 +627,7 @@ body { line-height: 1.75; }
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="cryo" onclick="location.href='challenge.html'">
           <div class="char-aura" style="background: radial-gradient(circle, var(--el-cryo-glow), transparent);"></div>
           <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-cryo); box-shadow: 0 0 15px rgba(160,215,239,0.3);">
-            <img src="https://genshin.jmp.blue/characters/ganyu/gacha-splash" alt="甘雨" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/ganyu/icon';this.onerror=null;">
+            <img src="https://genshin.jmp.blue/characters/ganyu/gacha-splash" alt="甘雨" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=function(){this.style.display='none';var c=this.closest('.char-card');if(c){c.classList.add('char-img-failed');var ic=c.querySelector('.element-icon');if(ic){ic.style.cssText='position:absolute;inset:0;width:auto;height:auto;display:flex;align-items:center;justify-content:center;font-size:40px;background:transparent;border-radius:0;';}}};this.src='https://genshin.jmp.blue/characters/ganyu/icon';">
             <div class="absolute top-2 left-2 element-icon" style="background: var(--el-cryo); color: #fff;">❄️</div>
           </div>
           <h4 class="font-display text-sm truncate">甘雨</h4>
@@ -619,7 +640,7 @@ body { line-height: 1.75; }
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="pyro" onclick="location.href='challenge.html'">
           <div class="char-aura" style="background: radial-gradient(circle, var(--el-pyro-glow), transparent);"></div>
           <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-pyro); box-shadow: 0 0 15px rgba(239,122,53,0.3);">
-            <img src="https://genshin.jmp.blue/characters/hutao/gacha-splash" alt="胡桃" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/hutao/icon';this.onerror=null;">
+            <img src="assets/chars/hutao.png" alt="胡桃" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=function(){this.style.display='none';var c=this.closest('.char-card');if(c)c.classList.add('char-img-failed');}">
             <div class="absolute top-2 left-2 element-icon" style="background: var(--el-pyro); color: #fff;">🔥</div>
           </div>
           <h4 class="font-display text-sm truncate">胡桃</h4>
@@ -629,7 +650,7 @@ body { line-height: 1.75; }
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="pyro" onclick="location.href='challenge.html'">
           <div class="char-aura" style="background: radial-gradient(circle, var(--el-pyro-glow), transparent);"></div>
           <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-pyro); box-shadow: 0 0 15px rgba(239,122,53,0.3);">
-            <img src="https://genshin.jmp.blue/characters/durin/gacha-splash" alt="杜林" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/durin/icon';this.onerror=null;">
+            <img src="assets/chars/durin.png" alt="杜林" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=function(){this.style.display='none';var c=this.closest('.char-card');if(c)c.classList.add('char-img-failed');}">
             <div class="absolute top-2 left-2 element-icon" style="background: var(--el-pyro); color: #fff;">🔥</div>
           </div>
           <h4 class="font-display text-sm truncate">杜林</h4>
@@ -639,7 +660,7 @@ body { line-height: 1.75; }
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="hydro" onclick="location.href='calculus.html'">
           <div class="char-aura" style="background: radial-gradient(circle, var(--el-hydro-glow), transparent);"></div>
           <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-hydro); box-shadow: 0 0 15px rgba(76,194,240,0.3);">
-            <img src="https://genshin.jmp.blue/characters/mualani/gacha-splash" alt="玛拉妮" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/mualani/icon';this.onerror=null;">
+            <img src="assets/chars/mualani.png" alt="玛拉妮" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=function(){this.style.display='none';var c=this.closest('.char-card');if(c)c.classList.add('char-img-failed');}">
             <div class="absolute top-2 left-2 element-icon" style="background: var(--el-hydro); color: #fff;">💧</div>
           </div>
           <h4 class="font-display text-sm truncate">玛拉妮</h4>
@@ -649,7 +670,7 @@ body { line-height: 1.75; }
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="electro" onclick="location.href='probability.html'">
           <div class="char-aura" style="background: radial-gradient(circle, var(--el-electro-glow), transparent);"></div>
           <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-electro); box-shadow: 0 0 15px rgba(176,136,232,0.3);">
-            <img src="https://genshin.jmp.blue/characters/ororon/gacha-splash" alt="欧洛伦" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/ororon/icon';this.onerror=null;">
+            <img src="assets/chars/ororon.png" alt="欧洛伦" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=function(){this.style.display='none';var c=this.closest('.char-card');if(c)c.classList.add('char-img-failed');}">
             <div class="absolute top-2 left-2 element-icon" style="background: var(--el-electro); color: #fff;">⚡</div>
           </div>
           <h4 class="font-display text-sm truncate">欧洛伦</h4>
@@ -659,7 +680,7 @@ body { line-height: 1.75; }
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="cryo" onclick="location.href='challenge.html'">
           <div class="char-aura" style="background: radial-gradient(circle, var(--el-cryo-glow), transparent);"></div>
           <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-cryo); box-shadow: 0 0 15px rgba(160,215,239,0.3);">
-            <img src="https://genshin.jmp.blue/characters/citlali/gacha-splash" alt="茜特菈莉" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/citlali/icon';this.onerror=null;">
+            <img src="assets/chars/citlali.png" alt="茜特菈莉" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=function(){this.style.display='none';var c=this.closest('.char-card');if(c)c.classList.add('char-img-failed');}">
             <div class="absolute top-2 left-2 element-icon" style="background: var(--el-cryo); color: #fff;">❄️</div>
           </div>
           <h4 class="font-display text-sm truncate">茜特菈莉</h4>
@@ -669,7 +690,7 @@ body { line-height: 1.75; }
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="anemo" onclick="location.href='functions.html'">
           <div class="char-aura" style="background: radial-gradient(circle, var(--el-anemo-glow), transparent);"></div>
           <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-anemo); box-shadow: 0 0 15px rgba(116,194,168,0.3);">
-            <img src="https://genshin.jmp.blue/characters/chasca/gacha-splash" alt="恰斯卡" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/chasca/icon';this.onerror=null;">
+            <img src="assets/chars/chasca.png" alt="恰斯卡" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=function(){this.style.display='none';var c=this.closest('.char-card');if(c)c.classList.add('char-img-failed');}">
             <div class="absolute top-2 left-2 element-icon" style="background: var(--el-anemo); color: #fff;">🌪️</div>
           </div>
           <h4 class="font-display text-sm truncate">恰斯卡</h4>
@@ -679,7 +700,7 @@ body { line-height: 1.75; }
         <div class="showcase-char genshin-card p-3 text-center cursor-pointer char-card" data-element="geo" onclick="location.href='geometry.html'">
           <div class="char-aura" style="background: radial-gradient(circle, var(--el-geo-glow), transparent);"></div>
           <div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden mb-3" style="border: 2px solid var(--el-geo); box-shadow: 0 0 15px rgba(240,182,50,0.3);">
-            <img src="https://genshin.jmp.blue/characters/xilonen/gacha-splash" alt="希诺宁" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://genshin.jmp.blue/characters/xilonen/icon';this.onerror=null;">
+            <img src="assets/chars/xilonen.png" alt="希诺宁" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=function(){this.style.display='none';var c=this.closest('.char-card');if(c)c.classList.add('char-img-failed');}">
             <div class="absolute top-2 left-2 element-icon" style="background: var(--el-geo); color: #fff;">🪨</div>
           </div>
           <h4 class="font-display text-sm truncate">希诺宁</h4>
@@ -696,11 +717,11 @@ body { line-height: 1.75; }
           <div class="mt-2 text-xs md:text-sm whitespace-nowrap" style="color: var(--genshin-muted-foreground);">大知识模块</div>
         </div>
         <div class="p-6 md:p-8 text-center" style="background-color: var(--genshin-card);">
-          <div class="font-display text-3xl md:text-4xl whitespace-nowrap" style="color: var(--genshin-primary);">21</div>
+          <div class="font-display text-3xl md:text-4xl whitespace-nowrap" style="color: var(--genshin-primary);">27</div>
           <div class="mt-2 text-xs md:text-sm whitespace-nowrap" style="color: var(--genshin-muted-foreground);">个知识单元</div>
         </div>
         <div class="p-6 md:p-8 text-center" style="background-color: var(--genshin-card);">
-          <div class="font-display text-3xl md:text-4xl whitespace-nowrap" style="color: var(--genshin-primary);">120+</div>
+          <div class="font-display text-3xl md:text-4xl whitespace-nowrap" style="color: var(--genshin-primary);">280+</div>
           <div class="mt-2 text-xs md:text-sm whitespace-nowrap" style="color: var(--genshin-muted-foreground);">核心考点</div>
         </div>
         <div class="p-6 md:p-8 text-center" style="background-color: var(--genshin-card);">
@@ -745,11 +766,11 @@ body { line-height: 1.75; }
                 <span class="text-sm">大知识模块</span>
               </div>
               <div class="flex items-baseline gap-2">
-                <span class="font-display text-2xl whitespace-nowrap" style="color: var(--genshin-primary);">21</span>
+                <span class="font-display text-2xl whitespace-nowrap" style="color: var(--genshin-primary);">27</span>
                 <span class="text-sm">个知识单元</span>
               </div>
               <div class="flex items-baseline gap-2">
-                <span class="font-display text-2xl whitespace-nowrap" style="color: var(--genshin-primary);">120+</span>
+                <span class="font-display text-2xl whitespace-nowrap" style="color: var(--genshin-primary);">280+</span>
                 <span class="text-sm">核心考点</span>
               </div>
             </div>
@@ -992,24 +1013,6 @@ body { line-height: 1.75; }
   window.addEventListener('scroll',updateBar,{passive:true});
   updateBar();
 
-  // 点击金色粒子效果
-  var colors=['#C8A95B','#E8D5A3','#FFD700','#74C2A1','#4CC2F0','#A85AF5'];
-  document.addEventListener('click',function(e){
-    if(e.target.closest('button,a,.day-card,.option-btn')){
-      colors.forEach(function(c,i){
-        var p=document.createElement('div');
-        var ang=Math.PI*2/colors.length*i+Math.random()*0.5;
-        var dist=25+Math.random()*35;
-        p.style.cssText='position:fixed;width:6px;height:6px;border-radius:50%;background:'+c+';pointer-events:none;z-index:99999;left:'+e.clientX+'px;top:'+e.clientY+'px;box-shadow:0 0 6px '+c+';transition:all .6s ease-out;';
-        document.body.appendChild(p);
-        requestAnimationFrame(function(){
-          p.style.transform='translate('+Math.cos(ang)*dist+'px,'+Math.sin(ang)*dist+'px) scale(0)';
-          p.style.opacity='0';
-        });
-        setTimeout(function(){p.remove();},650);
-      });
-    }
-  });
 
   // 知识点卡片hover光晕效果
   document.querySelectorAll('[class*="card"], .kp-card, .kp-item, section, article').forEach(function(el){
