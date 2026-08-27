@@ -58,7 +58,7 @@ for (const page of pages) {
 
   for (const script of html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)) {
     const attributes = script[1];
-    if (/\bsrc=|type=["']text\/tailwindcss["']/.test(attributes)) continue;
+    if (/\bsrc=|type=["']text\/tailwindcss["']|type=["']application\/ld\+json["']/.test(attributes)) continue;
     try {
       new Function(script[2]);
     } catch (error) {
