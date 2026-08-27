@@ -1081,5 +1081,8 @@ body { line-height: 1.75; }
 })();
 </script>
 <script src="assets/genshin-enhancements.js"></script>
+<script>
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('/sw.js').catch(function(){}); }
+</script>
 </body>
 </html>
