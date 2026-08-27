@@ -940,12 +940,7 @@ body { line-height: 1.75; }
   .reveal-init { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
   .reveal-in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) { .reveal-init { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
-  #back-to-top { background-color: var(--genshin-primary); color: var(--genshin-primary-foreground); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
-  #back-to-top:hover { filter: brightness(1.1); }
 </style>
-<button id="back-to-top" type="button" aria-label="回到顶部" class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-lg opacity-0 pointer-events-none transition-all duration-300">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto; display:block;"><polyline points="18 15 12 9 6 15"/></svg>
-</button>
 <script>
 (function(){
   // ---- mobile menu toggle ----
@@ -972,15 +967,6 @@ body { line-height: 1.75; }
     panel.querySelectorAll('[data-nav-key]').forEach(function(a){
       if(a.getAttribute('data-nav-key')===curKey){a.style.color='var(--genshin-primary)';a.style.fontWeight='600';}
     });
-  }
-  // ---- back to top ----
-  var btt=document.getElementById('back-to-top');
-  if(btt){
-    window.addEventListener('scroll',function(){
-      if(window.scrollY>500){btt.classList.remove('opacity-0','pointer-events-none');}
-      else{btt.classList.add('opacity-0','pointer-events-none');}
-    },{passive:true});
-    btt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
   }
   // ---- safe scroll reveal (no-JS = visible) ----
   var els=document.querySelectorAll('.genshin-card');
@@ -1031,12 +1017,6 @@ body { line-height: 1.75; }
       el.style.transition='transform .3s ease, box-shadow .3s ease';
     });
   });
-
-  // Back to top enhancement
-  var bk=document.getElementById('back-to-top');
-  if(bk){
-    bk.addEventListener('click',function(){playTone(600,0.08);setTimeout(function(){playTone(800,0.12);},80);});
-  }
 
   // Web Audio click feedback (subtle)
   var actx=null;
