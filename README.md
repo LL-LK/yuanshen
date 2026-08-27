@@ -55,3 +55,10 @@ Tailwind、Lucide、KaTeX 和角色占位图已放在 `assets/` 下，页面核�
 - **可访问性**：skip-link 键盘跳转、ARIA 标签、键盘快捷键（T 回到顶部、M 打开菜单）
 - **性能优化**：资源预加载、preconnect/dns-prefetch 提示、懒加载图片、本地缓存策略
 - **代码质量**：共享渲染器（katex-renderer.js、back-to-top.js）、静态检查、回归测试
+
+## 移动端适配
+
+- **触摸目标**：所有页面的移动端菜单按钮已增大到 44×44px 以上，符合 WCAG 2.5.5 最小触摸目标要求
+- **安全区域**：固定导航和主内容支持 `env(safe-area-inset-*)`，避免刘海屏和底部指示条遮挡
+- **交互优化**：全局消除点击高亮、Canvas 区域禁止浏览器手势干扰、极小屏（≤360px）字体与间距微调
+- **体验一致**：统一 challenge.html 的 lang、Tailwind 引用和 overflow 处理，确保跨页面体验一致
