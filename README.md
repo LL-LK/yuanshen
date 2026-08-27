@@ -43,4 +43,6 @@ python tests/site_regression.py
 
 ## 资源说明
 
-Tailwind、Lucide 和角色占位图已放在 `assets/` 下，页面核心布局不依赖 Google Fonts；部分角色装饰立绘仍会尝试访问 `genshin.jmp.blue`，请求失败时会自动隐藏，不影响正文和练习功能。
+Tailwind、Lucide、KaTeX 和角色占位图已放在 `assets/` 下，页面核心布局不依赖 Google Fonts；部分角色装饰立绘仍会尝试访问 `genshin.jmp.blue`，请求失败时会自动隐藏，不影响正文和练习功能。
+
+全部外部来源、借鉴理念与许可证合规结论见 [SOURCES.md](SOURCES.md)。

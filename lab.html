@@ -138,6 +138,8 @@
 </style>
     <script src="assets/vendor/tailwind-browser-4.3.1.js"></script>
     <script src="assets/vendor/lucide-1.8.0.min.js"></script>
+    <link rel="stylesheet" href="assets/vendor/katex/katex.min.css">
+    <script src="assets/vendor/katex/katex.min.js"></script>
     <style type="text/tailwindcss">
   @theme inline {
     --color-background: var(--genshin-background);
@@ -514,6 +516,10 @@ article[id^="kp-"] { scroll-margin-top: 90px; }
     .eq-row.now { background: var(--genshin-card); box-shadow: 0 1px 8px rgba(0,0,0,.08); }
     .eq-row.dim .lab-math { opacity: .45; filter: saturate(.35); transition: opacity .38s, filter .38s; }
     .eq-note { font-size: .78rem; color: var(--genshin-muted-foreground); max-width: 46%; }
+    /* KaTeX 渲染的公式与高亮标记 */
+    .lab-math .katex { font-size: 1.22em; }
+    .katex .chg { border-radius: 4px; padding: 0 3px; animation: labChgPulse 1.8s ease-in-out infinite; }
+    .katex .chg-cut { text-decoration: line-through; opacity: .55; padding: 0 3px; }
     .chg {
       font-weight: 700; border-radius: 4px; padding: 0 3px;
       animation: labChgPulse 1.8s ease-in-out infinite;
@@ -798,6 +804,20 @@ article[id^="kp-"] { scroll-margin-top: 90px; }
         </div>
       </div>
     </article>
+
+    <!-- ===== 设计来源致谢 ===== -->
+    <section class="reveal rounded-xl p-5 sm:p-6 mb-8" style="border: 1px dashed var(--genshin-border); background: var(--genshin-muted);">
+      <h2 class="font-display text-base font-bold mb-2" style="color: var(--genshin-primary);">实验装置的设计灵感</h2>
+      <p class="text-sm leading-relaxed mb-0" style="color: var(--genshin-muted-foreground);">
+        本实验室全部代码为原创 vanilla JS 实现（零框架、可离线运行），交互设计吸收了以下优秀开源项目的公开设计理念：逐步变形注释模式参考
+        <a href="https://mathigon.org" target="_blank" rel="noopener" style="color: var(--genshin-primary); text-decoration: underline;">Mathigon</a> 课程叙事，
+        「变换而非替换」的动画语言参考 <a href="https://github.com/3b1b/manim" target="_blank" rel="noopener" style="color: var(--genshin-primary); text-decoration: underline;">3Blue1Brown / manim</a>，
+        多表征联动与探究优先原则参考 <a href="https://phet.colorado.edu" target="_blank" rel="noopener" style="color: var(--genshin-primary); text-decoration: underline;">PhET Interactive Simulations</a>，
+        概率收敛可视化参考 <a href="https://seeing-theory.brown.edu" target="_blank" rel="noopener" style="color: var(--genshin-primary); text-decoration: underline;">Seeing Theory</a>；
+        公式排版使用开源库 <a href="https://github.com/KaTeX/KaTeX" target="_blank" rel="noopener" style="color: var(--genshin-primary); text-decoration: underline;">KaTeX</a>（MIT License，已本地化）。
+        完整来源清单见仓库 <a href="https://github.com/LL-LK/yuanshen/blob/main/SOURCES.md" target="_blank" rel="noopener" style="color: var(--genshin-primary); text-decoration: underline;">SOURCES.md</a>。
+      </p>
+    </section>
 
     <!-- ===== 章节导航 ===== -->
     <div class="genshin-card mt-8 p-5 sm:p-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
@@ -1220,49 +1240,61 @@ article[id^="kp-"] { scroll-margin-top: 90px; }
 
       // ============================================================
       // 实验一 · 公式炼金台（公式变形分步可视化）
-      // 数据驱动：每一步 = {f: 公式HTML, n: 本步法则说明}，<em class="chg"> 标出变化项
+      // 数据驱动：每一步 = {tex: LaTeX(优先), f: HTML回退, n: 本步法则说明}
+      // \htmlClass{chg}{...} 标出该步变化的项（金色脉冲），渲染引擎：KaTeX(MIT, 本地 vendor)
       // ============================================================
+      function renderMath(el, tex, fallbackHtml) {
+        if (window.katex) {
+          try {
+            katex.render(tex, el, { trust: true, strict: 'ignore', throwOnError: false });
+            return;
+          } catch (e) { /* 渲染失败走 HTML 回退 */ }
+        }
+        if (fallbackHtml) el.innerHTML = fallbackHtml;
+        else el.textContent = tex;
+      }
+
       var DECKS = [
         {
           id: 'peifang', name: '配方 · 解一元二次方程', tip: '配方法的几何直觉见下方「实验二·尘歌壶砌筑术」，两边同加 (b/2)² 只为凑出一个完全平方。',
           steps: [
-            { f: 'x<sup>2</sup> + 6x − 7 = 0', n: '原始方程：二次项、一次项、常数项各就各位。' },
-            { f: 'x<sup>2</sup> + 6x <em class="chg">= 7</em>', n: '移项法则：两边同加 7，常数项搬到等号右边。' },
-            { f: 'x<sup>2</sup> + 6x + <em class="chg">9</em> = 7 <em class="chg">+ 9</em>', n: '关键一步！两边同时加上「一次项系数一半的平方」：6 ÷ 2 = 3，3² = 9。等式仍成立。' },
-            { f: '<em class="chg">(x + 3)<sup>2</sup></em> = 16', n: '左边三个项恰好拼成完全平方式 (x+3)²；右边合并得 16。（为什么恰好？去实验二看面积模型！）' },
-            { f: 'x + 3 = <em class="chg">±4</em>', n: '开平方法则：16 的平方根有两个，±4，千万别丢负的那支。' },
-            { f: 'x = −3 ± 4', n: '移项：把 −3 移到右边。此时答案已经呼之欲出。' },
-            { f: '<em class="chg">x₁ = 1，x₂ = −7</em>', n: '分别取 +4 和 −4，得到两根。代回原方程验算：1+6−7=0 ✓，49−42−7=0 ✓。' }
+            { tex: 'x^2 + 6x - 7 = 0', f: 'x<sup>2</sup> + 6x − 7 = 0', n: '原始方程：二次项、一次项、常数项各就各位。' },
+            { tex: 'x^2 + 6x \\htmlClass{chg}{= 7}', f: 'x<sup>2</sup> + 6x <em class="chg">= 7</em>', n: '移项法则：两边同加 7，常数项搬到等号右边。' },
+            { tex: 'x^2 + 6x + \\htmlClass{chg}{9} = 7 \\htmlClass{chg}{+ 9}', f: 'x<sup>2</sup> + 6x + <em class="chg">9</em> = 7 <em class="chg">+ 9</em>', n: '关键一步！两边同时加上「一次项系数一半的平方」：6 ÷ 2 = 3，3² = 9。等式仍成立。' },
+            { tex: '\\htmlClass{chg}{(x + 3)^2} = 16', f: '<em class="chg">(x + 3)<sup>2</sup></em> = 16', n: '左边三个项恰好拼成完全平方式 (x+3)²；右边合并得 16。（为什么恰好？去实验二看面积模型！）' },
+            { tex: 'x + 3 = \\htmlClass{chg}{\\pm 4}', f: 'x + 3 = <em class="chg">±4</em>', n: '开平方法则：16 的平方根有两个，±4，千万别丢负的那支。' },
+            { tex: 'x = -3 \\pm 4', f: 'x = −3 ± 4', n: '移项：把 −3 移到右边。此时答案已经呼之欲出。' },
+            { tex: '\\htmlClass{chg}{x_1 = 1, \\quad x_2 = -7}', f: '<em class="chg">x₁ = 1，x₂ = −7</em>', n: '分别取 +4 和 −4，得到两根。代回原方程验算：1+6−7=0 ✓，49−42−7=0 ✓。' }
           ]
         },
         {
           id: 'wanquan', name: '完全平方公式', tip: '(a+b)² ≠ a²+b²！中间那项 2ab 是展开时"交叉相乘"的产物——用实验二的面积模型拼一次就再也不会忘。',
           steps: [
-            { f: '(a + b)<sup>2</sup>', n: '目标：把「和的平方」展开成不含括号的形式。' },
-            { f: '= (a + b)(a + b)', n: '平方的定义：就是两个相同的因式相乘。' },
-            { f: '= a(a + b) <em class="chg">+ b(a + b)</em>', n: '分配律第一轮：把第一个括号拆开，每一项都乘后面整个括号。' },
-            { f: '= a² + ab <em class="chg">+ ab + b²</em>', n: '分配律第二轮：a 和 b 分别乘 (a+b)，得到四个项。注意出现了两个 ab。' },
-            { f: '= a² + <em class="chg">2ab</em> + b²', n: '合并同类项：ab + ab = 2ab。这就是口诀「首平方、末平方、首末乘积二倍放中央」。' }
+            { tex: '(a + b)^2', f: '(a + b)<sup>2</sup>', n: '目标：把「和的平方」展开成不含括号的形式。' },
+            { tex: '= (a + b)(a + b)', f: '= (a + b)(a + b)', n: '平方的定义：就是两个相同的因式相乘。' },
+            { tex: '= a(a + b) \\htmlClass{chg}{{} + b(a + b)}', f: '= a(a + b) <em class="chg">+ b(a + b)</em>', n: '分配律第一轮：把第一个括号拆开，每一项都乘后面整个括号。' },
+            { tex: '= a^2 + ab \\htmlClass{chg}{{} + ab + b^2}', f: '= a² + ab <em class="chg">+ ab + b²</em>', n: '分配律第二轮：a 和 b 分别乘 (a+b)，得到四个项。注意出现了两个 ab。' },
+            { tex: '= a^2 + \\htmlClass{chg}{2ab} + b^2', f: '= a² + <em class="chg">2ab</em> + b²', n: '合并同类项：ab + ab = 2ab。这就是口诀「首平方、末平方、首末乘积二倍放中央」。' }
           ]
         },
         {
           id: 'pingfangcha', name: '平方差公式', tip: '平方差是"对称美"的极致：只要两个括号里一项完全相同、一项互为相反数，中间项必然成对抵消。',
           steps: [
-            { f: '(a + b)(a − b)', n: '目标：展开「和 × 差」。' },
-            { f: '= a(a − b) <em class="chg">+ b(a − b)</em>', n: '分配律第一轮：先用 a 去乘后面整个括号。' },
-            { f: '= a² − ab <em class="chg">+ ab</em> − b²', n: '分配律第二轮：b 也乘一遍，得到 +ab；而前面已有 −ab。' },
-            { f: '= a² − <span style="text-decoration:line-through;opacity:.55;">ab + ab</span> − b²', n: '见证奇迹：−ab 与 +ab 恰好互为相反数，一对抵消！' },
-            { f: '= <em class="chg">a² − b²</em>', n: '只剩下两个平方之差。「乘积和差」与「平方之差」从此可以互相秒变。' }
+            { tex: '(a + b)(a - b)', f: '(a + b)(a − b)', n: '目标：展开「和 × 差」。' },
+            { tex: '= a(a - b) \\htmlClass{chg}{{} + b(a - b)}', f: '= a(a − b) <em class="chg">+ b(a − b)</em>', n: '分配律第一轮：先用 a 去乘后面整个括号。' },
+            { tex: '= a^2 - ab \\htmlClass{chg}{{} + ab} - b^2', f: '= a² − ab <em class="chg">+ ab</em> − b²', n: '分配律第二轮：b 也乘一遍，得到 +ab；而前面已有 −ab。' },
+            { tex: '= a^2 \\htmlClass{chg-cut}{- ab + ab} - b^2', f: '= a² − <span style="text-decoration:line-through;opacity:.55;">ab + ab</span> − b²', n: '见证奇迹：−ab 与 +ab 恰好互为相反数，一对抵消！' },
+            { tex: '= \\htmlClass{chg}{a^2 - b^2}', f: '= <em class="chg">a² − b²</em>', n: '只剩下两个平方之差。「乘积和差」与「平方之差」从此可以互相秒变。' }
           ]
         },
         {
           id: 'dengcha', name: '等差数列求和公式', tip: '高斯上小学时用同样的配对思想心算出 1+2+⋯+100=5050。"正序+倒序"是处理数列求和的万能起手式。',
           steps: [
-            { f: 'S<sub>n</sub> = a₁ + a₂ + ⋯ + a<sub>n</sub>', n: '目标：求等差数列前 n 项的和。' },
-            { f: '= a₁ + (a₁+d) + ⋯ + <em class="chg">(a₁+(n−1)d)</em>', n: '通项公式：第 k 项是 a₁+(k−1)d，最后一项即 aₙ = a₁+(n−1)d。' },
-            { f: '2S<sub>n</sub> = <em class="chg">(a₁+aₙ)</em> + (a₁+aₙ) + ⋯ + (a₁+aₙ)', n: '高斯操作：把和正着写一遍、倒着写一遍，两行上下对齐后逐列相加——每列都是 a₁+aₙ！' },
-            { f: '2S<sub>n</sub> = <em class="chg">n(a₁ + aₙ)</em>', n: '一共 n 列，每列的和都是 a₁+aₙ，所以总和是它们的 n 倍。' },
-            { f: 'S<sub>n</sub> = <em class="chg">(a₁ + aₙ) · n ÷ 2</em>', n: '两边同除以 2。读作：「(首项+末项) × 项数 ÷ 2」——和梯形面积公式惊人地相似。' }
+            { tex: 'S_n = a_1 + a_2 + \\cdots + a_n', f: 'S<sub>n</sub> = a₁ + a₂ + ⋯ + a<sub>n</sub>', n: '目标：求等差数列前 n 项的和。' },
+            { tex: '= a_1 + (a_1+d) + \\cdots + \\htmlClass{chg}{(a_1+(n-1)d)}', f: '= a₁ + (a₁+d) + ⋯ + <em class="chg">(a₁+(n−1)d)</em>', n: '通项公式：第 k 项是 a₁+(k−1)d，最后一项即 aₙ = a₁+(n−1)d。' },
+            { tex: '2S_n = \\htmlClass{chg}{(a_1+a_n)} + (a_1+a_n) + \\cdots + (a_1+a_n)', f: '2S<sub>n</sub> = <em class="chg">(a₁+aₙ)</em> + (a₁+aₙ) + ⋯ + (a₁+aₙ)', n: '高斯操作：把和正着写一遍、倒着写一遍，两行上下对齐后逐列相加——每列都是 a₁+aₙ！' },
+            { tex: '2S_n = \\htmlClass{chg}{n(a_1 + a_n)}', f: '2S<sub>n</sub> = <em class="chg">n(a₁ + aₙ)</em>', n: '一共 n 列，每列的和都是 a₁+aₙ，所以总和是它们的 n 倍。' },
+            { tex: 'S_n = \\htmlClass{chg}{\\dfrac{n(a_1 + a_n)}{2}}', f: 'S<sub>n</sub> = <em class="chg">(a₁ + aₙ) · n ÷ 2</em>', n: '两边同除以 2。读作：「(首项+末项) × 项数 ÷ 2」——和梯形面积公式惊人地相似。' }
           ]
         }
       ];
@@ -1296,8 +1328,9 @@ article[id^="kp-"] { scroll-margin-top: 90px; }
         row.className = 'eq-row';
         row.innerHTML =
           '<span class="text-xs shrink-0 font-bold" style="color:' + GOLD + ';min-width:1.4em;">' + no + '</span>' +
-          '<span class="lab-math flex-1 min-w-0">' + step.f + '</span>' +
+          '<span class="lab-math flex-1 min-w-0"></span>' +
           '<span class="eq-note">' + step.n + '</span>';
+        renderMath(row.querySelector('.lab-math'), step.tex, step.f);
         return row;
       }
 
@@ -1400,11 +1433,15 @@ article[id^="kp-"] { scroll-margin-top: 90px; }
         // 底部大括号说明
         html += '<text x="' + (pad + (X + w) / 2) + '" y="' + (top + X + w + 30) + '" text-anchor="middle" font-size="13" font-weight="700" fill="' + GOLD + '">' + (areaFilled ? '边长 (x + b/2) 的完美正方形' : '还差一个角的完美正方形') + '</text>';
         areaSvg.innerHTML = html;
-        // 同步代数式
+        // 同步代数式（KaTeX 渲染）
         var hb = b / 2;
-        areaFormula.innerHTML =
-          'x<sup>2</sup> + ' + b + 'x' + (areaFilled ? ' + <em class="chg">' + (hb * hb) + '</em>' : ' + <span style="opacity:.45;">(b/2)²</span>') +
-          (areaFilled ? ' = <em class="chg">(x + ' + hb + ')²</em>' : ' = ?');
+        var texFilled = 'x^2 + ' + b + 'x + \\htmlClass{chg}{' + (hb * hb) + '} = \\htmlClass{chg}{(x + ' + hb + ')^2}';
+        var texEmpty = 'x^2 + ' + b + 'x + \\htmlClass{chg}{(b/2)^2} = \\,?';
+        areaFormula.textContent = '';
+        renderMath(areaFormula, areaFilled ? texFilled : texEmpty,
+          areaFilled
+            ? 'x<sup>2</sup> + ' + b + 'x + <em class="chg">' + (hb * hb) + '</em> = <em class="chg">(x + ' + hb + ')²</em>'
+            : 'x<sup>2</sup> + ' + b + 'x + <em class="chg">(b/2)²</em> = ?');
         areaToggle.textContent = areaFilled ? ('拆掉缺角 ◂') : ('砌上缺角 (b/2)² ▸');
         areaToggle.setAttribute('aria-pressed', String(areaFilled));
       }
