@@ -799,8 +799,7 @@
 
     // ===== 移动端检测与优化 =====
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
-      || window.innerWidth <= 768 
-      || ('ontouchstart' in window && window.innerWidth <= 900);
+      || window.innerWidth <= 1024;
     
     if (isMobile) {
       document.body.classList.add('is-mobile');

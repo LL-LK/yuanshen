@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -67,10 +67,6 @@
         body {
             font-family: 'Microsoft YaHei', sans-serif;
             background: var(--bg-dark);
-            color: var(--text-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
 
         .starfield {
             position: fixed;
@@ -578,6 +574,10 @@
             justify-content: center;
             z-index: 100;
             padding: 20px;
+        }
+
+        .modal-overlay.hidden {
+            display: none;
         }
 
         .modal-content {
