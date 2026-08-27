@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /assets/
+Disallow: /tests/
+Disallow: /.mimosa/
+Disallow: /.debug/
+Disallow: /*.pdf
+Disallow: /*.zip
+Disallow: /*.log
+
+Sitemap: https://ll-lk.github.io/yuanshen/sitemap.xml
