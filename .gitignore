@@ -3,3 +3,4 @@ node_modules/
 *.log
 .debug/
 .debug_static_report.json
+.mimosa/
