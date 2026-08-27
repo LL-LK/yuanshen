@@ -73,7 +73,8 @@ for (const asset of [
   'assets/vendor/tailwind-v3.js',
   'assets/vendor/lucide-1.8.0.min.js',
   'assets/genshin-enhancements.js',
-  'assets/genshin-enhancements.css'
+  'assets/genshin-enhancements.css',
+  'manifest.json'
 ]) {
   check(fs.existsSync(path.join(root, asset)), `${asset} is missing`);
 }
