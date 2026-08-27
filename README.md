@@ -46,3 +46,12 @@ python tests/site_regression.py
 Tailwind、Lucide、KaTeX 和角色占位图已放在 `assets/` 下，页面核心布局不依赖 Google Fonts；部分角色装饰立绘仍会尝试访问 `genshin.jmp.blue`，请求失败时会自动隐藏，不影响正文和练习功能。
 
 全部外部来源、借鉴理念与许可证合规结论见 [SOURCES.md](SOURCES.md)。
+
+## 性能与体验优化
+
+- **KaTeX 公式渲染**：本地 vendored KaTeX 0.16.11，支持数学公式美观排版
+- **PWA 支持**：manifest.json + Service Worker，支持离线访问和添加到主屏幕
+- **SEO 优化**：meta description、Open Graph、Twitter Card、JSON-LD 结构化数据、canonical URL、sitemap.xml、robots.txt
+- **可访问性**：skip-link 键盘跳转、ARIA 标签、键盘快捷键（T 回到顶部、M 打开菜单）
+- **性能优化**：资源预加载、preconnect/dns-prefetch 提示、懒加载图片、本地缓存策略
+- **代码质量**：共享渲染器（katex-renderer.js、back-to-top.js）、静态检查、回归测试
